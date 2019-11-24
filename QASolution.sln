@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAProjectUIs", "QAProject\QAProjectUIs.csproj", "{60252D0C-B181-4139-B22B-B7AC915081FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QADataModelLib", "QADataModelLib\QADataModelLib.csproj", "{1E8F967B-B405-47D8-9B83-0C377EB67FB2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60252D0C-B181-4139-B22B-B7AC915081FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60252D0C-B181-4139-B22B-B7AC915081FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60252D0C-B181-4139-B22B-B7AC915081FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60252D0C-B181-4139-B22B-B7AC915081FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E8F967B-B405-47D8-9B83-0C377EB67FB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E8F967B-B405-47D8-9B83-0C377EB67FB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E8F967B-B405-47D8-9B83-0C377EB67FB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E8F967B-B405-47D8-9B83-0C377EB67FB2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {887B7E5C-33E3-45ED-8DED-AFFF03BD07D0}
+	EndGlobalSection
+EndGlobal
