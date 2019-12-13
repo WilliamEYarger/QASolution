@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAProjectUIs", "QAProject\QAProjectUIs.csproj", "{60252D0C-B181-4139-B22B-B7AC915081FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QADataModelLib", "QADataModelLib\QADataModelLib.csproj", "{1E8F967B-B405-47D8-9B83-0C377EB67FB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QADataModelLib", "QADataModelLib\QADataModelLib.csproj", "{1E8F967B-B405-47D8-9B83-0C377EB67FB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

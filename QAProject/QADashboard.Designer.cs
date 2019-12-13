@@ -30,6 +30,8 @@
         {
             this.formTitleLabel = new System.Windows.Forms.Label();
             this.informationButton = new System.Windows.Forms.Button();
+            this.openSubjectsTreeButton = new System.Windows.Forms.Button();
+            this.exitApplicationButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // formTitleLabel
@@ -50,18 +52,41 @@
             this.informationButton.Text = "Click here for information as to how to use this Dashboard";
             this.informationButton.UseVisualStyleBackColor = true;
             // 
+            // openSubjectsTreeButton
+            // 
+            this.openSubjectsTreeButton.Location = new System.Drawing.Point(31, 103);
+            this.openSubjectsTreeButton.Name = "openSubjectsTreeButton";
+            this.openSubjectsTreeButton.Size = new System.Drawing.Size(232, 89);
+            this.openSubjectsTreeButton.TabIndex = 2;
+            this.openSubjectsTreeButton.Text = "Open the Subjects Tree ";
+            this.openSubjectsTreeButton.UseVisualStyleBackColor = true;
+            this.openSubjectsTreeButton.Click += new System.EventHandler(this.openSubjectsTreeButton_Click);
+            // 
+            // exitApplicationButton
+            // 
+            this.exitApplicationButton.Location = new System.Drawing.Point(367, 103);
+            this.exitApplicationButton.Name = "exitApplicationButton";
+            this.exitApplicationButton.Size = new System.Drawing.Size(232, 89);
+            this.exitApplicationButton.TabIndex = 3;
+            this.exitApplicationButton.Text = "Exit Application";
+            this.exitApplicationButton.UseVisualStyleBackColor = true;
+            this.exitApplicationButton.Click += new System.EventHandler(this.exitApplicationButton_Click);
+            // 
             // QADashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1151, 627);
+            this.Controls.Add(this.exitApplicationButton);
+            this.Controls.Add(this.openSubjectsTreeButton);
             this.Controls.Add(this.informationButton);
             this.Controls.Add(this.formTitleLabel);
             this.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "QADashboard";
             this.Text = "QA Dashboard";
+            this.Load += new System.EventHandler(this.QADashboard_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -71,6 +96,8 @@
 
         private System.Windows.Forms.Label formTitleLabel;
         private System.Windows.Forms.Button informationButton;
+        private System.Windows.Forms.Button openSubjectsTreeButton;
+        private System.Windows.Forms.Button exitApplicationButton;
     }
 }
 

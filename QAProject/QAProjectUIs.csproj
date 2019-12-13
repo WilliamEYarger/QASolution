@@ -115,5 +115,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QADataModelLib\QADataModelLib.csproj">
+      <Project>{1e8f967b-b405-47d8-9b83-0c377eb67fb2}</Project>
+      <Name>QADataModelLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
