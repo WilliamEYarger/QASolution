@@ -1,5 +1,5 @@
 ﻿// PROPERTIES AND VARIABLES
-// 
+// updateNodeChildrenDictionary
 // METHODS
 //  void saveAllFiles()
 // void returnToDashboardButton_Click()
@@ -108,14 +108,7 @@ namespace QAProject
                 // Close file
                 file.Close();
 
-
-                ////  1. CallRecursive() to convert the TreeView into a \n and ^ delimited string 
-                ////      of nameID/subjecgtText pairs
-                //string treeViewOutput = CallRecursive(subjectTreeView);
-                ////  2.  Write the output delimited string to a text file
-                //File.WriteAllText(SubjectTreeViewModel.getQASubjectTreeViewPath(), treeViewOutput);
-
-
+                               
                 // 2. Save saveNodeChildrenDictionary
                 SubjectTreeViewModel.saveNodeChildrenDictionary();
 
@@ -234,7 +227,6 @@ namespace QAProject
         /// <param name="e"></param>
         private void addNewQAFileNodeButton_Click(object sender, EventArgs e)
         {
-            // TODO - new QA files are not being added when 1 already exists
 
             TreeNode selectedNode = subjectTreeView.SelectedNode;
             // Determine if this node has children, is so it cannot hold a QAFile
@@ -321,62 +313,14 @@ namespace QAProject
                     }
                 }
 
-                ////  1.  Send path to SubjectTreeViewModel.returnSubjectTreeView
-                //List<string>  nodeList = SubjectTreeViewModel.returnSubjectTreeViewNodesList(filePath);
-                //foreach(string line in nodeList)
-                //{
-                //    string[] values = line.Split('^');
-                //    string parentsName = values[0];
-                //    string nodesName = values[1];
-                //    string nodesText = values[2];
-                //    TreeNode thisNode = new TreeNode(nodesText);
-                //    thisNode.Name = nodesName;
-                //    if (parentsName == "")
-                //    {
-                //        // This is a main subject note
-                //        subjectTreeView.Nodes.Add(thisNode);
-                //    }
-                //    else
-                //    {
-                //        // This is a Division node or a qa node
-                //        TreeNode selectedNode = new TreeNode();
-                //        selectedNode.Name = parentsName;
-                //        subjectTreeView.SelectedNode = selectedNode;
-                //        subjectTreeView.SelectedNode.Nodes.Add(thisNode);
-                //    }
-                //}
-
-
-
-
             }// End loadTree button clicked
 
-
-
-
-            /// <summary>
-            /// This method loads the tree and all the files from the disk 
-            /// into the TreeView and the various Lists and Dictionaries
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
-            //public void QATreeForm_Load(object sender, EventArgs e)
-            //{
-            //    this.ControlBox = false;
-            //    loadTreeButton.PerformClick();
-            //    //subjectTreeView.BeginUpdate();
-            //    SubjectTreeViewModel.loadSubjectNodesList();
-            //    SubjectTreeViewModel.loadTreeViewDictionary();
-            //    SubjectTreeViewModel.loadNodeChildrenDictionary();
-            //    SubjectTreeViewModel.loadQANameScoreDictionary();
-            //}// End QATreeForm_Load
-
-
-        }// End (File.Exists(filePath))
+        }// End loadTreeButton_Clicked
 
         private void QATreeForm_Load(object sender, EventArgs e)
         {
             loadTreeButton.PerformClick();
+            SubjectTreeViewModel.loadNodeChildrenDictionary();
         }
     }// End QATreeForm
 }//End QAProject

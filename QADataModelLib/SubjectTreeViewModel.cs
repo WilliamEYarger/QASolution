@@ -272,6 +272,10 @@ namespace QADataModelLib
             return result;
         }// End GetLine(Dictionary<string, string> 
 
+        /// <summary>
+        /// This method is not called yet because the file is added to by appending, but I will
+        /// need it for the change node text procedure
+        /// </summary>
         public static void loadQANameScoreDictionary()
         {
 
@@ -330,11 +334,12 @@ namespace QADataModelLib
             string output = ID.ToString() + '~' + value + '\n';
             File.AppendAllText(getQANameScoreFilePath(), output);
 
-
         }// End addQANodeToQANamesDictionary
 
 
         /// <summary>
+        /// This method is not called yet because the file is updated by appendation, but
+        /// it will be needed for the change node text method if a subject node is being changed
         /// this method loads the text file containing the entries in the subjectNodeList
         /// each line contains subjectNodeName + "^" + nodeTextValue
         /// </summary>
@@ -355,32 +360,34 @@ namespace QADataModelLib
             }
         }// End loadSubjectNodesList
 
-        /// <summary>
-        /// This method determines if TreeViewDictionary.txt exists and if it is not empty loads i
-        /// into Dictionary<string, string> treeViewDictionary
-        /// </summary>
-        public static void  loadTreeViewDictionary()
-        {
-            if (File.Exists(getTreeViewDictionaryPath()))
-            {
-                //determine if there are data in the file and if so read it into the dictionary
-                var fil = new FileInfo(getTreeViewDictionaryPath());
-                long length = fil.Length;
-                if (length != 0)
-                {
-                    // Read in the file and parse  it into the dictionary
-                    var logFile = File.ReadAllLines(getTreeViewDictionaryPath());
-                    var treeViewdictionaryList = new List<string>(logFile);
-                    foreach(string line in treeViewdictionaryList)
-                    {
-                        string[] keyAndValue = line.Split('^');
-                        treeViewDictionary.Add(keyAndValue[0], keyAndValue[1]);
-                    }
+        ///// <summary>
+        ///// The following has been superceded by the binary load and save procedured
+        ///// 
+        ///// This method determines if TreeViewDictionary.txt exists and if it is not empty loads i
+        ///// into Dictionary<string, string> treeViewDictionary
+        ///// </summary>
+        //public static void loadTreeViewDictionary()
+        //{
+        //    if (File.Exists(getTreeViewDictionaryPath()))
+        //    {
+        //        //determine if there are data in the file and if so read it into the dictionary
+        //        var fil = new FileInfo(getTreeViewDictionaryPath());
+        //        long length = fil.Length;
+        //        if (length != 0)
+        //        {
+        //            // Read in the file and parse  it into the dictionary
+        //            var logFile = File.ReadAllLines(getTreeViewDictionaryPath());
+        //            var treeViewdictionaryList = new List<string>(logFile);
+        //            foreach (string line in treeViewdictionaryList)
+        //            {
+        //                string[] keyAndValue = line.Split('^');
+        //                treeViewDictionary.Add(keyAndValue[0], keyAndValue[1]);
+        //            }
 
-                }
-            }
+        //        }
+        //    }
 
-        }// End loadTreeViewDictionary
+        //}// End loadTreeViewDictionary
 
 
         public static void  loadNodeChildrenDictionary()
