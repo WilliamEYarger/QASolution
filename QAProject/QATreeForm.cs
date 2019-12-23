@@ -1,17 +1,23 @@
-﻿// PROPERTIES AND VARIABLES
+﻿
+// PROPERTIES AND VARIABLES
+// private static string output = ""
 // updateNodeChildrenDictionary
 // METHODS
-//  void saveAllFiles()
-// void returnToDashboardButton_Click()
-// void addNewSubjectButton_ClicK()
-// void addNewSubjectDivisionButton_Click()
-// void addNewQAFileNodeButton_Click
-// void loadTreeButton_Click
+//      private void PrintRecursive(TreeNode treeNode
+//      private string CallRecursive(
+//      void saveAllFiles()
+//      void returnToDashboardButton_Click()
+//      void addNewSubjectButton_ClicK()
+//      void addNewSubjectDivisionButton_Click()
+//      private void addNewQAFileNodeButton_Click(
+//      private void loadTreeButton_Click(
+//      private void QATreeForm_Load(
+//      private void renameNodeButton_Click(
 // saveTreeButton_Click
 //  QATreeForm_Load()
 // 
 
-
+// TODO - Why is QANameScoresDictionary being reduplicated
 
 using System;
 using System.Collections.Generic;
@@ -43,9 +49,19 @@ namespace QAProject
         // the following is a test area
         private void PrintRecursive(TreeNode treeNode)
         {
-            // Print the node.  
-            //System.Diagnostics.Debug.WriteLine(treeNode.Text);
-            // MessageBox.Show(treeNode.Text);
+            if(treeNode.Name.IndexOf('q') != -1)
+            {
+                string [] qaNodesNameText = StringHelperClass.getLastDelimitedValue(treeNode.Name, '.');
+                string qaNodeName = qaNodesNameText[1];
+                int posQ = qaNodeName.IndexOf('q');
+                string qaNodeID = qaNodeName.Substring(0, posQ);
+                Int32 qaNodeIDNumber = Int32.Parse(qaNodeID);
+                if(qaNodeIDNumber > AccessData.currentMaxQAFileID)
+                {
+                    AccessData.currentMaxQAFileID = qaNodeIDNumber;
+                }
+
+            }
             output = output + treeNode.Name + '^' + treeNode.Text + '\n';
             // Print each node recursively.  
             foreach (TreeNode tn in treeNode.Nodes)
@@ -74,7 +90,7 @@ namespace QAProject
         {
 
 
-            string qaTreePath = SubjectTreeViewModel.getQASubjectTreeViewPath();
+            string qaTreePath = QADataModelLib.AccessData.getQASubjectTreePath();
 
             if (SubjectTreeViewModel.filesChanged)
             {
@@ -110,7 +126,7 @@ namespace QAProject
 
                                
                 // 2. Save saveNodeChildrenDictionary
-                SubjectTreeViewModel.saveNodeChildrenDictionary();
+                //SubjectTreeViewModel.saveNodeChildrenDictionary();
 
                 // 3. Save the QAFileNameScores.txt  file
                 //SubjectTreeViewModel.saveQAFileNameScoresFile();
@@ -120,8 +136,8 @@ namespace QAProject
                 // 5. The SubjectNodesList is Only appended to so no save procedure is necessary
 
                 // Now that all files have been saved filesChanges is false
-                SubjectTreeViewModel.filesChanged = false;
-                loadTreeButton.Enabled = false;
+                //SubjectTreeViewModel.filesChanged = false;
+                //loadTreeButton.Enabled = false;
             }
         }// End saveAllFiles
 
@@ -216,17 +232,24 @@ namespace QAProject
                 subjectTextValue.Text = "";
             }
             // Update the count of children for the parent in the nodeChildrenDictionary
-            SubjectTreeViewModel.updateNodeChildrenDictionary(selectedNode.Name);
+            AccessData.updateNodeChildrenDictionary(selectedNode.Name);
 
         }// End add Subject Division button clicked
 
         /// <summary>
-        ///  This method 
+        ///  This method 1st insures that you are not trying to add a QA node to a Divsion or 
+        ///  Subject node with other Division node children. 2nd it gets the chain of Parent nodes,
+        ///  3rd it gets the new maximum node ID value by incrementing the last and uses it to
+        ///  4th create the name for the new QA node with that name and a text value from qa_ +
+        ///  the text of the nodeTextValue input box. After examining TreeViewDictionary to
+        ///  insure that the new QA node name has not been used it creats and adds the new QA node
+        ///  Finally it creates an empty QAFile.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void addNewQAFileNodeButton_Click(object sender, EventArgs e)
         {
+            // a TODO - when in QAFileNameScores.txt updated
 
             TreeNode selectedNode = subjectTreeView.SelectedNode;
             // Determine if this node has children, is so it cannot hold a QAFile
@@ -237,7 +260,7 @@ namespace QAProject
                 return;
             }
             //  Get the Chain of parents of the new node to be added
-            string parentChain = SubjectTreeViewModel.retrunParentChain(selectedNode.Name);
+            string parentChain = SubjectTreeViewModel.returnParentChain(selectedNode.Name);
 
 
             // The following returns the current value of the current value of currentMaxQAFileID
@@ -262,7 +285,7 @@ namespace QAProject
                 subjectTextValue.Text = "";
             }
             // Add this qa file node's  name and text value to the qaNamesDictionary
-            SubjectTreeViewModel.addQANodeToQANamesDictionary(qaFileNumber, qaNode.Name, qaNode.Text, parentChain);
+            AccessData.updateQANameScoreDictionary(qaFileNumber, qaNode.Name, qaNode.Text, parentChain);
             // Create a file in  @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles"
             //      whose name is qaNode.Name value
 
@@ -276,9 +299,9 @@ namespace QAProject
 
 
 
-        private void loadTreeButton_Click(object sender, EventArgs e)
+        public void loadTreeButton_Click(object sender, EventArgs e)
         {
-            string filePath = SubjectTreeViewModel.getQASubjectTreeViewPath();
+            string filePath = QADataModelLib.AccessData.getQASubjectTreePath();
 
 
             if (File.Exists(filePath))
@@ -298,7 +321,7 @@ namespace QAProject
                     }
                     catch (System.Runtime.Serialization.SerializationException ex1)
                     {
-                        MessageBox.Show("De-Serialization failed ");
+                        MessageBox.Show($"De-Serialization failed {ex1.Message} ");
                     }
                     // Close File
                     file.Close();
@@ -311,18 +334,48 @@ namespace QAProject
                     {
                         subjectTreeView.Nodes.Add(node);
                     }
-                }
+                }// End if (File.Exists(filePath))
+                CallRecursive(subjectTreeView);
 
             }// End loadTree button clicked
 
         }// End loadTreeButton_Clicked
 
-        private void QATreeForm_Load(object sender, EventArgs e)
+        
+
+        public void QATreeForm_Load(object sender, EventArgs e)
         {
+            this.ControlBox = false;
             loadTreeButton.PerformClick();
-            SubjectTreeViewModel.loadNodeChildrenDictionary();
+            //SubjectTreeViewModel.loadNodeChildrenDictionary();
+            
+        }
+
+        private void renameNodeButton_Click(object sender, EventArgs e)
+        {
+            string newNodeText = "";
+            if (subjectTreeView.SelectedNode.Text.IndexOf("qa_") == 0)
+            {
+                // The node to be changed is a QA Node
+                newNodeText = "qa_" + subjectTextValue.Text;
+            }
+            else
+            {
+                newNodeText = subjectTextValue.Text;
+            }
+            
+            string nodeName = subjectTreeView.SelectedNode.Name;
+            string oldNodeText = subjectTreeView.SelectedNode.Text;
+            int nodeLevel = subjectTreeView.SelectedNode.Level;
+            SubjectTreeViewModel.renameNode(nodeName, oldNodeText, newNodeText, nodeLevel);
+            // a TODO - make sure you rename the node in the treeview as well as in all the Accessoryfiles See HowTo TreeView – change node text
         }
     }// End QATreeForm
+
+
+    // a TODO - Create a class to respond to the Rename node button
+
+
 }//End QAProject
 
 

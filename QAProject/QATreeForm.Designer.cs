@@ -215,6 +215,7 @@
             this.renameNodeButton.TabIndex = 19;
             this.renameNodeButton.Text = "Rename Node";
             this.renameNodeButton.UseVisualStyleBackColor = true;
+            this.renameNodeButton.Click += new System.EventHandler(this.renameNodeButton_Click);
             // 
             // deleteNode
             // 

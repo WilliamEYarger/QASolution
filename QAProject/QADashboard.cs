@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using QADataModelLib;
 
 
 namespace QAProject
@@ -17,6 +18,8 @@ namespace QAProject
         {
             InitializeComponent();
         }
+
+        private static Boolean filesLoaded = false;
 
         private void openSubjectsTreeButton_Click(object sender, EventArgs e)
         {
@@ -29,12 +32,17 @@ namespace QAProject
         private void QADashboard_Load(object sender, EventArgs e)
         {
             this.ControlBox = false;
-
-
+            if (!filesLoaded)
+            {
+                QADataModelLib.AccessData.openAllFiles();
+                filesLoaded = true;
+            }
+           
         }
 
         private void exitApplicationButton_Click(object sender, EventArgs e)
         {
+            QADataModelLib.AccessData.saveAllFiles();
             System.Windows.Forms.Application.Exit();
         }
     }
