@@ -57,13 +57,52 @@ namespace QADataModelLib
         /// <summary>
         /// The is the main procedure called to change a node's text value
         /// </summary>
-        public static void changeNodeTextValue()
+        public static void changeNodeTextValue(char nodeType)
         {
-            openFiles();
+            // a TODO - call all necessary methods to change the appropriate file type
+            switch (nodeType)
+            {
+                //case 'S':
+                //    // Will need to change TreeViewDictionary, SubjectsNodeList,QANameScores
+                //    SubjectNodesListModel.changeSubjectNodeList(nodeName, newNodeText);
+                //    //subjectNodesList = SubjectNodesListModel.getSubjectNodesList();
+                        
+                //    //changeSubjectNodeList();
+                //    break;
+                case 'D':
+                    // Will need to change TreeViewDictionary, QANameScores
+
+                    break;
+                case 'Q':
+                    // Will need to change TreeViewDictionary, QANameScores, and QACumulativeResults
+                    break;
+                default:
+                    break;
+            }
+            //openFiles();
         }
 
 
         //------------------------------PRIVATE-------------------------------//
+
+        private static void changeSubjectNodeList()
+        {
+            List<string> newSubjectNodeList = new List<string>();
+            foreach(string line in subjectNodesList)
+            {
+                string[] nameText = line.Split('^');
+                if (nameText[0] == nodeName)
+                {
+                    nameText[1] = newNodeText;
+                }
+                newSubjectNodeList.Add(nameText[0] + '^' + nameText[1]);
+            }
+            subjectNodesList = new List<string>();
+            subjectNodesList = newSubjectNodeList;
+            SubjectNodesListModel.reviseSubjectNodesList(subjectNodesList);
+
+
+        }
 
         /// <summary>
         /// This procedure opens all files which will be needed
@@ -75,11 +114,8 @@ namespace QADataModelLib
             if(nodeName.IndexOf('.') == -1)
             {
                 // The node to be changed is a Subject node so open the SubjectNodesList.txt file
-                subjectNodesList = SubjectTreeViewModel.getSubjectNodesList();
+                subjectNodesList = SubjectNodesListModel.getSubjectNodesList();
             }
-            //treeViewDictionary = SubjectTreeViewModel.getTreeViewDictionary();
-            //QANameScoreDictionary = SubjectTreeViewModel.getQANameScoreDictionary();
-            //convertQANameScoreDictionary();
             changeFiles();
         }// End openFiles(
 
@@ -127,9 +163,8 @@ namespace QADataModelLib
                     newValue = newValue.Remove(newValue.Length-1);
                     QANameScoreDictionary.Add(key, newValue);
                 }
-                //SubjectTreeViewModel.resetQANameScoreDictionary(QANameScoreDictionary);
-                //AccessData.saveQAFileNameScoresFile();
-            }
+
+            }// End if(oldNodeText.IndexOf("qa_") == 0)
 
         }// End changeFiles
 

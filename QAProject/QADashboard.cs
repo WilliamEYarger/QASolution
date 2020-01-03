@@ -19,6 +19,7 @@ namespace QAProject
             InitializeComponent();
         }
 
+        
         private static Boolean filesLoaded = false;
 
         private void openSubjectsTreeButton_Click(object sender, EventArgs e)
@@ -35,7 +36,12 @@ namespace QAProject
             if (!filesLoaded)
             {
                 QADataModelLib.AccessData.openAllFiles();
+                QAFileNameScoresModel.loadQANameScoreDictionary();
+                SubjectNodesListModel.loadSubjectNodesList();
+                QADataModelLib.NodeChildrenDictionaryModel.loadNodeChildrenDictionary();
+                QADataModelLib.TreeViewDictionaryModel.loadTreeViewDictionary();
                 filesLoaded = true;
+                QACumulativeResultsModel.importQACumulativeResultsFile();
             }
            
         }
@@ -43,7 +49,13 @@ namespace QAProject
         private void exitApplicationButton_Click(object sender, EventArgs e)
         {
             QADataModelLib.AccessData.saveAllFiles();
-            System.Windows.Forms.Application.Exit();
+            SubjectNodesListModel.saveSubjectNodeList();
+            NodeChildrenDictionaryModel.saveNodeChildrenDictionary();
+            QAFileNameScoresModel.saveQAFileNameScoresFile();
+            TreeViewDictionaryModel.saveTreeViewDictionary();
+            QACumulativeResultsModel.exportQACumulativeResutsFile();
+            this.ControlBox = true;
+           //System.Windows.Forms.Application.Exit();
         }
     }
 }

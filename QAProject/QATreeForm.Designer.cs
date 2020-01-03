@@ -44,7 +44,6 @@
             this.selectParentbutton = new System.Windows.Forms.Button();
             this.getMoveInfoButton = new System.Windows.Forms.Button();
             this.returnToDashboardButton = new System.Windows.Forms.Button();
-            this.loadTreeButton = new System.Windows.Forms.Button();
             this.renameNodeButton = new System.Windows.Forms.Button();
             this.deleteNode = new System.Windows.Forms.Button();
             this.moveNodeToNewParentGroupBox.SuspendLayout();
@@ -197,16 +196,6 @@
             this.returnToDashboardButton.UseVisualStyleBackColor = true;
             this.returnToDashboardButton.Click += new System.EventHandler(this.returnToDashboardButton_Click);
             // 
-            // loadTreeButton
-            // 
-            this.loadTreeButton.Location = new System.Drawing.Point(803, 65);
-            this.loadTreeButton.Name = "loadTreeButton";
-            this.loadTreeButton.Size = new System.Drawing.Size(222, 47);
-            this.loadTreeButton.TabIndex = 17;
-            this.loadTreeButton.Text = "Load Tree";
-            this.loadTreeButton.UseVisualStyleBackColor = true;
-            this.loadTreeButton.Click += new System.EventHandler(this.loadTreeButton_Click);
-            // 
             // renameNodeButton
             // 
             this.renameNodeButton.Location = new System.Drawing.Point(795, 257);
@@ -233,7 +222,6 @@
             this.ClientSize = new System.Drawing.Size(1432, 753);
             this.Controls.Add(this.deleteNode);
             this.Controls.Add(this.renameNodeButton);
-            this.Controls.Add(this.loadTreeButton);
             this.Controls.Add(this.returnToDashboardButton);
             this.Controls.Add(this.moveNodeToNewParentGroupBox);
             this.Controls.Add(this.button1);
@@ -276,7 +264,6 @@
         private System.Windows.Forms.Button selectParentbutton;
         private System.Windows.Forms.Button getMoveInfoButton;
         private System.Windows.Forms.Button returnToDashboardButton;
-        private System.Windows.Forms.Button loadTreeButton;
         private System.Windows.Forms.Button renameNodeButton;
         private System.Windows.Forms.Button deleteNode;
     }

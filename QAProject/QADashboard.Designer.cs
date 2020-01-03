@@ -68,7 +68,7 @@
             this.exitApplicationButton.Name = "exitApplicationButton";
             this.exitApplicationButton.Size = new System.Drawing.Size(232, 89);
             this.exitApplicationButton.TabIndex = 3;
-            this.exitApplicationButton.Text = "Exit Application";
+            this.exitApplicationButton.Text = "Save Files Before Exiting";
             this.exitApplicationButton.UseVisualStyleBackColor = true;
             this.exitApplicationButton.Click += new System.EventHandler(this.exitApplicationButton_Click);
             // 
