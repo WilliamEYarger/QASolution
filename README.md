@@ -16,3 +16,6 @@ Then there might be the following QAFiles under the Syntax{0.0.0.0} node: Variab
 #NOTE
 The QA File names differ from the subjec node names in that they contain a terminal letter. The digit assigned to the terminal QAFile name, however is determined by 
 its position in the QAFileNameDataGridView
+
+#Rename Branch#
+Rather than containing the code to rename a node this branch moves all model files related to the various input/output files into separate classes foe each file.
