@@ -107,5 +107,50 @@ namespace QADataModelLib
 
         }// End updateQANameScoreDictionary
 
+
+        public static void reTextNameScores(string nodeName, string oldNodeText, string newNodeText)
+        {
+            // Create dummy dictionary to hold changed values
+            Dictionary<Int32, string> tempQANAmeScoredictionary = new Dictionary<int, string>();
+            // Create a string[] valueArray to hold the component of the value
+            string[] valueArray = new string[4];
+            // Cycle thru QANameScoreDictionary 
+            foreach (KeyValuePair<Int32, string> kvp in QANameScoreDictionary)
+            {
+                int Key = kvp.Key;
+                string value = kvp.Value;
+                valueArray = value.Split('^');
+                string qaFileText = valueArray[0];
+                string parentsString = valueArray[1];
+                string qaFileName = valueArray[2];
+                string testResults = valueArray[3];
+                // Determine if the nodeName is at the beginning of the qaFileName
+                if (qaFileName.IndexOf(nodeName) == 0)
+                {
+                    // First convert Parents into a string []
+                    string[] parentsArray = parentsString.Split('<');
+                    // Next get the number of parents
+                    int numParents = parentsArray.Length;
+                    // Next convert the nodeName into a string[]
+                    string[] nodeItems = nodeName.Split('.');
+                    // Next get the number of nodeItems
+                    int numNodeItems = nodeItems.Length;
+                    // Get the item number of parentsArray to replace from 
+                    int itemToReplace = numParents - numNodeItems;
+                    // Repalce the itemToReplace - th  item in parents String with newNodeText
+                    parentsString = StringHelperClass.replaceNthItemInDelimitedString(parentsString, '<', itemToReplace, newNodeText);
+                    // Reassemble the value with the updated parentsString
+                    value = qaFileText + '^' + parentsString + '^' + qaFileName + '^' + testResults;
+                    // Insert this new value in the QANameScoreDictionary
+                    tempQANAmeScoredictionary[Key] = value;
+                }// End if (qaFileText.IndexOf(nodeName) == 0
+                // Insert this new value in the QANameScoreDictionary
+                tempQANAmeScoredictionary[Key] = value;
+            }// End foreach (KeyValuePair<Int32, string> kvp 
+            // Delete the old version of QANameScoreDictionary
+            QANameScoreDictionary = new Dictionary<int, string>();
+            QANameScoreDictionary = tempQANAmeScoredictionary;
+        }// End reTextNameScores
+
     }// End QAFileNameScoresModel
 }// End QADataModelLib

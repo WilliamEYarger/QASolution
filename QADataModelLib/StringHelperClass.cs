@@ -34,5 +34,25 @@ namespace QADataModelLib
         }
 
 
+        public static string returnNthItemInDelimitedString(string inputString, char del, int itemNumber)
+        {
+            string[] items = inputString.Split(del);
+            string outputString = items[itemNumber];
+            return outputString;
+        }
+
+        public static string replaceNthItemInDelimitedString(string inputString, char del, int itemNumber, string replacementString)
+        {
+            string[] items = inputString.Split(del);
+            items[itemNumber] = replacementString;
+            string outputString = "";
+            for(int i =0; i<items.Length; i++)
+            {
+                outputString = outputString + items[i] + del;
+            }
+            outputString = outputString.Substring(0, outputString.Length - 1);
+            return outputString;
+        }
+
     }// End StringHelperClass
 }// End namespace QADataModelLib

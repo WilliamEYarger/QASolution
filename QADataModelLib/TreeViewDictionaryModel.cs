@@ -134,6 +134,11 @@ namespace QADataModelLib
         }
 
 
+        public static void reTextNode(string nodeName, string newNodeText)
+        {
+            TreeViewDictionary[nodeName] = newNodeText;
+
+        }// End reTextNode
 
     }// End TreeViewDictionaryModel
 }// End QADataModelLib

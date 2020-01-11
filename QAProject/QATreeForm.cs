@@ -402,12 +402,16 @@ namespace QAProject
             {
                 newNodeText = subjectTextValue.Text;
             }
-            
-            string nodeName = subjectTreeView.SelectedNode.Name;
+            //Get the old text of the noded
             string oldNodeText = subjectTreeView.SelectedNode.Text;
-            int nodeLevel = subjectTreeView.SelectedNode.Level;
-            SubjectTreeViewModel.renameNode(nodeName, oldNodeText, newNodeText, nodeLevel);
+            // Change the text property of the node selected
             subjectTreeView.SelectedNode.Text = newNodeText;
+            // Get the selected node's name and current(oldNodeText) text value
+            string nodeName = subjectTreeView.SelectedNode.Name;
+            int nodeLevel = subjectTreeView.SelectedNode.Level;
+
+            SubjectTreeViewModel.renameNode(nodeName, oldNodeText, newNodeText, nodeLevel);
+            //subjectTreeView.SelectedNode.Text = newNodeText;
             SubjectTreeViewModel.filesChanged = true;
         }
     }// End QATreeForm

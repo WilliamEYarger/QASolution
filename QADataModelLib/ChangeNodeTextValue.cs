@@ -54,33 +54,33 @@ namespace QADataModelLib
         //------------------------------PUBLIC--------------------------------//
 
 
-        /// <summary>
-        /// The is the main procedure called to change a node's text value
-        /// </summary>
-        public static void changeNodeTextValue(char nodeType)
-        {
-            // a TODO - call all necessary methods to change the appropriate file type
-            switch (nodeType)
-            {
-                //case 'S':
-                //    // Will need to change TreeViewDictionary, SubjectsNodeList,QANameScores
-                //    SubjectNodesListModel.changeSubjectNodeList(nodeName, newNodeText);
-                //    //subjectNodesList = SubjectNodesListModel.getSubjectNodesList();
+        ///// <summary>
+        ///// The is the main procedure called to change a node's text value
+        ///// </summary>
+        //public static void changeNodeTextValue(char nodeType)
+        //{
+        //    // a TODO - call all necessary methods to change the appropriate file type
+        //    switch (nodeType)
+        //    {
+        //        //case 'S':
+        //        //    // Will need to change TreeViewDictionary, SubjectsNodeList,QANameScores
+        //        //    SubjectNodesListModel.changeSubjectNodeList(nodeName, newNodeText);
+        //        //    //subjectNodesList = SubjectNodesListModel.getSubjectNodesList();
                         
-                //    //changeSubjectNodeList();
-                //    break;
-                case 'D':
-                    // Will need to change TreeViewDictionary, QANameScores
+        //        //    //changeSubjectNodeList();
+        //        //    break;
+        //        case 'D':
+        //            // Will need to change TreeViewDictionary, QANameScores
 
-                    break;
-                case 'Q':
-                    // Will need to change TreeViewDictionary, QANameScores, and QACumulativeResults
-                    break;
-                default:
-                    break;
-            }
-            //openFiles();
-        }
+        //            break;
+        //        case 'Q':
+        //            // Will need to change TreeViewDictionary, QANameScores, and QACumulativeResults
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //    //openFiles();
+        //}
 
 
         //------------------------------PRIVATE-------------------------------//

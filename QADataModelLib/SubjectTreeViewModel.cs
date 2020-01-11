@@ -84,29 +84,40 @@ namespace QADataModelLib
 
 
 
-       
+        /// <summary>
+        /// Called by QATreeForm's renameNodeButton_Click( method
+        /// </summary>
+        /// <param name="nodeName"></param>
+        /// <param name="oldNodeText"></param>
+        /// <param name="newNodeText"></param>
+        /// <param name="nodeLevel"></param>
         public static void renameNode(string nodeName, string oldNodeText, string newNodeText, int nodeLevel)
         {
+            // Create a character 'nodeType' to refelect the type of node being re-texted
             char nodeType;
-            ChangeNodeTextValue.nodeName = nodeName;
-            ChangeNodeTextValue.oldNodeText = oldNodeText;
-            ChangeNodeTextValue.newNodeText = newNodeText;
+           // ChangeNodeTextValue.nodeName = nodeName;
+            //ChangeNodeTextValue.oldNodeText = oldNodeText;
             //ChangeNodeTextValue.newNodeText = newNodeText;
             // Get Char representing node type
             if (nodeLevel == 0)
             {
-                nodeType = 'S';
+                //nodeType = 'S';
                 SubjectNodesListModel.changeSubjectNodeList(nodeName, oldNodeText, newNodeText);
+                TreeViewDictionaryModel.reTextNode(nodeName, newNodeText);
+                // TODO - Change QANameScoresFile
+                QAFileNameScoresModel.reTextNameScores(nodeName, oldNodeText, newNodeText);
             }
             else if(oldNodeText.IndexOf("qa_") == 0)
             {
-                nodeType = 'Q';
+                //nodeType = 'Q';
             }
             else
             {
-                nodeType = 'D';
+                //nodeType = 'D';
+                TreeViewDictionaryModel.reTextNode(nodeName, newNodeText);
+                QAFileNameScoresModel.reTextNameScores(nodeName, oldNodeText, newNodeText);
             }
-            ChangeNodeTextValue.changeNodeTextValue(nodeType);
+            //ChangeNodeTextValue.changeNodeTextValue(nodeType);
         }
 
         //----------------------METHODS that will be transferrec to ChangeNodeGTextValue.cs------------------//
