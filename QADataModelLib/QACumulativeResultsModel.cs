@@ -204,6 +204,17 @@ namespace QADataModelLib
             return table;
         }
 
+        public static void reTextQANode(string nodeName, string newNodeText)
+        {
+            // Create  a temporary holding dictionary
+            Dictionary<string, string> tempCumulativeResultsDictionary = cumulativeResultsDictionary;
+            string delimitedResults = cumulativeResultsDictionary[nodeName];
+            string newDelimitedResults = StringHelperClass.replaceNthItemInDelimitedString(delimitedResults, '^', 1, newNodeText);
+            tempCumulativeResultsDictionary[nodeName] = newDelimitedResults;
+            cumulativeResultsDictionary = new Dictionary<string, string>();
+            cumulativeResultsDictionary = tempCumulativeResultsDictionary;
+        }// End reTextQANode
+
 
     }// End QACumulativeResultsModel
 }// End QADataModelLib

@@ -94,22 +94,23 @@ namespace QADataModelLib
         public static void renameNode(string nodeName, string oldNodeText, string newNodeText, int nodeLevel)
         {
             // Create a character 'nodeType' to refelect the type of node being re-texted
-            char nodeType;
-           // ChangeNodeTextValue.nodeName = nodeName;
-            //ChangeNodeTextValue.oldNodeText = oldNodeText;
-            //ChangeNodeTextValue.newNodeText = newNodeText;
-            // Get Char representing node type
+            //char nodeType;
             if (nodeLevel == 0)
             {
-                //nodeType = 'S';
                 SubjectNodesListModel.changeSubjectNodeList(nodeName, oldNodeText, newNodeText);
                 TreeViewDictionaryModel.reTextNode(nodeName, newNodeText);
-                // TODO - Change QANameScoresFile
                 QAFileNameScoresModel.reTextNameScores(nodeName, oldNodeText, newNodeText);
             }
             else if(oldNodeText.IndexOf("qa_") == 0)
             {
-                //nodeType = 'Q';
+                //files that need to be changes are:
+                //  1. TreeViewDictionary -DONE
+                TreeViewDictionaryModel.reTextNode(nodeName, newNodeText);
+                //  2. QAFileNameScores - DONE
+                QAFileNameScoresModel.reTextNameScores(nodeName, oldNodeText, newNodeText);
+                //  3. QACumulativeResults
+                QACumulativeResultsModel.reTextQANode(nodeName, newNodeText);
+                //  4. You do not need to change the name of the QAFile because the nodeName has not changed
             }
             else
             {

@@ -48,86 +48,6 @@ namespace QAProject
 
         private static string SubjectTreePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QASubjectTreeView.bin";
 
-        private void PrintRecursive(TreeNode treeNode)
-        {
-            if(treeNode.Name.IndexOf('q') != -1)
-            {
-                string [] qaNodesNameText = StringHelperClass.getLastDelimitedValue(treeNode.Name, '.');
-                string qaNodeName = qaNodesNameText[1];
-                int posQ = qaNodeName.IndexOf('q');
-                string qaNodeID = qaNodeName.Substring(0, posQ);
-                Int32 qaNodeIDNumber = Int32.Parse(qaNodeID);
-                if(qaNodeIDNumber > QAFileNameScoresModel.currentMaxQAFileID)
-                {
-                    QAFileNameScoresModel.currentMaxQAFileID = qaNodeIDNumber;
-                }
-
-            }
-            output = output + treeNode.Name + '^' + treeNode.Text + '\n';
-            // Print each node recursively.  
-            foreach (TreeNode tn in treeNode.Nodes)
-            {
-                PrintRecursive(tn);
-            }
-        }// End PrintRecursive
-
-        // Call the procedure using the TreeView.  
-        private string CallRecursive(System.Windows.Forms.TreeView subjectTreeView)
-        {
-            // Print each node recursively.  
-            TreeNodeCollection nodes = subjectTreeView.Nodes;
-            foreach (TreeNode n in nodes)
-            {
-                PrintRecursive(n);
-            }
-            return output;
-        }
-
-        /// <summary>
-        /// This method saves the TreeView as a double delimited text file, aswellas  the nodeChildrenDictionary 
-        /// and the QANameScoresdictionary as .txt files
-        /// </summary>
-        public void saveTreeView()
-        {
-
-
-            string qaTreePath = SubjectTreePath;
-            // Save the TreeView to a binary file
-            if (SubjectTreeViewModel.filesChanged)
-            {
-                if (File.Exists(qaTreePath))
-                {
-                    File.Delete(qaTreePath);
-                }
-                // Create new array
-
-                ArrayList al = new ArrayList();
-                foreach (TreeNode tn in subjectTreeView.Nodes)
-                {
-                    // back up every RootNode in the TreeView ...
-                    al.Add(tn);
-                }
-
-                // create file
-                Stream file = File.Open(qaTreePath, FileMode.Create);
-                // Binary formatting init.
-                BinaryFormatter bf = new BinaryFormatter();
-                try
-                {
-                    // Serializing the array
-                    bf.Serialize(file, al);
-                }
-                catch (System.Runtime.Serialization.SerializationException eeex2)
-                {
-                    MessageBox.Show("Serialization failed : {0}", eeex2.Message);
-                }
-
-                // Close file
-                file.Close();
-
-            }
-        }// End saveTreeView
-
 
 
         /// <summary>
@@ -138,7 +58,6 @@ namespace QAProject
         /// <param name="e"></param>
         private void returnToDashboardButton_Click(object sender, EventArgs e)
         {
-            saveTreeView();
             this.Hide();
             QADashboard dashboardForm = new QADashboard();
             dashboardForm.ShowDialog();
@@ -193,8 +112,7 @@ namespace QAProject
         /// <param name="e"></param>
         private void addNewSubjectDivisionButton_Click(object sender, EventArgs e)
         {
-
-
+            
             // Insure that this 'Division' node is not being added to a 'qaFileNode'
             TreeNode selectedNode = subjectTreeView.SelectedNode;
             int ln = selectedNode.Name.Length - 1;
@@ -299,94 +217,290 @@ namespace QAProject
             }
         }// End addNewQAFileNodeButton_Click
 
-
-
-
-        public void loadTreeButton_Click(object sender, EventArgs e)
+        //----------------START UPDATE---------------//
+        private void createTreeViewFromDictionary()
         {
-            string filePath = SubjectTreePath;
+            Dictionary<string, string> treeViewDictionary = new Dictionary<string, string>();
+            treeViewDictionary = TreeViewDictionaryModel.getTreeViewDictionary();
+            subjectTreeView.BeginUpdate();
 
-
-            if (File.Exists(filePath))
+            // Process each line of treeViewDictionary into a node on the treeView
+            foreach (KeyValuePair<string, string> kvp in treeViewDictionary)
             {
-                if (File.Exists(filePath))
+                string nodeName = kvp.Key;// the key is the '.' delimited nodeName
+                string nodeText = kvp.Value;// the value is the nodeText 
+                                            // Determine the node level from the number of periods in the nodeName
+                string[] nodeNameComponents = nodeName.Split('.');
+                int nodeLevel = nodeNameComponents.Length;
+                //Create a new treeNode thisNode
+                TreeNode thisNode = new TreeNode();
+                switch (nodeLevel)
                 {
-                    // open file
-                    Stream file = File.Open(filePath, FileMode.Open);
-                    // Binary formatting init.
-                    BinaryFormatter bf = new BinaryFormatter();
-                    // Object var. init.
-                    object obj = null;
-                    try
-                    {
-                        // Deserialize data from the file
-                        obj = bf.Deserialize(file);
-                    }
-                    catch (System.Runtime.Serialization.SerializationException ex1)
-                    {
-                        MessageBox.Show($"De-Serialization failed {ex1.Message} ");
-                    }
-                    // Close File
-                    file.Close();
+                    case 1:
+                        // Level 1 is a root node so create a root node from the nodeText value
+                        subjectTreeView.Nodes.Add(nodeText);
+                        // Determine the index of this node by convertine the nodeNameComponents[0] string value to an integer
+                        int thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
+                        // Add this node to the tree
+                        thisNode = subjectTreeView.Nodes[thisNodesNumber0];
+                        // Assign the nodeName value to this node's name property
+                        thisNode.Name = nodeName;
+                        break;
+                    case 2:
+                        // This and all subsequent levels are either Division nodes or QA nodes
+                        // Get the immediate parent of this new node from the nodeNameComponents[0]th component
+                        int node0 = Int32.Parse(nodeNameComponents[0]);
+                        // Add a child to the immediate parent using the nodeText value
+                        subjectTreeView.Nodes[node0].Nodes.Add(nodeText);
+                        // Create the value of thisNodesNumber0 from nodeNameComponents[0],
+                        // This int was defined in the previous case statement it represents the index of the immediate parent
+                        thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
+                        // Determine if the node to be added is a Division node (nodeNameComponents does not contain 'q'
+                        int thisNodesNumber1 = -1;
+                        if (nodeNameComponents[1].IndexOf('q') != -1)
+                        {
+                            // This is a QA node
+                            // Get the selectedNode from the the immediate parent index
+                            TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0];
+                            // Get the index of this node from the number of children of the immediate parent
+                            // It will be used to create the nodeName property for the new Node
+                            thisNodesNumber1 = selectedNode.GetNodeCount(true);
 
-                    // Create a new array
-                    ArrayList nodeList = obj as ArrayList;
+                        }
+                        else
+                        {
+                            // This is a Divisiion node so its index is derived from nodeNameComponents[1]
+                            thisNodesNumber1 = Int32.Parse(nodeNameComponents[1]);
+                        }
+                        // assign the new node (based on the index of its parent and itself to thisNode
+                        thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1];
+                        // Assign the nodeName property to this new child node
+                        thisNode.Name = nodeName;
+                        break;
+                    case 3:
+                        thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
+                        thisNodesNumber1 = Int32.Parse(nodeNameComponents[1]);
+                        int thisNodesNumber2 = -1;
+                        if (nodeNameComponents[2].IndexOf('q') != -1)
+                        {
+                            TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1];
+                            thisNodesNumber2 = selectedNode.GetNodeCount(true);
+                        }
+                        else
+                        {
+                            thisNodesNumber2 = Int32.Parse(nodeNameComponents[2]);
+                        }
+                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes.Add(nodeText);
+                        thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2];
+                        thisNode.Name = nodeName;
+                        break;
+                    case 4:
+                        thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
+                        thisNodesNumber1 = Int32.Parse(nodeNameComponents[1]);
+                        thisNodesNumber2 = Int32.Parse(nodeNameComponents[2]);
+                        int thisNodesNumber3 = -1;
+                        if (nodeNameComponents[3].IndexOf('q') != -1)
+                        {
+                            TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2];
+                            thisNodesNumber3 = selectedNode.GetNodeCount(true);
+                        }
+                        else
+                        {
+                            thisNodesNumber3 = Int32.Parse(nodeNameComponents[3]);
+                        }
+                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes.Add(nodeText);
+                        thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3];
+                        thisNode.Name = nodeName;
+                        break;
+                    case 5:
+                        thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
+                        thisNodesNumber1 = Int32.Parse(nodeNameComponents[1]);
+                        thisNodesNumber2 = Int32.Parse(nodeNameComponents[2]);
+                        thisNodesNumber3 = Int32.Parse(nodeNameComponents[3]);
+                        int thisNodesNumber4 = -1;
+                        if (nodeNameComponents[4].IndexOf('q') != -1)
+                        {
+                            TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3];
+                            thisNodesNumber4 = selectedNode.GetNodeCount(true);
+                        }
+                        else
+                        {
+                            thisNodesNumber4 = Int32.Parse(nodeNameComponents[4]);
+                        }
+                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes.Add(nodeText);
+                        thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3];
+                        thisNode.Name = nodeName;
+                        break;
+                    case 6:
+                        thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
+                        thisNodesNumber1 = Int32.Parse(nodeNameComponents[1]);
+                        thisNodesNumber2 = Int32.Parse(nodeNameComponents[2]);
+                        thisNodesNumber3 = Int32.Parse(nodeNameComponents[3]);
+                        thisNodesNumber4 = Int32.Parse(nodeNameComponents[4]);
+                        int thisNodesNumber5 = -1;
+                        if (nodeNameComponents[5].IndexOf('q') != -1)
+                        {
+                            TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4];
+                            thisNodesNumber5 = selectedNode.GetNodeCount(true);
+                        }
+                        else
+                        {
+                            thisNodesNumber5 = Int32.Parse(nodeNameComponents[5]);
+                        }
+                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes.Add(nodeText);
+                        thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5];
+                        thisNode.Name = nodeName;
+                        break;
+                    case 7:
+                        thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
+                        thisNodesNumber1 = Int32.Parse(nodeNameComponents[1]);
+                        thisNodesNumber2 = Int32.Parse(nodeNameComponents[2]);
+                        thisNodesNumber3 = Int32.Parse(nodeNameComponents[3]);
+                        thisNodesNumber4 = Int32.Parse(nodeNameComponents[4]);
+                        thisNodesNumber5 = Int32.Parse(nodeNameComponents[5]);
+                        int thisNodesNumber6 = -1;
+                        if (nodeNameComponents[6].IndexOf('q') != -1)
+                        {
+                            // This is a QA node
+                            // Get the selectedNode from the the immediate parent index
+                            TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5];
+                            // Get the index of this node from the number of children of the immediate parent
+                            // It will be used to create the nodeName property for the new Node
+                            thisNodesNumber6 = selectedNode.GetNodeCount(true);
 
-                    // load Root-Nodes
-                    foreach (TreeNode node in nodeList)
-                    {
-                        subjectTreeView.Nodes.Add(node);
-                    }
-                }// End if (File.Exists(filePath))
-                CallRecursive(subjectTreeView);
+                        }
+                        else
+                        {
+                            // This is a Divisiion node so its index is derived from nodeNameComponents[6]
+                            thisNodesNumber6 = Int32.Parse(nodeNameComponents[6]);
+                        }
 
-            }// End loadTree button clicked
+                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes.Add(nodeText);
+                        thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6];
+                        thisNode.Name = nodeName;
+                        break;
+                    case 8:
+                        thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
+                        thisNodesNumber1 = Int32.Parse(nodeNameComponents[1]);
+                        thisNodesNumber2 = Int32.Parse(nodeNameComponents[2]);
+                        thisNodesNumber3 = Int32.Parse(nodeNameComponents[3]);
+                        thisNodesNumber4 = Int32.Parse(nodeNameComponents[4]);
+                        thisNodesNumber5 = Int32.Parse(nodeNameComponents[5]);
+                        thisNodesNumber6 = Int32.Parse(nodeNameComponents[6]);
+                        int thisNodesNumber7 = -1;
+                        if (nodeNameComponents[7].IndexOf('q') != -1)
+                        {
+                            TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6];
+                            thisNodesNumber7 = selectedNode.GetNodeCount(true);
+                        }
+                        else
+                        {
+                            thisNodesNumber7 = Int32.Parse(nodeNameComponents[7]);
+                        }
+                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes.Add(nodeText);
+                        thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7];
+                        thisNode.Name = nodeName;
+                        break;
+                    case 9:
+                        thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
+                        thisNodesNumber1 = Int32.Parse(nodeNameComponents[1]);
+                        thisNodesNumber2 = Int32.Parse(nodeNameComponents[2]);
+                        thisNodesNumber3 = Int32.Parse(nodeNameComponents[3]);
+                        thisNodesNumber4 = Int32.Parse(nodeNameComponents[4]);
+                        thisNodesNumber5 = Int32.Parse(nodeNameComponents[5]);
+                        thisNodesNumber6 = Int32.Parse(nodeNameComponents[6]);
+                        thisNodesNumber7 = Int32.Parse(nodeNameComponents[7]);
+                        int thisNodesNumber8 = -1;
+                        if (nodeNameComponents[8].IndexOf('q') != -1)
+                        {
+                            TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7];
+                            thisNodesNumber8 = selectedNode.GetNodeCount(true);
+                        }
+                        else
+                        {
+                            thisNodesNumber8 = Int32.Parse(nodeNameComponents[8]);
+                        }
+                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7].Nodes.Add(nodeText);
+                        thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7].Nodes[thisNodesNumber8];
+                        thisNode.Name = nodeName;
+                        break;
+                    case 10:
+                        thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
+                        thisNodesNumber1 = Int32.Parse(nodeNameComponents[1]);
+                        thisNodesNumber2 = Int32.Parse(nodeNameComponents[2]);
+                        thisNodesNumber3 = Int32.Parse(nodeNameComponents[3]);
+                        thisNodesNumber4 = Int32.Parse(nodeNameComponents[4]);
+                        thisNodesNumber5 = Int32.Parse(nodeNameComponents[5]);
+                        thisNodesNumber6 = Int32.Parse(nodeNameComponents[6]);
+                        thisNodesNumber7 = Int32.Parse(nodeNameComponents[7]);
+                        thisNodesNumber8 = Int32.Parse(nodeNameComponents[8]);
+                        int thisNodesNumber9 = -1;
+                        if (nodeNameComponents[9].IndexOf('q') != -1)
+                        {
+                            TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7].Nodes[thisNodesNumber8];
+                            thisNodesNumber9 = selectedNode.GetNodeCount(true);
+                        }
+                        else
+                        {
+                            thisNodesNumber9 = Int32.Parse(nodeNameComponents[9]);
+                        }
+                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7].Nodes[thisNodesNumber8].Nodes.Add(nodeText);
+                        thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7].Nodes[thisNodesNumber8].Nodes[thisNodesNumber9];
+                        thisNode.Name = nodeName;
+                        break;
+                    case 11:
+                        MessageBox.Show("The program currently is unable to handel nodes at this level! Change the program");
+                        break;
+                }// End switch(nodeLevel)
+            }
+            subjectTreeView.EndUpdate();
+        }// End CreateTreeViewFromDictionary
 
-        }// End loadTreeButton_Clicked
-
-        
+        //----------------END UPDATE-----------------//
 
         public void QATreeForm_Load(object sender, EventArgs e)
         {
             this.ControlBox = false;
-            //-----------------------------------------------------//
-            string filePath = SubjectTreePath;
+            createTreeViewFromDictionary();
+
+            ////-----------------------------------------------------//
+            //string filePath = SubjectTreePath;
 
 
-            if (File.Exists(filePath))
-            {
-                if (File.Exists(filePath))
-                {
-                    // open file
-                    Stream file = File.Open(filePath, FileMode.Open);
-                    // Binary formatting init.
-                    BinaryFormatter bf = new BinaryFormatter();
-                    // Object var. init.
-                    object obj = null;
-                    try
-                    {
-                        // Deserialize data from the file
-                        obj = bf.Deserialize(file);
-                    }
-                    catch (System.Runtime.Serialization.SerializationException ex1)
-                    {
-                        MessageBox.Show($"De-Serialization failed {ex1.Message} ");
-                    }
-                    // Close File
-                    file.Close();
+            //if (File.Exists(filePath))
+            //{
+            //    if (File.Exists(filePath))
+            //    {
+            //        // open file
+            //        Stream file = File.Open(filePath, FileMode.Open);
+            //        // Binary formatting init.
+            //        BinaryFormatter bf = new BinaryFormatter();
+            //        // Object var. init.
+            //        object obj = null;
+            //        try
+            //        {
+            //            // Deserialize data from the file
+            //            obj = bf.Deserialize(file);
+            //        }
+            //        catch (System.Runtime.Serialization.SerializationException ex1)
+            //        {
+            //            MessageBox.Show($"De-Serialization failed {ex1.Message} ");
+            //        }
+            //        // Close File
+            //        file.Close();
 
-                    // Create a new array
-                    ArrayList nodeList = obj as ArrayList;
+            //        // Create a new array
+            //        ArrayList nodeList = obj as ArrayList;
 
-                    // load Root-Nodes
-                    foreach (TreeNode node in nodeList)
-                    {
-                        subjectTreeView.Nodes.Add(node);
-                    }
-                }// End if (File.Exists(filePath))
-                CallRecursive(subjectTreeView);
+            //        // load Root-Nodes
+            //        foreach (TreeNode node in nodeList)
+            //        {
+            //            subjectTreeView.Nodes.Add(node);
+            //        }
+            //    }// End if (File.Exists(filePath))
+            //    CallRecursive(subjectTreeView);
 
-            }
+            //}
         }// EndQATreeFormLoad
 
         private void renameNodeButton_Click(object sender, EventArgs e)
@@ -402,9 +516,9 @@ namespace QAProject
             {
                 newNodeText = subjectTextValue.Text;
             }
-            //Get the old text of the noded
+            //Get the old text of the node to be changed
             string oldNodeText = subjectTreeView.SelectedNode.Text;
-            // Change the text property of the node selected
+            // Change the text property of the node selected to the new name
             subjectTreeView.SelectedNode.Text = newNodeText;
             // Get the selected node's name and current(oldNodeText) text value
             string nodeName = subjectTreeView.SelectedNode.Name;

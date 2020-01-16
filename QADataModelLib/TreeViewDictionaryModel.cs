@@ -140,5 +140,7 @@ namespace QADataModelLib
 
         }// End reTextNode
 
+       
+
     }// End TreeViewDictionaryModel
 }// End QADataModelLib

@@ -138,11 +138,20 @@ namespace QADataModelLib
                     // Get the item number of parentsArray to replace from 
                     int itemToReplace = numParents - numNodeItems;
                     // Repalce the itemToReplace - th  item in parents String with newNodeText
-                    parentsString = StringHelperClass.replaceNthItemInDelimitedString(parentsString, '<', itemToReplace, newNodeText);
-                    // Reassemble the value with the updated parentsString
-                    value = qaFileText + '^' + parentsString + '^' + qaFileName + '^' + testResults;
+                    if(itemToReplace != -1)
+                    {
+                        parentsString = StringHelperClass.replaceNthItemInDelimitedString(parentsString, '<', itemToReplace, newNodeText);
+                        // Reassemble the value with the updated parentsString
+                        value = qaFileText + '^' + parentsString + '^' + qaFileName + '^' + testResults;
+                    }
+                    else
+                    {
+                        // This is a QA file 
+                        value = newNodeText + '^' + parentsString + '^' + qaFileName + '^' + testResults;
+                    }
                     // Insert this new value in the QANameScoreDictionary
-                    tempQANAmeScoredictionary[Key] = value;
+                    // TODO - Determine if I need the next line
+                   // tempQANAmeScoredictionary[Key] = value;
                 }// End if (qaFileText.IndexOf(nodeName) == 0
                 // Insert this new value in the QANameScoreDictionary
                 tempQANAmeScoredictionary[Key] = value;
