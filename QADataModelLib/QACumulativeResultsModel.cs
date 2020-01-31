@@ -178,18 +178,29 @@ namespace QADataModelLib
         /// <summary>
         /// This public method is called whenever a new 'qa_' test node is added to the SubjectTreeView
         /// in the QATreeForm's addNewQAFileNodeButton_Click( method
+        /// 
+        /// The nodeName transferred is composed of the Parent's name+ the new unique int
+        /// identifying this QA file + a terminal 'q'
         /// </summary>
         /// <param name="nodeName"></param>
         /// <param name="nodeText"></param>
-        public static void addNewQATestFileRow(string nodeName, string nodeText)
+        /// 
+
+        //CHANGE- 001 add nextQAFileNumberString to the parameters
+        public static void addNewQATestFileRow(string nextQAFileNumberString, string nodeName, string nodeText)
         {
-            //string nodeName = nodeNameValue.Text;
-            string value = nodeName + '^' + nodeText + '^';
-            if (!cumulativeResultsDictionary.ContainsKey(nodeName))
+            string newQAFileName = nextQAFileNumberString + 'q';
+
+
+            // Changes in change 001
+            //string value = nodeName + '^' + nodeText + '^';
+
+            // New in change 001
+            string value = newQAFileName + '^' + nodeText + '^';
+            if (!cumulativeResultsDictionary.ContainsKey(newQAFileName))
             {
-                cumulativeResultsDictionary.Add(nodeName, value);
+                cumulativeResultsDictionary.Add(newQAFileName, value);
             }
-            //string outputString = cumulativeResultsDictionary[nodeName] + '~' + value;
 
         }// End addNewQATestFileRow(
 

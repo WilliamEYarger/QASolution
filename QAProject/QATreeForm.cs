@@ -44,11 +44,18 @@ namespace QAProject
             InitializeComponent();
         }
 
-        private static string output = "";
-
-        private static string SubjectTreePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QASubjectTreeView.bin";
-
-
+        //--------------------------------VARIALBES-----------------------------------------------//
+        private string movedNodeName ="";
+        private int movedNodeChildValue;
+        private int movedNodeIndexValue = -1;
+        private int movedNodeLevel = -1;
+        private TreeNode movedNodesParent = null;
+        private TreeNode oldParentNode = null;
+        private string oldParentName = "";
+        private string oldParentText = "";
+        private int oldParentsNumChildren = 0;
+        private string newParentName = "";
+        private int numberOfNewParentsChildren;
 
         /// <summary>
         /// This method cals saveTreeView() to save any changes to the tree
@@ -97,7 +104,6 @@ namespace QAProject
                 // Clear the subjectTextValue TextBox
                 subjectTextValue.Text = "";
             }
-
         }// End add new subject button clicked
 
 
@@ -169,7 +175,7 @@ namespace QAProject
         /// <param name="e"></param>
         private void addNewQAFileNodeButton_Click(object sender, EventArgs e)
         {
-            // a TODO - when in QAFileNameScores.txt updated
+            // Create a parent node from the selected node
 
             TreeNode selectedNode = subjectTreeView.SelectedNode;
             // Determine if this node has children, is so it cannot hold a QAFile
@@ -185,14 +191,31 @@ namespace QAProject
 
             // The following returns the current value of the current value of currentMaxQAFileID
             int qaFileNumber = SubjectTreeViewModel.returnQAFileName();
+            // Create a string from the int returned above
             string nextQAFileNumberString = qaFileNumber.ToString();
             // Create a new qaNode whose text value is the text in the subjectTextValue 
             // with prefix qa_ to identify it as a QA File
             TreeNode qaNode = new TreeNode("qa_" + subjectTextValue.Text);
             // Add a new stud to the QACumulativerResultsDictionary
+
+            //--------Potential REVISION-------//
+            /*
+             *  Explore what happens if you do NOT appent the parent(selectedNode) name to
+             *  the front of the new node
+             *      The addNewQATestFileRow method should still work
+             *      
+             *  Explore omitting the parent's name from only from the QA File,
+             *  the QA Name Scores Dictionary, and the cumulative results Dictionary
+             */
+
+            //--------Potential REVISION-------//
+
+            
             //Create the name for this node and append 'q'
             qaNode.Name = selectedNode.Name + "." + nextQAFileNumberString + "q";
-            QACumulativeResultsModel.addNewQATestFileRow(qaNode.Name, qaNode.Text);
+
+
+            QACumulativeResultsModel.addNewQATestFileRow(nextQAFileNumberString, qaNode.Name, qaNode.Text);
             // Test to make sure no node with with name already exists in treeViewDictionary
             if (!TreeViewDictionaryModel.AddNode(qaNode.Name, qaNode.Text))
             {
@@ -207,14 +230,21 @@ namespace QAProject
                 subjectTextValue.Text = "";
             }
             // Add this qa file node's  name and text value to the qaNamesDictionary
-            QAFileNameScoresModel.updateQANameScoreDictionary(qaFileNumber, qaNode.Name, qaNode.Text, parentChain);
+            QAFileNameScoresModel.updateQANameScoreDictionary(nextQAFileNumberString, qaFileNumber, qaNode.Name, qaNode.Text, parentChain);
             // Create a file in  @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles"
             //      whose name is qaNode.Name value
 
+            // CHANGE- 003
             if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Name + ".txt"))
             {
                 File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Name + ".txt");
             }
+
+            //changed in change 003
+            //if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Name + ".txt"))
+            //{
+            //    File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Name + ".txt");
+            //}
         }// End addNewQAFileNodeButton_Click
 
         //----------------START UPDATE---------------//
@@ -222,6 +252,19 @@ namespace QAProject
         {
             Dictionary<string, string> treeViewDictionary = new Dictionary<string, string>();
             treeViewDictionary = TreeViewDictionaryModel.getTreeViewDictionary();
+
+            //-------------New 202001271125-------------------------------//
+
+            //Cycle thru treeViewDictionary
+            foreach(KeyValuePair<string, string> kvp in treeViewDictionary)
+            {
+                string nodeName = kvp.Key;
+                string nodeText = kvp.Value;
+                if(subjectTreeView.Nodes.ContainsKey(nodeText))
+                subjectTreeView.Nodes[nodeText].Remove();
+            }
+
+            //----------------------------------------------------------//
             subjectTreeView.BeginUpdate();
 
             // Process each line of treeViewDictionary into a node on the treeView
@@ -528,12 +571,298 @@ namespace QAProject
             //subjectTreeView.SelectedNode.Text = newNodeText;
             SubjectTreeViewModel.filesChanged = true;
         }
+
+        /// <summary>
+        /// This method is called when the user wants to move a node. When a node in the
+        /// tree has been selected and this button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void selectNodetoMoveButton_Click(object sender, EventArgs e)
+        {
+            // Get needed values about the node to be moved
+            TreeNode nodeToMove = subjectTreeView.SelectedNode;
+            oldParentNode = nodeToMove.Parent;
+            movedNodeName = nodeToMove.Name;
+            movedNodeIndexValue = nodeToMove.Index;
+            movedNodeLevel = nodeToMove.Level;
+            string movedNodeChildValueStr = StringHelperClass.returnNthItemInDelimitedString(movedNodeName, '.', movedNodeIndexValue);
+            movedNodeChildValue = Int32.Parse(movedNodeChildValueStr);
+            movedNodesParent = subjectTreeView.SelectedNode.Parent;
+            oldParentName = movedNodesParent.Name;
+            oldParentText = movedNodesParent.Text;
+            subjectTreeView.SelectedNode = movedNodesParent;
+            oldParentsNumChildren = subjectTreeView.SelectedNode.GetNodeCount(false);
+        }
+
+      
+
+
+        //private void moveNodeToNewParent()
+        //{
+
+        //    // Lists of string[] to hold lines of data from TreeViewDictinary
+        //    List<string> tempTreeViewList = new List<string>();
+        //    // List of string[] to hold the lines from the tree view that will be moved
+        //    List<string> movedNodeTreeViewList = new List<string>();
+        //    // List of string[] to hold the lines from the tree view that the children of the old parent
+        //    //      whose index number is greater that that of the moved node
+        //    List<string> remainingChildrenOfOldParent = new List<string>();
+        //    // Get TreeView Dictionary
+        //    Dictionary<string, string> oldTreeViewDictionary = TreeViewDictionaryModel.getTreeViewDictionary();
+
+        //    List<string> sortedTreeViewDictionaryList = new List<string>();
+        //    sortedTreeViewDictionaryList = oldTreeViewDictionary.Keys.ToList();
+        //    Dictionary<string, string> treeViewDictionary = new Dictionary<string, string>();
+
+        //    //cycle thru sortedTreeViewDictionaryList
+
+        //    foreach (string key in sortedTreeViewDictionaryList)
+        //    {
+        //        string value = oldTreeViewDictionary[key];
+        //        treeViewDictionary.Add(key, value);
+        //    }
+
+        //    // Cycle thru the TreeViewDictionary
+        //    foreach (KeyValuePair<string,string> kvp in treeViewDictionary)
+        //    {
+        //        string nodeName = kvp.Key;
+        //        string nodeText = kvp.Value;
+        //        if (!nodeName.StartsWith(movedNodeName))
+        //        {
+        //            int nodeValueInt = -1;
+        //            if (nodeName.Length>= movedNodeName.Length)
+        //            {
+        //                string nodeValueString = StringHelperClass.returnNthItemInDelimitedString(nodeName, '.', movedNodeIndexValue);
+        //                 nodeValueInt = Int32.Parse(nodeValueString);
+        //            }
+        //            else
+        //            {
+        //                nodeValueInt = movedNodeChildValue - 1;
+        //            }
+
+        //            // Determine if this is another child of the moved node's parent
+        //            if ((movedNodeIdentified) && (nodeName.StartsWith(oldParentName) && (nodeValueInt > movedNodeChildValue)))
+        //            {
+        //                //Add this line to the remaining children
+        //                remainingChildrenOfOldParent.Add(nodeName + '^' + nodeText);
+        //            }
+        //            else
+        //            {
+        //                // Add this line to tempTreeViewList
+        //                tempTreeViewList.Add(nodeName + '^' + nodeText);
+        //            }
+                    
+        //        }
+        //        else
+        //        {
+        //            movedNodeIdentified = true;
+        //            movedNodeTreeViewList.Add(nodeName + '^' + nodeText);
+        //        }
+        //    }// End Cycle thru the TreeViewDictionary
+
+        //    // Change the names of the moved node and its children
+        //    // Length Residual name of moved node length of the ole parents name +1 
+        //    int lengthResidualMovedNode = oldParentName.Length + 1;
+        //    int lengthMovedNodeName = movedNodeName.Length;
+
+        //    // Cycle thru movedNodeTreeViewList
+        //    foreach (string line in movedNodeTreeViewList)
+        //    {
+        //        string oldName = StringHelperClass.returnNthItemInDelimitedString(line, '^', 0);
+        //        string nodeText = StringHelperClass.returnNthItemInDelimitedString(line, '^', 1);
+        //        // remove the movedNodeName from the front of the oldNodeName
+        //        string residualMovedNodeName = oldName.Substring(movedNodeName.Length);
+        //        string newMovedNodeName;
+        //        if (residualMovedNodeName.Length != 0)
+        //        {
+        //             newMovedNodeName = newMovedNodeNameFront + residualMovedNodeName;
+        //        }
+        //        else
+        //        {
+        //            newMovedNodeName = newMovedNodeNameFront;
+        //        }
+
+        //        tempTreeViewList.Add(newMovedNodeName + '^' + nodeText);
+        //        numberOfNewParentsChildren++;
+        //    }// End Cycle thru movedNodeTreeViewList
+
+
+        //    // Change the name of the nodes in RemainingOldParentChildrenList
+        //    // Cycle thru remainingChildrenOfOldParent
+        //    foreach (string line in remainingChildrenOfOldParent)
+        //    {
+
+        //        string oldName = StringHelperClass.returnNthItemInDelimitedString(line, '^', 0);
+        //        string nodeText = StringHelperClass.returnNthItemInDelimitedString(line, '^', 1);
+        //        // Get the current value string of oldName
+        //        string currentValueStr = StringHelperClass.returnNthItemInDelimitedString(oldName, '.', movedNodeIndexValue);
+        //        // Convert it to an integer
+        //        int currentValueInt = Int32.Parse(currentValueStr);
+        //        // Decrement it
+        //        currentValueInt--;
+        //        // Convert it back into a string
+        //        currentValueStr = currentValueInt.ToString();
+        //        //Insert the reduced string value into newName
+        //        string newName = StringHelperClass.replaceNthItemInDelimitedString(oldName, '.', movedNodeIndexValue, currentValueStr);
+        //        tempTreeViewList.Add(newName + '^' + nodeText);
+        //    }// End Cycle thru remainingChildrenOfOldParent
+
+
+        //    // Convert tempTreeViewList back into treeViewDictionary
+        //    // Clear onl treeViewDictionary
+        //    treeViewDictionary = new Dictionary<string, string>();
+
+        //    // Cycle thru tempTreeViewList
+        //    foreach(string line in tempTreeViewList)
+        //    {
+        //        string nodeName = StringHelperClass.returnNthItemInDelimitedString(line, '^', 0);
+        //        string nodeText = StringHelperClass.returnNthItemInDelimitedString(line, '^', 1);
+        //        treeViewDictionary.Add(nodeName, nodeText);
+
+        //    }// End Cycle thru tempTreeViewList
+
+        //    // Return revised treeViewDictionary
+        //    TreeViewDictionaryModel.updateTreeViewDictionary(treeViewDictionary);
+        //    subjectTreeView.Nodes.Clear();
+        //    createTreeViewFromDictionary();
+
+        //}// End moveNodeToNewParent()
+
+        private void selectNewParentbutton_Click(object sender, EventArgs e)
+        {
+            newParentName = subjectTreeView.SelectedNode.Name;
+            numberOfNewParentsChildren = subjectTreeView.SelectedNode.Nodes.Count;
+            string newParentsChildrenNumberStr = numberOfNewParentsChildren.ToString();
+
+            //bool movedNodefound = false;
+            // Create List<string> to hold, unchangesNodes, movedNodes, and renamedChileNodes
+            List<string> unchangesNodesList = new List<string>();
+            List<string> movedNodesList = new List<string>();
+            List<string> renamedChildNodesList = new List<string>();
+
+
+            // Create a locat copy of treeViewDictionary
+            Dictionary<string, string> treeViewDictionary = TreeViewDictionaryModel.getTreeViewDictionary();
+            // Cycle thru treeViewDictionary alloting the lines to the appropriate list
+            foreach(KeyValuePair<string, string> kvp in treeViewDictionary)
+            {
+                // get the nodeName and text values
+                string nodeName = kvp.Key;
+                string nodeText = kvp.Value;
+
+                // Move the nodes to the proper list
+                // is it an unchanged node
+                if ((nodeName.IndexOf(movedNodeName) != 0) && (nodeName.IndexOf(oldParentName+'.') != 0))
+                {
+                    unchangesNodesList.Add(nodeName + '^' + nodeText);
+                }
+                else if (nodeName == movedNodeName)
+                {
+                    //this is the node to be moved
+                    movedNodesList.Add(nodeName + '^' + nodeText);
+                    //movedNodefound = true;
+                }
+                else if(nodeName.IndexOf(movedNodeName) == 0)
+                {
+                    // this is a child of the node to be moved 
+                    movedNodesList.Add(nodeName + '^' + nodeText);
+                }
+                else //if (nodeName.IndexOf(oldParentName + '.') == 0)
+                {
+                    //this is a potential child of the old parent
+                    // get the movedNodeLevel strig
+                    string testNodeLevelStr = StringHelperClass.returnNthItemInDelimitedString(nodeName, '.', movedNodeLevel);
+                    int testNodeLevel = Int32.Parse(testNodeLevelStr);
+                    if (testNodeLevel > movedNodeLevel)
+                    {
+                        // this is a remaining child of the oldParent
+                        renamedChildNodesList.Add(nodeName + '^' + nodeText);
+                    }
+                    else
+                    {
+                        //this is an earlier child of the parent
+                        unchangesNodesList.Add(nodeName + '^' + nodeText);
+                    }
+                }
+            } // End Cycle thru treeViewDictionary alloting the lines to the appropriate list
+
+
+
+            // Rename the nodes in the  movedNodesList by
+            // 1. remove the monedNodeName.Length number of characters from the front of the nodeName
+            // 2. create a new front string from
+            //      a. the new newParentName + '.'
+            //      b. + newParentsChildrenNumberStr
+            // 3. Create the new node name from the newFrontString + remiander of the old node name
+
+            // Cycle thru movedNodesList changing name and adding to unchangedNodesList
+            foreach(string line in movedNodesList)
+            {
+                string nodeName = StringHelperClass.returnNthItemInDelimitedString(line, '^', 0);
+                string nodeText = StringHelperClass.returnNthItemInDelimitedString(line, '^', 1);
+
+                string nodeNameRemainder = nodeName.Substring(movedNodeName.Length);
+                string newFront = newParentName + '.' + newParentsChildrenNumberStr;
+                nodeName = newFront + nodeNameRemainder;
+                string newNodeToAddToUnchangesNodesList = StringHelperClass.replaceNthItemInDelimitedString(line, '^', 0, nodeName);
+                unchangesNodesList.Add(newNodeToAddToUnchangesNodesList);
+
+            }// End Cycle thru movedNodesList changing name and adding to unchangedNodesList
+
+            // Change the renamedChileNodesList changing name by decrementing the parent's child node index 
+            // for example if the remaining child node to be renamed is 0.0.3.0.3q
+            // if the movedNodesLevel is 2
+            // then the value to be decremented in the 2nd value in the '.' string ie. 3
+            // then the resultant value is 3-- = 2
+
+            // Cycle thru renamedChileNodesList changing name and adding it to unchangesNodesList
+            foreach(string line in renamedChildNodesList)
+            {
+                string nodeName = StringHelperClass.returnNthItemInDelimitedString(line, '^', 0);
+                string nodeText = StringHelperClass.returnNthItemInDelimitedString(line, '^', 1);
+                string valueToDecrementStr = StringHelperClass.returnNthItemInDelimitedString(nodeName, '.', movedNodeLevel);
+                int valueToDecrementInt = Int32.Parse(valueToDecrementStr);
+                valueToDecrementInt--;
+                valueToDecrementStr = valueToDecrementInt.ToString();
+                nodeName = StringHelperClass.replaceNthItemInDelimitedString(nodeName, '.', movedNodeLevel, valueToDecrementStr);
+                unchangesNodesList.Add(nodeName + '^' + nodeText);
+            }
+
+            // Convert tempTreeViewList back into treeViewDictionary
+            // Clear onl treeViewDictionary
+            treeViewDictionary = new Dictionary<string, string>();
+
+            // Cycle thru tempTreeViewList
+            foreach (string line in unchangesNodesList)
+            {
+                string nodeName = StringHelperClass.returnNthItemInDelimitedString(line, '^', 0);
+                string nodeText = StringHelperClass.returnNthItemInDelimitedString(line, '^', 1);
+                treeViewDictionary.Add(nodeName, nodeText);
+
+            }// End Cycle thru tempTreeViewList
+
+            // Return revised treeViewDictionary
+            TreeViewDictionaryModel.updateTreeViewDictionary(treeViewDictionary);
+            subjectTreeView.Nodes.Clear();
+            createTreeViewFromDictionary();
+
+
+        }// End selectNewParrentbutton _ Click
+
+        private void removeRemainingChildButton_Click(object sender, EventArgs e)
+        {
+            subjectTreeView.Nodes.Remove(subjectTreeView.SelectedNode);
+        }
     }// End QATreeForm
 
 
-    // a TODO - Create a class to respond to the Rename node button
+
 
 
 }//End QAProject
 
 
+// TODO - Create procedure to update QAFileNameScores file
+// TODO - Create procedure to move a QA node
+// TODO - Determine if NodeChildDictionary can be eliminated

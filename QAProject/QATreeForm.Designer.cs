@@ -38,11 +38,10 @@
             this.reviewQAFileButton = new System.Windows.Forms.Button();
             this.takeQAFileTestButton = new System.Windows.Forms.Button();
             this.vewCumulativeResultsForSelectedQAFileButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.viewCumResAllFilesButton = new System.Windows.Forms.Button();
             this.moveNodeToNewParentGroupBox = new System.Windows.Forms.GroupBox();
-            this.moveNodeButton = new System.Windows.Forms.Button();
-            this.selectParentbutton = new System.Windows.Forms.Button();
-            this.getMoveInfoButton = new System.Windows.Forms.Button();
+            this.selectNewParentbutton = new System.Windows.Forms.Button();
+            this.selectNodetoMoveButton = new System.Windows.Forms.Button();
             this.returnToDashboardButton = new System.Windows.Forms.Button();
             this.renameNodeButton = new System.Windows.Forms.Button();
             this.deleteNode = new System.Windows.Forms.Button();
@@ -60,15 +59,16 @@
             // 
             // subjectTreeView
             // 
+            this.subjectTreeView.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.subjectTreeView.Location = new System.Drawing.Point(12, 12);
             this.subjectTreeView.Name = "subjectTreeView";
-            this.subjectTreeView.Size = new System.Drawing.Size(765, 717);
+            this.subjectTreeView.Size = new System.Drawing.Size(765, 743);
             this.subjectTreeView.TabIndex = 4;
             // 
             // subjectTextLabel
             // 
             this.subjectTextLabel.AutoSize = true;
-            this.subjectTextLabel.Location = new System.Drawing.Point(809, 136);
+            this.subjectTextLabel.Location = new System.Drawing.Point(809, 71);
             this.subjectTextLabel.Name = "subjectTextLabel";
             this.subjectTextLabel.Size = new System.Drawing.Size(201, 38);
             this.subjectTextLabel.TabIndex = 5;
@@ -76,14 +76,14 @@
             // 
             // subjectTextValue
             // 
-            this.subjectTextValue.Location = new System.Drawing.Point(1074, 136);
+            this.subjectTextValue.Location = new System.Drawing.Point(1074, 71);
             this.subjectTextValue.Name = "subjectTextValue";
             this.subjectTextValue.Size = new System.Drawing.Size(315, 43);
             this.subjectTextValue.TabIndex = 6;
             // 
             // addNewSubjectButton
             // 
-            this.addNewSubjectButton.Location = new System.Drawing.Point(795, 191);
+            this.addNewSubjectButton.Location = new System.Drawing.Point(795, 126);
             this.addNewSubjectButton.Name = "addNewSubjectButton";
             this.addNewSubjectButton.Size = new System.Drawing.Size(194, 47);
             this.addNewSubjectButton.TabIndex = 7;
@@ -93,7 +93,7 @@
             // 
             // addNewSubjectChapterButton
             // 
-            this.addNewSubjectChapterButton.Location = new System.Drawing.Point(995, 191);
+            this.addNewSubjectChapterButton.Location = new System.Drawing.Point(995, 126);
             this.addNewSubjectChapterButton.Name = "addNewSubjectChapterButton";
             this.addNewSubjectChapterButton.Size = new System.Drawing.Size(194, 47);
             this.addNewSubjectChapterButton.TabIndex = 8;
@@ -103,7 +103,7 @@
             // 
             // addNewQAFileNodeButton
             // 
-            this.addNewQAFileNodeButton.Location = new System.Drawing.Point(1195, 191);
+            this.addNewQAFileNodeButton.Location = new System.Drawing.Point(1195, 126);
             this.addNewQAFileNodeButton.Name = "addNewQAFileNodeButton";
             this.addNewQAFileNodeButton.Size = new System.Drawing.Size(194, 47);
             this.addNewQAFileNodeButton.TabIndex = 9;
@@ -113,7 +113,7 @@
             // 
             // reviewQAFileButton
             // 
-            this.reviewQAFileButton.Location = new System.Drawing.Point(795, 328);
+            this.reviewQAFileButton.Location = new System.Drawing.Point(795, 263);
             this.reviewQAFileButton.Name = "reviewQAFileButton";
             this.reviewQAFileButton.Size = new System.Drawing.Size(267, 54);
             this.reviewQAFileButton.TabIndex = 10;
@@ -122,7 +122,7 @@
             // 
             // takeQAFileTestButton
             // 
-            this.takeQAFileTestButton.Location = new System.Drawing.Point(1110, 328);
+            this.takeQAFileTestButton.Location = new System.Drawing.Point(1110, 263);
             this.takeQAFileTestButton.Name = "takeQAFileTestButton";
             this.takeQAFileTestButton.Size = new System.Drawing.Size(279, 54);
             this.takeQAFileTestButton.TabIndex = 11;
@@ -131,64 +131,56 @@
             // 
             // vewCumulativeResultsForSelectedQAFileButton
             // 
-            this.vewCumulativeResultsForSelectedQAFileButton.Location = new System.Drawing.Point(797, 415);
+            this.vewCumulativeResultsForSelectedQAFileButton.Location = new System.Drawing.Point(797, 350);
             this.vewCumulativeResultsForSelectedQAFileButton.Name = "vewCumulativeResultsForSelectedQAFileButton";
             this.vewCumulativeResultsForSelectedQAFileButton.Size = new System.Drawing.Size(280, 124);
             this.vewCumulativeResultsForSelectedQAFileButton.TabIndex = 13;
             this.vewCumulativeResultsForSelectedQAFileButton.Text = "View cumulative results for this QAFile";
             this.vewCumulativeResultsForSelectedQAFileButton.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // viewCumResAllFilesButton
             // 
-            this.button1.Location = new System.Drawing.Point(1122, 415);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(280, 124);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "View cumulative results for all QAFiles";
-            this.button1.UseVisualStyleBackColor = true;
+            this.viewCumResAllFilesButton.Location = new System.Drawing.Point(1122, 350);
+            this.viewCumResAllFilesButton.Name = "viewCumResAllFilesButton";
+            this.viewCumResAllFilesButton.Size = new System.Drawing.Size(280, 124);
+            this.viewCumResAllFilesButton.TabIndex = 14;
+            this.viewCumResAllFilesButton.Text = "View cumulative results for all QAFiles";
+            this.viewCumResAllFilesButton.UseVisualStyleBackColor = true;
             // 
             // moveNodeToNewParentGroupBox
             // 
-            this.moveNodeToNewParentGroupBox.Controls.Add(this.moveNodeButton);
-            this.moveNodeToNewParentGroupBox.Controls.Add(this.selectParentbutton);
-            this.moveNodeToNewParentGroupBox.Controls.Add(this.getMoveInfoButton);
-            this.moveNodeToNewParentGroupBox.Location = new System.Drawing.Point(797, 544);
+            this.moveNodeToNewParentGroupBox.Controls.Add(this.selectNewParentbutton);
+            this.moveNodeToNewParentGroupBox.Controls.Add(this.selectNodetoMoveButton);
+            this.moveNodeToNewParentGroupBox.Location = new System.Drawing.Point(797, 497);
             this.moveNodeToNewParentGroupBox.Name = "moveNodeToNewParentGroupBox";
-            this.moveNodeToNewParentGroupBox.Size = new System.Drawing.Size(605, 132);
+            this.moveNodeToNewParentGroupBox.Size = new System.Drawing.Size(605, 148);
             this.moveNodeToNewParentGroupBox.TabIndex = 15;
             this.moveNodeToNewParentGroupBox.TabStop = false;
             this.moveNodeToNewParentGroupBox.Text = "Move Node";
             // 
-            // moveNodeButton
+            // selectNewParentbutton
             // 
-            this.moveNodeButton.Location = new System.Drawing.Point(441, 51);
-            this.moveNodeButton.Name = "moveNodeButton";
-            this.moveNodeButton.Size = new System.Drawing.Size(135, 43);
-            this.moveNodeButton.TabIndex = 2;
-            this.moveNodeButton.Text = "Move";
-            this.moveNodeButton.UseVisualStyleBackColor = true;
+            this.selectNewParentbutton.Location = new System.Drawing.Point(313, 42);
+            this.selectNewParentbutton.Name = "selectNewParentbutton";
+            this.selectNewParentbutton.Size = new System.Drawing.Size(274, 87);
+            this.selectNewParentbutton.TabIndex = 1;
+            this.selectNewParentbutton.Text = "Select New Parent";
+            this.selectNewParentbutton.UseVisualStyleBackColor = true;
+            this.selectNewParentbutton.Click += new System.EventHandler(this.selectNewParentbutton_Click);
             // 
-            // selectParentbutton
+            // selectNodetoMoveButton
             // 
-            this.selectParentbutton.Location = new System.Drawing.Point(162, 51);
-            this.selectParentbutton.Name = "selectParentbutton";
-            this.selectParentbutton.Size = new System.Drawing.Size(263, 43);
-            this.selectParentbutton.TabIndex = 1;
-            this.selectParentbutton.Text = "Select New Parent";
-            this.selectParentbutton.UseVisualStyleBackColor = true;
-            // 
-            // getMoveInfoButton
-            // 
-            this.getMoveInfoButton.Location = new System.Drawing.Point(6, 51);
-            this.getMoveInfoButton.Name = "getMoveInfoButton";
-            this.getMoveInfoButton.Size = new System.Drawing.Size(135, 43);
-            this.getMoveInfoButton.TabIndex = 0;
-            this.getMoveInfoButton.Text = "Get Info";
-            this.getMoveInfoButton.UseVisualStyleBackColor = true;
+            this.selectNodetoMoveButton.Location = new System.Drawing.Point(6, 39);
+            this.selectNodetoMoveButton.Name = "selectNodetoMoveButton";
+            this.selectNodetoMoveButton.Size = new System.Drawing.Size(274, 87);
+            this.selectNodetoMoveButton.TabIndex = 0;
+            this.selectNodetoMoveButton.Text = "Select Node To Move";
+            this.selectNodetoMoveButton.UseVisualStyleBackColor = true;
+            this.selectNodetoMoveButton.Click += new System.EventHandler(this.selectNodetoMoveButton_Click);
             // 
             // returnToDashboardButton
             // 
-            this.returnToDashboardButton.Location = new System.Drawing.Point(934, 682);
+            this.returnToDashboardButton.Location = new System.Drawing.Point(915, 669);
             this.returnToDashboardButton.Name = "returnToDashboardButton";
             this.returnToDashboardButton.Size = new System.Drawing.Size(307, 47);
             this.returnToDashboardButton.TabIndex = 16;
@@ -198,7 +190,7 @@
             // 
             // renameNodeButton
             // 
-            this.renameNodeButton.Location = new System.Drawing.Point(795, 257);
+            this.renameNodeButton.Location = new System.Drawing.Point(795, 192);
             this.renameNodeButton.Name = "renameNodeButton";
             this.renameNodeButton.Size = new System.Drawing.Size(267, 47);
             this.renameNodeButton.TabIndex = 19;
@@ -208,7 +200,7 @@
             // 
             // deleteNode
             // 
-            this.deleteNode.Location = new System.Drawing.Point(1122, 257);
+            this.deleteNode.Location = new System.Drawing.Point(1122, 192);
             this.deleteNode.Name = "deleteNode";
             this.deleteNode.Size = new System.Drawing.Size(267, 47);
             this.deleteNode.TabIndex = 20;
@@ -219,12 +211,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1432, 753);
+            this.ClientSize = new System.Drawing.Size(1432, 853);
             this.Controls.Add(this.deleteNode);
             this.Controls.Add(this.renameNodeButton);
             this.Controls.Add(this.returnToDashboardButton);
             this.Controls.Add(this.moveNodeToNewParentGroupBox);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.viewCumResAllFilesButton);
             this.Controls.Add(this.vewCumulativeResultsForSelectedQAFileButton);
             this.Controls.Add(this.takeQAFileTestButton);
             this.Controls.Add(this.reviewQAFileButton);
@@ -258,13 +250,12 @@
         private System.Windows.Forms.Button reviewQAFileButton;
         private System.Windows.Forms.Button takeQAFileTestButton;
         private System.Windows.Forms.Button vewCumulativeResultsForSelectedQAFileButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button viewCumResAllFilesButton;
         private System.Windows.Forms.GroupBox moveNodeToNewParentGroupBox;
-        private System.Windows.Forms.Button moveNodeButton;
-        private System.Windows.Forms.Button selectParentbutton;
-        private System.Windows.Forms.Button getMoveInfoButton;
+        private System.Windows.Forms.Button selectNodetoMoveButton;
         private System.Windows.Forms.Button returnToDashboardButton;
         private System.Windows.Forms.Button renameNodeButton;
         private System.Windows.Forms.Button deleteNode;
+        private System.Windows.Forms.Button selectNewParentbutton;
     }
 }

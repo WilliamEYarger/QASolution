@@ -98,10 +98,19 @@ namespace QADataModelLib
             }
         }// End saveQAFileNameScoresFile(
 
-        public static void updateQANameScoreDictionary(int ID, string nodeName, string nodeText, string parentString)
-        {
-            string value = nodeText + "^" + parentString + "^" + nodeName + "^No Test Yet";
+        /*
+         *  If the parent's name is omitted from the string the node name value will be changed 
+         *  to only reflect its unique int ID number
+         */
 
+            // CHANGE- 002 change the nodeName to the cumulativeQANodeNumber string
+        public static void updateQANameScoreDictionary(string cumulativeQANumberString, int ID, string nodeName, string nodeText, string parentString)
+        {
+            // changed in change 002
+            //string value = nodeText + "^" + parentString + "^" + nodeName + "^No Test Yet";
+
+            // change 002
+            string value = nodeText + "^" + parentString + "^" + cumulativeQANumberString+'q' + "^No Test Yet";
             QANameScoreDictionary.Add(ID, value);
             string output = ID.ToString() + '~' + value + '\n';
 
@@ -150,8 +159,6 @@ namespace QADataModelLib
                         value = newNodeText + '^' + parentsString + '^' + qaFileName + '^' + testResults;
                     }
                     // Insert this new value in the QANameScoreDictionary
-                    // TODO - Determine if I need the next line
-                   // tempQANAmeScoredictionary[Key] = value;
                 }// End if (qaFileText.IndexOf(nodeName) == 0
                 // Insert this new value in the QANameScoreDictionary
                 tempQANAmeScoredictionary[Key] = value;

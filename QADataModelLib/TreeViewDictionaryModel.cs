@@ -23,6 +23,13 @@ namespace QADataModelLib
             return TreeViewDictionary;
         }
 
+
+        public static void updateTreeViewDictionary(Dictionary<string, string> newValue)
+        {
+            TreeViewDictionary = new Dictionary<string, string>();
+            TreeViewDictionary = newValue;
+        }
+
         /// <summary>
         /// This method is called getTreeViewDictionary 
         /// It opens reads the lines in the  TreeViewDictionary.txt into a ArrayList

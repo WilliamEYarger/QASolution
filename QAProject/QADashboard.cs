@@ -54,7 +54,8 @@ namespace QAProject
             QAFileNameScoresModel.saveQAFileNameScoresFile();
             TreeViewDictionaryModel.saveTreeViewDictionary();
             QACumulativeResultsModel.exportQACumulativeResutsFile();
-            this.ControlBox = true;
+            Application.Exit();
+            //this.ControlBox = true;
            //System.Windows.Forms.Application.Exit();
         }
     }
