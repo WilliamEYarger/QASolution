@@ -121,7 +121,7 @@ namespace QADataModelLib
             //ChangeNodeTextValue.changeNodeTextValue(nodeType);
         }
 
-        //----------------------METHODS that will be transferrec to ChangeNodeGTextValue.cs------------------//
+        //------------------------------------UTILITY METHODS---------------------------------//
 
 
 

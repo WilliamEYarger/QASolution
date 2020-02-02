@@ -23,7 +23,11 @@ namespace QADataModelLib
             return TreeViewDictionary;
         }
 
-
+        /// <summary>
+        /// This procedure Receives an updated version of the TreeViewDictionary 
+        /// and exchanges it for the old version of the TreeViewdictionary
+        /// </summary>
+        /// <param name="newValue"></param>
         public static void updateTreeViewDictionary(Dictionary<string, string> newValue)
         {
             TreeViewDictionary = new Dictionary<string, string>();

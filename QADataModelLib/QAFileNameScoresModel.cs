@@ -168,5 +168,11 @@ namespace QADataModelLib
             QANameScoreDictionary = tempQANAmeScoredictionary;
         }// End reTextNameScores
 
+        public static void reCreateQANameScoreDictionary(Dictionary<Int32, string> newQANameScoreDiction)
+        {
+            QANameScoreDictionary = new Dictionary<int, string>();
+            QANameScoreDictionary = newQANameScoreDiction;
+        }
+
     }// End QAFileNameScoresModel
 }// End QADataModelLib
