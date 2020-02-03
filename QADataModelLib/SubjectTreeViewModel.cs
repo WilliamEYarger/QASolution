@@ -97,7 +97,7 @@ namespace QADataModelLib
             //char nodeType;
             if (nodeLevel == 0)
             {
-                SubjectNodesListModel.changeSubjectNodeList(nodeName, oldNodeText, newNodeText);
+                //SubjectNodesListModel.changeSubjectNodeList(nodeName, oldNodeText, newNodeText);
                 TreeViewDictionaryModel.reTextNode(nodeName, newNodeText);
                 QAFileNameScoresModel.reTextNameScores(nodeName, oldNodeText, newNodeText);
             }

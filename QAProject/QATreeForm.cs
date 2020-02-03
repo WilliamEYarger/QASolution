@@ -108,9 +108,11 @@ namespace QAProject
             string subjectNodeTextValue = subjectTextValue.Text;
             // Create a new root, or Subject node with this text value
             TreeNode subjectTreeNode = new TreeNode(subjectTextValue.Text);
-            // Get the node's name property from the count of current number of Subject Nodes
-            subjectTreeNode.Name = SubjectNodesListModel.returnSubjectNodeName(subjectNodeTextValue);
-                
+
+            int numberOfSubjectNodes = subjectTreeView.Nodes.Count;
+
+            subjectTreeNode.Name = numberOfSubjectNodes.ToString();
+
             // SubjectTreeViewModel.returnSubjectNodeName(subjectTextValue.Text);
             // If this node name has not already beed used add this node
             if (!TreeViewDictionaryModel.AddNode(subjectTreeNode.Name, subjectTreeNode.Text))

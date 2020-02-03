@@ -37,7 +37,7 @@ namespace QAProject
             {
                 QADataModelLib.AccessData.openAllFiles();
                 QAFileNameScoresModel.loadQANameScoreDictionary();
-                SubjectNodesListModel.loadSubjectNodesList();
+                //SubjectNodesListModel.loadSubjectNodesList();
                 QADataModelLib.NodeChildrenDictionaryModel.loadNodeChildrenDictionary();
                 QADataModelLib.TreeViewDictionaryModel.loadTreeViewDictionary();
                 filesLoaded = true;
@@ -49,7 +49,7 @@ namespace QAProject
         private void exitApplicationButton_Click(object sender, EventArgs e)
         {
             QADataModelLib.AccessData.saveAllFiles();
-            SubjectNodesListModel.saveSubjectNodeList();
+            //SubjectNodesListModel.saveSubjectNodeList();
             NodeChildrenDictionaryModel.saveNodeChildrenDictionary();
             QAFileNameScoresModel.saveQAFileNameScoresFile();
             TreeViewDictionaryModel.saveTreeViewDictionary();
