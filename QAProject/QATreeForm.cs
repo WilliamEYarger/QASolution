@@ -68,7 +68,9 @@ namespace QAProject
         private bool movedNodeIsQA = false;
         private string newParentsChildrenNumberStr = "";
         private Dictionary<string, string> treeViewDictionary = new Dictionary<string, string>();
-
+        private bool addingHyperlink = false;
+        private string thisHyperlink = "";
+        private TreeNode hyperlinkSelectedNode = null;
 
         //----------------------PUBLIC METHODS------------------------------//
 
@@ -896,6 +898,47 @@ namespace QAProject
             //    return;
             //}
             //subjectTreeView.SelectedNode.Remove();
+        }
+
+        private void addHyperlinkButton_Click(object sender, EventArgs e)
+        {
+           //subjectTextLabel.Text = "Enter HyperLink";
+            hyperlinkSelectedNode = subjectTreeView.SelectedNode;
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK) 
+            {
+                string filePath = ofd.FileName;
+                string output = hyperlinkSelectedNode.Name + '^' + filePath + '\n';
+                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
+            }
+
+            //addingHyperlink = true;
+            //subjectTextValue.Select();
+            return;
+        }
+
+        private void subjectTextValue_Leave(object sender, EventArgs e)
+        {
+            if (addingHyperlink)
+            {
+                thisHyperlink = subjectTextValue.Text;
+                string output = hyperlinkSelectedNode.Name + '^' + thisHyperlink+'\n';
+                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
+                subjectTextLabel.Text = "Enter Name ->";
+                thisHyperlink = "";
+                addingHyperlink = false;
+                subjectTextValue.Text = "";
+                return;
+            }
+        }
+
+        private void openHyperlinkButton_Click(object sender, EventArgs e)
+        {
+            TreeNode selectedNode = subjectTreeView.SelectedNode;
+            string selectedNodeName = selectedNode.Name;
+            string hyperlink = TreeViewDictionaryModel.getHyperlink(selectedNodeName);
+            System.Diagnostics.Process.Start(hyperlink);
+
         }
     }// End QATreeForm
 

@@ -45,6 +45,8 @@
             this.returnToDashboardButton = new System.Windows.Forms.Button();
             this.renameNodeButton = new System.Windows.Forms.Button();
             this.deleteNode = new System.Windows.Forms.Button();
+            this.addHyperlinkButton = new System.Windows.Forms.Button();
+            this.openHyperlinkButton = new System.Windows.Forms.Button();
             this.moveNodeToNewParentGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,6 +82,7 @@
             this.subjectTextValue.Name = "subjectTextValue";
             this.subjectTextValue.Size = new System.Drawing.Size(315, 43);
             this.subjectTextValue.TabIndex = 6;
+            this.subjectTextValue.Leave += new System.EventHandler(this.subjectTextValue_Leave);
             // 
             // addNewSubjectButton
             // 
@@ -113,7 +116,7 @@
             // 
             // editQAFileButton
             // 
-            this.editQAFileButton.Location = new System.Drawing.Point(795, 263);
+            this.editQAFileButton.Location = new System.Drawing.Point(795, 374);
             this.editQAFileButton.Name = "editQAFileButton";
             this.editQAFileButton.Size = new System.Drawing.Size(321, 54);
             this.editQAFileButton.TabIndex = 10;
@@ -123,7 +126,7 @@
             // 
             // takeQAFileTestButton
             // 
-            this.takeQAFileTestButton.Location = new System.Drawing.Point(1153, 263);
+            this.takeQAFileTestButton.Location = new System.Drawing.Point(1153, 374);
             this.takeQAFileTestButton.Name = "takeQAFileTestButton";
             this.takeQAFileTestButton.Size = new System.Drawing.Size(267, 54);
             this.takeQAFileTestButton.TabIndex = 11;
@@ -132,7 +135,7 @@
             // 
             // vewCumulativeResultsForSelectedQAFileButton
             // 
-            this.vewCumulativeResultsForSelectedQAFileButton.Location = new System.Drawing.Point(797, 350);
+            this.vewCumulativeResultsForSelectedQAFileButton.Location = new System.Drawing.Point(797, 455);
             this.vewCumulativeResultsForSelectedQAFileButton.Name = "vewCumulativeResultsForSelectedQAFileButton";
             this.vewCumulativeResultsForSelectedQAFileButton.Size = new System.Drawing.Size(319, 124);
             this.vewCumulativeResultsForSelectedQAFileButton.TabIndex = 13;
@@ -141,9 +144,9 @@
             // 
             // viewCumResAllFilesButton
             // 
-            this.viewCumResAllFilesButton.Location = new System.Drawing.Point(1153, 350);
+            this.viewCumResAllFilesButton.Location = new System.Drawing.Point(1153, 455);
             this.viewCumResAllFilesButton.Name = "viewCumResAllFilesButton";
-            this.viewCumResAllFilesButton.Size = new System.Drawing.Size(280, 124);
+            this.viewCumResAllFilesButton.Size = new System.Drawing.Size(267, 124);
             this.viewCumResAllFilesButton.TabIndex = 14;
             this.viewCumResAllFilesButton.Text = "View cumulative results for all QAFiles";
             this.viewCumResAllFilesButton.UseVisualStyleBackColor = true;
@@ -152,7 +155,7 @@
             // 
             this.moveNodeToNewParentGroupBox.Controls.Add(this.selectNewParentbutton);
             this.moveNodeToNewParentGroupBox.Controls.Add(this.selectNodetoMoveButton);
-            this.moveNodeToNewParentGroupBox.Location = new System.Drawing.Point(797, 497);
+            this.moveNodeToNewParentGroupBox.Location = new System.Drawing.Point(797, 585);
             this.moveNodeToNewParentGroupBox.Name = "moveNodeToNewParentGroupBox";
             this.moveNodeToNewParentGroupBox.Size = new System.Drawing.Size(605, 148);
             this.moveNodeToNewParentGroupBox.TabIndex = 15;
@@ -163,7 +166,7 @@
             // 
             this.selectNewParentbutton.Location = new System.Drawing.Point(356, 39);
             this.selectNewParentbutton.Name = "selectNewParentbutton";
-            this.selectNewParentbutton.Size = new System.Drawing.Size(274, 87);
+            this.selectNewParentbutton.Size = new System.Drawing.Size(267, 87);
             this.selectNewParentbutton.TabIndex = 1;
             this.selectNewParentbutton.Text = "Select New Parent";
             this.selectNewParentbutton.UseVisualStyleBackColor = true;
@@ -181,7 +184,7 @@
             // 
             // returnToDashboardButton
             // 
-            this.returnToDashboardButton.Location = new System.Drawing.Point(915, 669);
+            this.returnToDashboardButton.Location = new System.Drawing.Point(959, 758);
             this.returnToDashboardButton.Name = "returnToDashboardButton";
             this.returnToDashboardButton.Size = new System.Drawing.Size(307, 47);
             this.returnToDashboardButton.TabIndex = 16;
@@ -191,9 +194,10 @@
             // 
             // renameNodeButton
             // 
+            this.renameNodeButton.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.renameNodeButton.Location = new System.Drawing.Point(795, 192);
             this.renameNodeButton.Name = "renameNodeButton";
-            this.renameNodeButton.Size = new System.Drawing.Size(321, 47);
+            this.renameNodeButton.Size = new System.Drawing.Size(251, 47);
             this.renameNodeButton.TabIndex = 19;
             this.renameNodeButton.Text = "Rename Node";
             this.renameNodeButton.UseVisualStyleBackColor = true;
@@ -201,6 +205,7 @@
             // 
             // deleteNode
             // 
+            this.deleteNode.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.deleteNode.Location = new System.Drawing.Point(1153, 192);
             this.deleteNode.Name = "deleteNode";
             this.deleteNode.Size = new System.Drawing.Size(267, 47);
@@ -209,11 +214,35 @@
             this.deleteNode.UseVisualStyleBackColor = true;
             this.deleteNode.Click += new System.EventHandler(this.deleteNode_Click);
             // 
+            // addHyperlinkButton
+            // 
+            this.addHyperlinkButton.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addHyperlinkButton.Location = new System.Drawing.Point(795, 286);
+            this.addHyperlinkButton.Name = "addHyperlinkButton";
+            this.addHyperlinkButton.Size = new System.Drawing.Size(251, 44);
+            this.addHyperlinkButton.TabIndex = 21;
+            this.addHyperlinkButton.Text = "Add Link";
+            this.addHyperlinkButton.UseVisualStyleBackColor = true;
+            this.addHyperlinkButton.Click += new System.EventHandler(this.addHyperlinkButton_Click);
+            // 
+            // openHyperlinkButton
+            // 
+            this.openHyperlinkButton.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openHyperlinkButton.Location = new System.Drawing.Point(1153, 286);
+            this.openHyperlinkButton.Name = "openHyperlinkButton";
+            this.openHyperlinkButton.Size = new System.Drawing.Size(267, 44);
+            this.openHyperlinkButton.TabIndex = 22;
+            this.openHyperlinkButton.Text = "Open Link";
+            this.openHyperlinkButton.UseVisualStyleBackColor = true;
+            this.openHyperlinkButton.Click += new System.EventHandler(this.openHyperlinkButton_Click);
+            // 
             // QATreeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1432, 853);
+            this.Controls.Add(this.openHyperlinkButton);
+            this.Controls.Add(this.addHyperlinkButton);
             this.Controls.Add(this.deleteNode);
             this.Controls.Add(this.renameNodeButton);
             this.Controls.Add(this.returnToDashboardButton);
@@ -259,5 +288,7 @@
         private System.Windows.Forms.Button renameNodeButton;
         private System.Windows.Forms.Button deleteNode;
         private System.Windows.Forms.Button selectNewParentbutton;
+        private System.Windows.Forms.Button addHyperlinkButton;
+        private System.Windows.Forms.Button openHyperlinkButton;
     }
 }

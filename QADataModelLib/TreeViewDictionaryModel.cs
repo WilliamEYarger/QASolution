@@ -13,6 +13,17 @@ namespace QADataModelLib
 
 
         private static Dictionary<string, string> TreeViewDictionary = new Dictionary<string, string>();
+        private static Dictionary<string, string> HyperlinkDictionary = new Dictionary<string, string>();
+        
+        public static string getHyperlink(string nodeName)
+        {
+            string hyperlink = "";
+            loadHyperlinkDictionary();
+            hyperlink = HyperlinkDictionary[nodeName];
+
+            return hyperlink;
+        }
+
 
         /// <summary>
         /// This method is called by ChangeNodeTextvalue and returns the TreeViewDictionary
@@ -61,7 +72,32 @@ namespace QADataModelLib
                     }
                 }
             }// End if(File.Exists
-        }// setTreeViewDictionary
+        }// loadTreeViewDictionary
+
+        private static void loadHyperlinkDictionary()
+        {
+            var hyperlinkDictionaryList = new List<string>();
+            string hyperlinkDictionaryPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt";
+
+            if (File.Exists(hyperlinkDictionaryPath))
+            {
+                //determine if there are data in the file and if so read it into the dictionary
+                var fil = new FileInfo(hyperlinkDictionaryPath);
+                long length = fil.Length;
+                if (length != 0)
+                {
+                    // Read in the file and parse  it into the dictionary
+                    var logFile = File.ReadAllLines(hyperlinkDictionaryPath);
+                    hyperlinkDictionaryList = new List<string>(logFile);
+                    //logFile.toList<string>;
+                    foreach (string line in hyperlinkDictionaryList)
+                    {
+                        string[] keyAndValue = line.Split('^');
+                        HyperlinkDictionary.Add(keyAndValue[0], keyAndValue[1]);
+                    }
+                }
+            }// End if(File.Exists
+        }// loadTreeViewDictionary
 
         public static void saveTreeViewDictionary()
         {
