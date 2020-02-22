@@ -60,7 +60,7 @@ namespace QADataModelLib
                         TreeViewDictionary.Add(keyAndValue[0], keyAndValue[1]);
                     }
                 }
-            }
+            }// End if(File.Exists
         }// setTreeViewDictionary
 
         public static void saveTreeViewDictionary()

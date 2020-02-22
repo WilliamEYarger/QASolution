@@ -54,5 +54,37 @@ namespace QADataModelLib
             return outputString;
         }
 
+        public static string replaceNthItemInString(string inputString, char del, int itemNumber)
+        {
+            string[] itemsArray = inputString.Split(del);
+            string returnString = "";
+            for(int i=0; i<itemsArray.Length; i++)
+            {
+                if(i != itemNumber)
+                {
+                    returnString = returnString + itemsArray[i] + del;
+                }
+            }
+            returnString = returnString.Substring(0, returnString.Length - 1);
+            return returnString;
+        }
+
+        public static string removeNthItemFromDelimitedString(string inputString, char del, int itemNumber)
+        {
+            string returnStr = "";
+            string[] itemsArray = inputString.Split(del);
+            for(int i=0; i< itemsArray.Length; i++)
+            {
+                if(i!= itemNumber)
+                {
+                    returnStr = returnStr + itemsArray[i] + del;
+                }
+            }
+            returnStr = returnStr.Substring(0, returnStr.Length - 1);
+
+            return returnStr;
+
+        }// End removeNthItemFromDelimitedString
+
     }// End StringHelperClass
 }// End namespace QADataModelLib

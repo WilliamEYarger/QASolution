@@ -15,6 +15,7 @@
 //      void renameNodeButton_Click(
 //      void selectNodetoMoveButton_Click(
 //      void selectNewParentbutton_Click(
+//      void editQAFileButton_Click
 
 //----------------------UTILITY METHODS------------------------------//
 //      bool nodeIsTerminal(
@@ -104,6 +105,13 @@ namespace QAProject
         /// <param name="e"></param>
         private void addNewSubjectButton_Click(object sender, EventArgs e)
         {
+            // Make sure that a text value has been added
+            if(subjectTextValue.Text == "")
+            {
+                MessageBox.Show("You must enter a name for the node first!");
+                return;
+            }
+
             // Get the node's text property
             string subjectNodeTextValue = subjectTextValue.Text;
             // Create a new root, or Subject node with this text value
@@ -143,7 +151,12 @@ namespace QAProject
         /// <param name="e"></param>
         private void addNewSubjectDivisionButton_Click(object sender, EventArgs e)
         {
-            
+            // Make sure that a parent has been chosen first
+            if(subjectTreeView.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a parent before you can add a Division node!");
+                return;
+            }
             // Insure that this 'Division' node is not being added to a 'qaFileNode'
             TreeNode selectedNode = subjectTreeView.SelectedNode;
             int ln = selectedNode.Name.Length - 1;
@@ -184,9 +197,6 @@ namespace QAProject
                 SubjectTreeViewModel.filesChanged = true;
                 subjectTextValue.Text = "";
             }
-            // Update the count of children for the parent in the nodeChildrenDictionary
-            //NodeChildrenDictionaryModel.updateNodeChildrenDictionary(selectedNode.Name);
-
         }// End add Subject Division button clicked
 
         /// <summary>
@@ -205,6 +215,7 @@ namespace QAProject
             // Create a parent node from the selected node
 
             TreeNode selectedNode = subjectTreeView.SelectedNode;
+            string tempNodeName = selectedNode.Name;
             // Determine if this node has children, is so it cannot hold a QAFile
             Boolean nodeHasChildren = NodeChildrenDictionaryModel.doesNodeHaveChildren(selectedNode.Name);
             if (nodeHasChildren)
@@ -222,7 +233,7 @@ namespace QAProject
             string nextQAFileNumberString = qaFileNumber.ToString();
             // Create a new qaNode whose text value is the text in the subjectTextValue 
             // with prefix qa_ to identify it as a QA File
-            TreeNode qaNode = new TreeNode("qa_" + subjectTextValue.Text);
+            TreeNode qaNode = new TreeNode("qa_" + subjectTextValue.Text+'-'+ nextQAFileNumberString);
             // Add a new stud to the QACumulativerResultsDictionary
 
            
@@ -247,9 +258,9 @@ namespace QAProject
             // Add this qa file node's  name and text value to the qaNamesDictionary
             QAFileNameScoresModel.updateQANameScoreDictionary(nextQAFileNumberString, qaFileNumber, qaNode.Name, qaNode.Text, parentChain);
            
-            if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Name + ".txt"))
+            if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt"))
             {
-                File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Name + ".txt");
+                File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text  + ".txt");
             }
         }// End addNewQAFileNodeButton_Click
 
@@ -258,6 +269,12 @@ namespace QAProject
 
         private void renameNodeButton_Click(object sender, EventArgs e)
         {
+            //Make sure the node has been selected first
+            if(subjectTreeView.SelectedNode == null)
+            {
+                MessageBox.Show("You Must Select a Node first!");
+                return;
+            }
             // Get the text to apply to the node's TextValue
             string newNodeText = "";
             if (subjectTreeView.SelectedNode.Text.IndexOf("qa_") == 0)
@@ -487,6 +504,14 @@ namespace QAProject
         }// selectNewParentbuttonClicked
 
 
+        private void editQAFileButton_Click(object sender, EventArgs e)
+        {
+            string qaFileName = subjectTreeView.SelectedNode.Text;
+            QAFileDataModel.setQAFileNameStr(qaFileName);
+            this.Hide();
+            QuestionAndAnswerForm questionAndAnswerForm = new QuestionAndAnswerForm();
+            questionAndAnswerForm.ShowDialog();
+        }
 
 
         //----------------------UTILITY METHODS------------------------------//
@@ -858,7 +883,20 @@ namespace QAProject
             }
         }// End updateQAFileNameScores()
 
+        private void deleteNode_Click(object sender, EventArgs e)
+        {
+            // TODO - Complete code to remove a node.
 
+            //  THIS CODE IS NOT COMPLETE SINCE I HAVEN'T REMOVED THE NODE AND
+            //  ALL OF ITS CHILDREN FROM THE TREEVIEWDICTIONARY
+            // Make sure that a node has been selected first
+            //if(subjectTreeView.SelectedNode == null)
+            //{
+            //    MessageBox.Show("You Must select a node first!");
+            //    return;
+            //}
+            //subjectTreeView.SelectedNode.Remove();
+        }
     }// End QATreeForm
 
 

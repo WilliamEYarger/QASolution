@@ -32,6 +32,7 @@
             this.informationButton = new System.Windows.Forms.Button();
             this.openSubjectsTreeButton = new System.Windows.Forms.Button();
             this.exitApplicationButton = new System.Windows.Forms.Button();
+            this.openCeateEditQAFilesFormbutton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // formTitleLabel
@@ -64,7 +65,7 @@
             // 
             // exitApplicationButton
             // 
-            this.exitApplicationButton.Location = new System.Drawing.Point(367, 103);
+            this.exitApplicationButton.Location = new System.Drawing.Point(759, 103);
             this.exitApplicationButton.Name = "exitApplicationButton";
             this.exitApplicationButton.Size = new System.Drawing.Size(232, 89);
             this.exitApplicationButton.TabIndex = 3;
@@ -72,12 +73,23 @@
             this.exitApplicationButton.UseVisualStyleBackColor = true;
             this.exitApplicationButton.Click += new System.EventHandler(this.exitApplicationButton_Click);
             // 
+            // openCeateEditQAFilesFormbutton
+            // 
+            this.openCeateEditQAFilesFormbutton.Location = new System.Drawing.Point(352, 103);
+            this.openCeateEditQAFilesFormbutton.Name = "openCeateEditQAFilesFormbutton";
+            this.openCeateEditQAFilesFormbutton.Size = new System.Drawing.Size(232, 89);
+            this.openCeateEditQAFilesFormbutton.TabIndex = 4;
+            this.openCeateEditQAFilesFormbutton.Text = "Open The Create/Edit QAFiles Forl";
+            this.openCeateEditQAFilesFormbutton.UseVisualStyleBackColor = true;
+            this.openCeateEditQAFilesFormbutton.Click += new System.EventHandler(this.openCeateEditQAFilesFormbutton_Click);
+            // 
             // QADashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1151, 627);
+            this.Controls.Add(this.openCeateEditQAFilesFormbutton);
             this.Controls.Add(this.exitApplicationButton);
             this.Controls.Add(this.openSubjectsTreeButton);
             this.Controls.Add(this.informationButton);
@@ -98,6 +110,7 @@
         private System.Windows.Forms.Button informationButton;
         private System.Windows.Forms.Button openSubjectsTreeButton;
         private System.Windows.Forms.Button exitApplicationButton;
+        private System.Windows.Forms.Button openCeateEditQAFilesFormbutton;
     }
 }
 

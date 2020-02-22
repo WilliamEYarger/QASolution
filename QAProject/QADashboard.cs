@@ -55,8 +55,14 @@ namespace QAProject
             TreeViewDictionaryModel.saveTreeViewDictionary();
             QACumulativeResultsModel.exportQACumulativeResutsFile();
             Application.Exit();
-            //this.ControlBox = true;
-           //System.Windows.Forms.Application.Exit();
+        }
+
+        private void openCeateEditQAFilesFormbutton_Click(object sender, EventArgs e)
+        {
+            
+            this.Hide();
+            QuestionAndAnswerForm createQAForm = new QuestionAndAnswerForm();
+            createQAForm.ShowDialog();
         }
     }
 }

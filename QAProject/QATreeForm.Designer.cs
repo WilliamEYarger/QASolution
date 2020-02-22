@@ -35,7 +35,7 @@
             this.addNewSubjectButton = new System.Windows.Forms.Button();
             this.addNewSubjectChapterButton = new System.Windows.Forms.Button();
             this.addNewQAFileNodeButton = new System.Windows.Forms.Button();
-            this.reviewQAFileButton = new System.Windows.Forms.Button();
+            this.editQAFileButton = new System.Windows.Forms.Button();
             this.takeQAFileTestButton = new System.Windows.Forms.Button();
             this.vewCumulativeResultsForSelectedQAFileButton = new System.Windows.Forms.Button();
             this.viewCumResAllFilesButton = new System.Windows.Forms.Button();
@@ -111,20 +111,21 @@
             this.addNewQAFileNodeButton.UseVisualStyleBackColor = true;
             this.addNewQAFileNodeButton.Click += new System.EventHandler(this.addNewQAFileNodeButton_Click);
             // 
-            // reviewQAFileButton
+            // editQAFileButton
             // 
-            this.reviewQAFileButton.Location = new System.Drawing.Point(795, 263);
-            this.reviewQAFileButton.Name = "reviewQAFileButton";
-            this.reviewQAFileButton.Size = new System.Drawing.Size(267, 54);
-            this.reviewQAFileButton.TabIndex = 10;
-            this.reviewQAFileButton.Text = "Review this QA File";
-            this.reviewQAFileButton.UseVisualStyleBackColor = true;
+            this.editQAFileButton.Location = new System.Drawing.Point(795, 263);
+            this.editQAFileButton.Name = "editQAFileButton";
+            this.editQAFileButton.Size = new System.Drawing.Size(321, 54);
+            this.editQAFileButton.TabIndex = 10;
+            this.editQAFileButton.Text = "Edit/Create this QA File";
+            this.editQAFileButton.UseVisualStyleBackColor = true;
+            this.editQAFileButton.Click += new System.EventHandler(this.editQAFileButton_Click);
             // 
             // takeQAFileTestButton
             // 
-            this.takeQAFileTestButton.Location = new System.Drawing.Point(1110, 263);
+            this.takeQAFileTestButton.Location = new System.Drawing.Point(1153, 263);
             this.takeQAFileTestButton.Name = "takeQAFileTestButton";
-            this.takeQAFileTestButton.Size = new System.Drawing.Size(279, 54);
+            this.takeQAFileTestButton.Size = new System.Drawing.Size(267, 54);
             this.takeQAFileTestButton.TabIndex = 11;
             this.takeQAFileTestButton.Text = "Take Test on this File";
             this.takeQAFileTestButton.UseVisualStyleBackColor = true;
@@ -133,14 +134,14 @@
             // 
             this.vewCumulativeResultsForSelectedQAFileButton.Location = new System.Drawing.Point(797, 350);
             this.vewCumulativeResultsForSelectedQAFileButton.Name = "vewCumulativeResultsForSelectedQAFileButton";
-            this.vewCumulativeResultsForSelectedQAFileButton.Size = new System.Drawing.Size(280, 124);
+            this.vewCumulativeResultsForSelectedQAFileButton.Size = new System.Drawing.Size(319, 124);
             this.vewCumulativeResultsForSelectedQAFileButton.TabIndex = 13;
             this.vewCumulativeResultsForSelectedQAFileButton.Text = "View cumulative results for this QAFile";
             this.vewCumulativeResultsForSelectedQAFileButton.UseVisualStyleBackColor = true;
             // 
             // viewCumResAllFilesButton
             // 
-            this.viewCumResAllFilesButton.Location = new System.Drawing.Point(1122, 350);
+            this.viewCumResAllFilesButton.Location = new System.Drawing.Point(1153, 350);
             this.viewCumResAllFilesButton.Name = "viewCumResAllFilesButton";
             this.viewCumResAllFilesButton.Size = new System.Drawing.Size(280, 124);
             this.viewCumResAllFilesButton.TabIndex = 14;
@@ -160,7 +161,7 @@
             // 
             // selectNewParentbutton
             // 
-            this.selectNewParentbutton.Location = new System.Drawing.Point(313, 42);
+            this.selectNewParentbutton.Location = new System.Drawing.Point(356, 39);
             this.selectNewParentbutton.Name = "selectNewParentbutton";
             this.selectNewParentbutton.Size = new System.Drawing.Size(274, 87);
             this.selectNewParentbutton.TabIndex = 1;
@@ -172,7 +173,7 @@
             // 
             this.selectNodetoMoveButton.Location = new System.Drawing.Point(6, 39);
             this.selectNodetoMoveButton.Name = "selectNodetoMoveButton";
-            this.selectNodetoMoveButton.Size = new System.Drawing.Size(274, 87);
+            this.selectNodetoMoveButton.Size = new System.Drawing.Size(313, 87);
             this.selectNodetoMoveButton.TabIndex = 0;
             this.selectNodetoMoveButton.Text = "Select Node To Move";
             this.selectNodetoMoveButton.UseVisualStyleBackColor = true;
@@ -192,7 +193,7 @@
             // 
             this.renameNodeButton.Location = new System.Drawing.Point(795, 192);
             this.renameNodeButton.Name = "renameNodeButton";
-            this.renameNodeButton.Size = new System.Drawing.Size(267, 47);
+            this.renameNodeButton.Size = new System.Drawing.Size(321, 47);
             this.renameNodeButton.TabIndex = 19;
             this.renameNodeButton.Text = "Rename Node";
             this.renameNodeButton.UseVisualStyleBackColor = true;
@@ -200,12 +201,13 @@
             // 
             // deleteNode
             // 
-            this.deleteNode.Location = new System.Drawing.Point(1122, 192);
+            this.deleteNode.Location = new System.Drawing.Point(1153, 192);
             this.deleteNode.Name = "deleteNode";
             this.deleteNode.Size = new System.Drawing.Size(267, 47);
             this.deleteNode.TabIndex = 20;
             this.deleteNode.Text = "Delete Node";
             this.deleteNode.UseVisualStyleBackColor = true;
+            this.deleteNode.Click += new System.EventHandler(this.deleteNode_Click);
             // 
             // QATreeForm
             // 
@@ -219,7 +221,7 @@
             this.Controls.Add(this.viewCumResAllFilesButton);
             this.Controls.Add(this.vewCumulativeResultsForSelectedQAFileButton);
             this.Controls.Add(this.takeQAFileTestButton);
-            this.Controls.Add(this.reviewQAFileButton);
+            this.Controls.Add(this.editQAFileButton);
             this.Controls.Add(this.addNewQAFileNodeButton);
             this.Controls.Add(this.addNewSubjectChapterButton);
             this.Controls.Add(this.addNewSubjectButton);
@@ -247,7 +249,7 @@
         private System.Windows.Forms.Button addNewSubjectButton;
         private System.Windows.Forms.Button addNewSubjectChapterButton;
         private System.Windows.Forms.Button addNewQAFileNodeButton;
-        private System.Windows.Forms.Button reviewQAFileButton;
+        private System.Windows.Forms.Button editQAFileButton;
         private System.Windows.Forms.Button takeQAFileTestButton;
         private System.Windows.Forms.Button vewCumulativeResultsForSelectedQAFileButton;
         private System.Windows.Forms.Button viewCumResAllFilesButton;
