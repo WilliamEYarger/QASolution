@@ -15,7 +15,11 @@
 //      void renameNodeButton_Click(
 //      void selectNodetoMoveButton_Click(
 //      void selectNewParentbutton_Click(
-//      void editQAFileButton_Click
+//      void editQAFileButton_Click(
+//      void deleteNode_Click(
+//      void addHyperlinkButton_Click(
+//      void subjectTextValue_Leave(
+//      void openHyperlinkButton_Click(
 
 //----------------------UTILITY METHODS------------------------------//
 //      bool nodeIsTerminal(
@@ -78,6 +82,8 @@ namespace QAProject
         {
             this.ControlBox = false;
             createTreeViewFromDictionary();
+            treeViewDictionary = TreeViewDictionaryModel.getTreeViewDictionary();
+
         }// EndQATreeFormLoad
 
         //-----------------------BUTTON CLICK METHODS------------------------//
@@ -161,8 +167,10 @@ namespace QAProject
             }
             // Insure that this 'Division' node is not being added to a 'qaFileNode'
             TreeNode selectedNode = subjectTreeView.SelectedNode;
-            int ln = selectedNode.Name.Length - 1;
-            char lastChar = selectedNode.Name[ln];
+            string selectedNodeText = selectedNode.Text;
+            string selectedNodeName = selectedNode.Name;
+            int ln = selectedNode.Name.Length;
+            char lastChar = selectedNode.Name[ln-1];
             bool lastIsNum = lastChar == 'q';
             if (lastIsNum)
             {
@@ -214,6 +222,13 @@ namespace QAProject
         /// <param name="e"></param>
         private void addNewQAFileNodeButton_Click(object sender, EventArgs e)
         {
+            // Make sure that a parent has been chosen first
+            if (subjectTreeView.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a parent before you can add a Division node!");
+                return;
+            }
+
             // Create a parent node from the selected node
 
             TreeNode selectedNode = subjectTreeView.SelectedNode;
@@ -513,7 +528,84 @@ namespace QAProject
             this.Hide();
             QuestionAndAnswerForm questionAndAnswerForm = new QuestionAndAnswerForm();
             questionAndAnswerForm.ShowDialog();
-        }
+        }// End editQAFileButton_Click(
+
+        private void deleteNode_Click(object sender, EventArgs e)
+        {
+            // TODO - Complete code to remove a node.
+
+            //  THIS CODE IS NOT COMPLETE SINCE I HAVEN'T REMOVED THE NODE AND
+            //  ALL OF ITS CHILDREN FROM THE TREEVIEWDICTIONARY
+            // Make sure that a node has been selected first
+            //if(subjectTreeView.SelectedNode == null)
+            //{
+            //    MessageBox.Show("You Must select a node first!");
+            //    return;
+            //}
+            //subjectTreeView.SelectedNode.Remove();
+        }// End deleteNode_Click(
+
+        private void addHyperlinkButton_Click(object sender, EventArgs e)
+        {
+
+            // Make sure that anode has been chosen first
+            if (subjectTreeView.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a node before you can add a Link!");
+                return;
+            }
+            //subjectTextLabel.Text = "Enter HyperLink";
+            hyperlinkSelectedNode = subjectTreeView.SelectedNode;
+            if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt"))
+            {
+                File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt");
+            }
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string filePath = ofd.FileName;
+                string output = hyperlinkSelectedNode.Name + '^' + filePath + '\n';
+                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
+            }
+
+            //addingHyperlink = true;
+            //subjectTextValue.Select();
+            return;
+        }// End addHyperlinkButton_Click(
+
+        private void subjectTextValue_Leave(object sender, EventArgs e)
+        {
+            if (addingHyperlink)
+            {
+                thisHyperlink = subjectTextValue.Text;
+                string output = hyperlinkSelectedNode.Name + '^' + thisHyperlink + '\n';
+                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
+                subjectTextLabel.Text = "Enter Name ->";
+                thisHyperlink = "";
+                addingHyperlink = false;
+                subjectTextValue.Text = "";
+                return;
+            }
+        }// End subjectTextValue_Leave(
+
+        private void openHyperlinkButton_Click(object sender, EventArgs e)
+        {
+            if (subjectTreeView.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a node before you can open a Link!");
+                return;
+            }
+            TreeNode selectedNode = subjectTreeView.SelectedNode;
+            string selectedNodeName = selectedNode.Name;
+            string hyperlink = TreeViewDictionaryModel.getHyperlink(selectedNodeName);
+            if (hyperlink == "")
+            {
+                MessageBox.Show("No Hyperlink exists for this node");
+                return;
+            }
+            System.Diagnostics.Process.Start(hyperlink);
+
+        }// End openHyperlinkButton_Click(
 
 
         //----------------------UTILITY METHODS------------------------------//
@@ -664,7 +756,8 @@ namespace QAProject
                             thisNodesNumber4 = Int32.Parse(nodeNameComponents[4]);
                         }
                         subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes.Add(nodeText);
-                        thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3];
+                        // NOTE this line of code altered 202003030803
+                        thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4];
                         thisNode.Name = nodeName;
                         break;
                     case 6:
@@ -790,6 +883,7 @@ namespace QAProject
                 }// End switch(nodeLevel)
             }
             subjectTreeView.EndUpdate();
+            //treeViewDictionary = TreeViewDictionaryModel
         }// End CreateTreeViewFromDictionary
 
         /// <summary>
@@ -885,61 +979,10 @@ namespace QAProject
             }
         }// End updateQAFileNameScores()
 
-        private void deleteNode_Click(object sender, EventArgs e)
-        {
-            // TODO - Complete code to remove a node.
 
-            //  THIS CODE IS NOT COMPLETE SINCE I HAVEN'T REMOVED THE NODE AND
-            //  ALL OF ITS CHILDREN FROM THE TREEVIEWDICTIONARY
-            // Make sure that a node has been selected first
-            //if(subjectTreeView.SelectedNode == null)
-            //{
-            //    MessageBox.Show("You Must select a node first!");
-            //    return;
-            //}
-            //subjectTreeView.SelectedNode.Remove();
-        }
 
-        private void addHyperlinkButton_Click(object sender, EventArgs e)
-        {
-           //subjectTextLabel.Text = "Enter HyperLink";
-            hyperlinkSelectedNode = subjectTreeView.SelectedNode;
-            OpenFileDialog ofd = new OpenFileDialog();
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK) 
-            {
-                string filePath = ofd.FileName;
-                string output = hyperlinkSelectedNode.Name + '^' + filePath + '\n';
-                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
-            }
+ 
 
-            //addingHyperlink = true;
-            //subjectTextValue.Select();
-            return;
-        }
-
-        private void subjectTextValue_Leave(object sender, EventArgs e)
-        {
-            if (addingHyperlink)
-            {
-                thisHyperlink = subjectTextValue.Text;
-                string output = hyperlinkSelectedNode.Name + '^' + thisHyperlink+'\n';
-                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
-                subjectTextLabel.Text = "Enter Name ->";
-                thisHyperlink = "";
-                addingHyperlink = false;
-                subjectTextValue.Text = "";
-                return;
-            }
-        }
-
-        private void openHyperlinkButton_Click(object sender, EventArgs e)
-        {
-            TreeNode selectedNode = subjectTreeView.SelectedNode;
-            string selectedNodeName = selectedNode.Name;
-            string hyperlink = TreeViewDictionaryModel.getHyperlink(selectedNodeName);
-            System.Diagnostics.Process.Start(hyperlink);
-
-        }
     }// End QATreeForm
 
 

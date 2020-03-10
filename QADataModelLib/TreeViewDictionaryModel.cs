@@ -14,15 +14,23 @@ namespace QADataModelLib
 
         private static Dictionary<string, string> TreeViewDictionary = new Dictionary<string, string>();
         private static Dictionary<string, string> HyperlinkDictionary = new Dictionary<string, string>();
-        
+
         public static string getHyperlink(string nodeName)
         {
             string hyperlink = "";
             loadHyperlinkDictionary();
-            hyperlink = HyperlinkDictionary[nodeName];
-
+            try 
+            {
+                hyperlink = HyperlinkDictionary[nodeName];
+            }
+            catch (Exception)
+            {
+                hyperlink = "";
+            }
             return hyperlink;
-        }
+        }// End getHyperlink
+
+
 
 
         /// <summary>

@@ -18,14 +18,16 @@
 //      void editSelectedQAPairsToolStripMenuItem_Click(
 //      void questionNumberValue_Leave(
 //      void editAllSeriatemToolStripMenuItem_Click(
-//      answerValue_Leave(
 //      imagesToolStripMenuItem_Click(
+//      beginANewFileToolStripMenuItem_Click(
+//      getNextQAPairButton_Click(
 //--------------------------HELPER METHODS-----------------------------//
 //      void setQandA() 
 //      void saveThisQAPair(
 //      
 //      
 
+// TODO - Add an insturtion form to the solution
 
 using System;
 using System.Collections.Generic;
@@ -59,6 +61,10 @@ namespace QAProject
         private bool editSelectedQAPairs = false;
         // Edit mode is edit All files Seriatem
         private bool editAllSeriatem = false;
+        // The tab key was pressed
+        private bool tabKeyPressed = false;
+        // The Control key was pressed
+        private bool controlKeyPressed = false;
         //--------------------------String---------------------------------------//
 
 
@@ -212,17 +218,24 @@ namespace QAProject
         /// <param name="e"></param>
         private void questionNumberValue_Leave(object sender, EventArgs e)
         {
+            // If edit editSelectedQAPairs is false return without further processing
+            if (!editSelectedQAPairs)
+            {
+                return;
+            }
+
             /*Convert the string numeric the user entered in the questionNumberValue 
              into an integer and use it to call the appropriate values from the
              qaDictionary. 
              */
             currentQAPairInt = Int32.Parse(questionNumberValue.Text);
-            string currentQAString = qaDictionary[currentQAPairInt];
-            string[] currentQAValsArray = currentQAString.Split('^');
-            questionValue.Text = currentQAValsArray[0];
-            answerValue.Text = currentQAValsArray[1];
-            imageURL = currentQAValsArray[2];
-            mp3URL = currentQAValsArray[3];
+            setQandA();
+            //string currentQAString = qaDictionary[currentQAPairInt];
+            //string[] currentQAValsArray = currentQAString.Split('^');
+            //questionValue.Text = currentQAValsArray[0];
+            //answerValue.Text = currentQAValsArray[1];
+            //imageURL = currentQAValsArray[2];
+            //mp3URL = currentQAValsArray[3];
             // Move to the question value text box
             questionValue.Select();
         }// End questionNumberValue_Leave
@@ -251,20 +264,7 @@ namespace QAProject
         }// End editAllSeriatemToolStripMenuItem_Click
 
 
-        /// <summary>
-        /// This procedure is called when the user exits the answer text box and
-        /// It calls saveThisQAPair() to save the current values of the question and
-        /// answer and ??? and changes in the image or mp3 urls
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void answerValue_Leave(object sender, EventArgs e)
-        {
-            // Set the value of currentQAPairsInt
-            saveThisQAPair();
-            return;
-        }// End answerValue_Leave
-
+       
         /// <summary>
         /// This method is called when the user clicks the load Image menu otion
         ///     1. It then copies the image from its original location into the 
@@ -300,6 +300,35 @@ namespace QAProject
             }// End open file dialog
         }// End imagesToolStripMenuItem_Click
 
+
+        private void beginANewFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (qaDictionary.Count != 0)
+            {
+                MessageBox.Show("This file already exists. Select another Edit Mode!");
+                return;
+            }
+            currentQAPairInt = 0;
+            questionNumberValue.Text = "0";
+            questionValue.Text = "";
+            answerValue.Text = "";
+            imageURL = "";
+            mp3URL = "";
+            appendToFile = true;
+            editAllSeriatem = false;
+            editSelectedQAPairs = false;
+            questionValue.Select();
+
+        }// End beginANewFileToolStripMenuItem_Click
+
+
+        private void getNextQAPairButton_Click(object sender, EventArgs e)
+        {
+            // Set the value of currentQAPairsInt
+            saveThisQAPair();
+            return;
+        }// End getNextQAPairButton_Click
+
         //--------------------------HELPER METHODS-----------------------------//
 
         /// <summary>
@@ -310,8 +339,10 @@ namespace QAProject
         private void setQandA() 
         {
             string [] thisQALineArray = qaDictionary[currentQAPairInt].Split('^');
-            questionValue.Text = thisQALineArray[0];
-            answerValue.Text = thisQALineArray[1];
+            string question = thisQALineArray[0];
+            string answer = thisQALineArray[1];
+            questionValue.Text = question.Replace("~", "\r\n");
+            answerValue.Text = answer.Replace("~", "\r\n");
             imageURL = thisQALineArray[2];
             if(imageURL != "")
             {
@@ -329,7 +360,9 @@ namespace QAProject
         /// </summary>
         private void saveThisQAPair()
         {
-            string qaLine = questionValue.Text + '^' + answerValue.Text + '^' + imageURL + '^' + mp3URL;
+            string question = questionValue.Text.Replace("\r\n", "~");
+            string answer = answerValue.Text.Replace("\r\n", "~");
+            string qaLine = question + '^' + answer + '^' + imageURL + '^' + mp3URL;
             // Save the current values
             // If Edit seriatem or edit selected return the new value to the dictionary
             if((editSelectedQAPairs) || (editAllSeriatem))
@@ -374,6 +407,17 @@ namespace QAProject
                 questionNumberValue.Select();
             }
         }// End saveThisQAPair
+
+        private void instructionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string instructions = "This is a list of instutions for the use of this form."
+                + '\n' + "This is line 2 of the insturctions.";
+            instructionForm iForm = new instructionForm();
+            Instructions.instructions = instructions;
+            iForm.Show();
+           
+        }
+
 
 
 
