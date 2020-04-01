@@ -43,6 +43,7 @@
             this.mediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soundsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.instructionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.questionNumberValue = new System.Windows.Forms.TextBox();
             this.questionNumberLabel = new System.Windows.Forms.Label();
@@ -54,7 +55,6 @@
             this.editTypeLabel = new System.Windows.Forms.Label();
             this.selectEditTypeLable = new System.Windows.Forms.Label();
             this.getNextQAPairButton = new System.Windows.Forms.Button();
-            this.instructionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.questionImagePictureBox)).BeginInit();
@@ -102,11 +102,8 @@
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
             this.openFileToolStripMenuItem.Size = new System.Drawing.Size(399, 32);
             this.openFileToolStripMenuItem.Text = "&Open File";
-            // 
-            // openQAFileToolStripMenuItem
-            // 
             this.openQAFileToolStripMenuItem.Name = "openQAFileToolStripMenuItem";
-            this.openQAFileToolStripMenuItem.Size = new System.Drawing.Size(210, 32);
+            this.openQAFileToolStripMenuItem.Size = new System.Drawing.Size(224, 32);
             this.openQAFileToolStripMenuItem.Text = "Open &QA file";
             this.openQAFileToolStripMenuItem.Click += new System.EventHandler(this.openQAFileToolStripMenuItem_Click);
             // 
@@ -177,6 +174,13 @@
             this.soundsToolStripMenuItem.Name = "soundsToolStripMenuItem";
             this.soundsToolStripMenuItem.Size = new System.Drawing.Size(163, 32);
             this.soundsToolStripMenuItem.Text = "Sounds";
+            // 
+            // instructionsToolStripMenuItem
+            // 
+            this.instructionsToolStripMenuItem.Name = "instructionsToolStripMenuItem";
+            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(127, 32);
+            this.instructionsToolStripMenuItem.Text = "Instructions";
+            this.instructionsToolStripMenuItem.Click += new System.EventHandler(this.instructionsToolStripMenuItem_Click);
             // 
             // errorProvider1
             // 
@@ -281,13 +285,6 @@
             this.getNextQAPairButton.Text = "Get Next QA Pair";
             this.getNextQAPairButton.UseVisualStyleBackColor = true;
             this.getNextQAPairButton.Click += new System.EventHandler(this.getNextQAPairButton_Click);
-            // 
-            // instructionsToolStripMenuItem
-            // 
-            this.instructionsToolStripMenuItem.Name = "instructionsToolStripMenuItem";
-            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(127, 32);
-            this.instructionsToolStripMenuItem.Text = "Instructions";
-            this.instructionsToolStripMenuItem.Click += new System.EventHandler(this.instructionsToolStripMenuItem_Click);
             // 
             // QuestionAndAnswerForm
             // 

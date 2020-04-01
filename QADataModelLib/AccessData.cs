@@ -23,7 +23,7 @@
 //       private static void saveQAFileNameScoresFile(
 //       private static void saveQACumulativeResultsFile(
 //------------------------------OTHER METHODS---------------------------------------------//
-//       void updateQANameScoreDictionary
+//       void updateQANameScoreDictionaryWithNewEntry
 //       
 //       
 //       

@@ -132,6 +132,7 @@
             this.takeQAFileTestButton.TabIndex = 11;
             this.takeQAFileTestButton.Text = "Take Test on this File";
             this.takeQAFileTestButton.UseVisualStyleBackColor = true;
+            this.takeQAFileTestButton.Click += new System.EventHandler(this.takeQAFileTestButton_Click);
             // 
             // vewCumulativeResultsForSelectedQAFileButton
             // 

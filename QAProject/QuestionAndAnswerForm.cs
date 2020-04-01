@@ -88,20 +88,20 @@ namespace QAProject
         /// <param name="e"></param>
         private void QuestionAndAnswerForm_Load(object sender, EventArgs e)
         {
-            string qaFileNameString = QAFileDataModel.getQAFileNameStr();
+            string qaFileNameString = AnswerQuestionsDataModel.getQAFileNameStr();
             if (qaFileNameString != "")
             {
-                string qaFilePath = QAFileDataModel.getQAFilePath();
+                string qaFilePath = AnswerQuestionsDataModel.getQAFilePath();
                 if (qaFilePath == "")
                 {
                     // Get a blank dictionary
-                    qaDictionary = QAFileDataModel.QandADictionary;
+                    qaDictionary = AnswerQuestionsDataModel.QandADictionary;
                     questionNumberValue.Text = qaDictionary.Count.ToString();
                     questionValue.Select();
                     return;
                 }
-                QAFileDataModel.loadQAFileIntoDictionary(QAFileDataModel.getQAFilePath());
-                qaDictionary = QAFileDataModel.QandADictionary;
+                AnswerQuestionsDataModel.loadQAFileIntoDictionary(AnswerQuestionsDataModel.getQAFilePath());
+                qaDictionary = AnswerQuestionsDataModel.QandADictionary;
                 selectEditTypeLable.Visible = true;
             }//End if (qaFileNameString != "")
         }// End QuestionAndAnswerForm_Load
@@ -121,7 +121,7 @@ namespace QAProject
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 qaFilePath = ofd.FileName;
-                QAFileDataModel.setQAFilePath(qaFilePath);
+                AnswerQuestionsDataModel.setQAFilePath(qaFilePath);
                 // Determine if the file exists
                 if (File.Exists(qaFilePath))
                 {
@@ -131,15 +131,15 @@ namespace QAProject
                     if (length != 0)
                     {
                         // Load File into dictionary
-                        QAFileDataModel.loadQAFileIntoDictionary(qaFilePath);
+                        AnswerQuestionsDataModel.loadQAFileIntoDictionary(qaFilePath);
                         // Get dictionary
-                        qaDictionary = QAFileDataModel.QandADictionary;
+                        qaDictionary = AnswerQuestionsDataModel.QandADictionary;
                     }
                     else
                     {
                         // If the file exists, but is blank
                         // Get a blank dictionary
-                        qaDictionary = QAFileDataModel.QandADictionary;
+                        qaDictionary = AnswerQuestionsDataModel.QandADictionary;
                         questionNumberValue.Text = qaDictionary.Count.ToString();
                         questionValue.Select();
                     }
@@ -158,8 +158,8 @@ namespace QAProject
         private void saveFileAndReturnToDashboardToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // send the current local value of the qaDictionary to QAFileDataModel's QandADictionary
-            QAFileDataModel.QandADictionary = qaDictionary;
-            QAFileDataModel.saveQAFile();
+            AnswerQuestionsDataModel.QandADictionary = qaDictionary;
+            AnswerQuestionsDataModel.saveQAFile();
             this.Hide();
             this.Close();
             QADashboard dashboardForm = new QADashboard();
@@ -417,6 +417,8 @@ namespace QAProject
             iForm.Show();
            
         }
+
+        
 
 
 

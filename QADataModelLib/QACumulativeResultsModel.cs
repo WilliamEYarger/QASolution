@@ -53,7 +53,7 @@ namespace QADataModelLib
         /// The cumulativeResultsDictionary has the nodeName as its Key and the delimited items of the 
         /// cumulative results for taking a Test on a particular "qa_" question and answer file collection.
         /// THE FORMAT OF EACH STIRNG IS:
-        ///     0.0.0.1.0.8q^qa_Plato^20191015 0853:95.0:1,15~20191115 1453:80:1,3,9,15~20191230 0950:70:1,3,7,9,25,31
+        ///     8q^qa_Plato^201910150853:95.0:1,15~201911151453:80:1,3,9,15~20191230 0950:70:1,3,7,9,25,31
         ///     nodeName^nodeText^individual test data [date, % corrct and , questions incorrectly answered] '~' individual test data'~' etc.
         /// Whenever a new qa_TestFile is created a "nodeName^nodeText^" stub will be appended to the dictionary
         /// Each time a test is taken on a qa_TestFile,  its dateTime yyyymmdd hhmm; the % of questions answered
@@ -124,6 +124,11 @@ namespace QADataModelLib
             {
                 string key = kvp.Key;
                 string value = kvp.Value;
+                int lastTilda = value.LastIndexOf('~');
+                if(lastTilda == value.Length-1)
+                {
+                    value = value.Substring(0, value.Length - 1);
+                }
                 lines[counter] = value;
                 counter++;
             }
@@ -189,13 +194,12 @@ namespace QADataModelLib
         //CHANGE- 001 add nextQAFileNumberString to the parameters
         public static void addNewQATestFileRow(string nextQAFileNumberString, string nodeName, string nodeText)
         {
+            /* newQAFileName will be used as the key to the dictionary it is created from
+               the integer representing the next available integer to create a new qaFile
+               converted to a string with a 'q' appended
+            */
             string newQAFileName = nextQAFileNumberString + 'q';
 
-
-            // Changes in change 001
-            //string value = nodeName + '^' + nodeText + '^';
-
-            // New in change 001
             string value = newQAFileName + '^' + nodeText + '^';
             if (!cumulativeResultsDictionary.ContainsKey(newQAFileName))
             {
@@ -215,6 +219,11 @@ namespace QADataModelLib
             return table;
         }
 
+        /// <summary>
+        /// This method is called when the SubjectTreeForm renames a qaNode
+        /// </summary>
+        /// <param name="nodeName"></param>
+        /// <param name="newNodeText"></param>
         public static void reTextQANode(string nodeName, string newNodeText)
         {
             // Create  a temporary holding dictionary
@@ -225,6 +234,24 @@ namespace QADataModelLib
             cumulativeResultsDictionary = new Dictionary<string, string>();
             cumulativeResultsDictionary = tempCumulativeResultsDictionary;
         }// End reTextQANode
+
+
+        public static void updateCumulativeresultsDictionary(string keyStr, string examResultsStr)
+        {
+            /* the Key string is a value something like "5q" and the
+             * examResultsStr contains a ':' delimited string like "201910150853:95.0:1,1"
+             * where the first value is the datetime the exam was taken
+             * the second value is the percent of correct answers,
+             * and the third is is list of incorrectly answered questions
+             * The examResultsStr will be appended to the existing value of the
+             * cumulativeResultsDictionary with a '~' internal delimiter added
+             */
+            string currentDictionaryLineStr = cumulativeResultsDictionary[keyStr];
+            currentDictionaryLineStr = currentDictionaryLineStr + examResultsStr;
+            cumulativeResultsDictionary[keyStr] = currentDictionaryLineStr;
+
+
+        }// End updateCumulativeresultsDictionary
 
 
     }// End QACumulativeResultsModel

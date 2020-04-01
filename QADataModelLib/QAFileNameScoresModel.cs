@@ -1,4 +1,9 @@
-﻿using System;
+﻿
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -8,7 +13,9 @@ namespace QADataModelLib
 {
     public class QAFileNameScoresModel
     {
-
+        /// <summary>
+        /// The path to the text file that holds the FileNameScores data
+        /// </summary>
         private static string qaNameScoreFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAFileNameScores.txt";
 
         /// <summary>
@@ -20,21 +27,32 @@ namespace QADataModelLib
         /// </summary>
         public static Int32 currentMaxQAFileID { get; set; } = 0;
 
-
+        /// <summary>
+        /// This is the reference variable that holds the 
+        /// </summary>
         private static Dictionary<Int32, string> QANameScoreDictionary = new Dictionary<int, string>();
 
+
+        /// <summary>
+        /// This is called by the QATreeForms' updateQAFileNameScores( method
+        /// </summary>
+        /// <returns></returns>
         public static Dictionary<Int32, string> getQANameScoreDictionary()
         {
             return QANameScoreDictionary;
         }// End getQANameScoreDictionary
 
         /// <summary>
-        /// 
+        /// This method is called by the QADashboard_Load Method
+        ///      Its Purpose is to load the QAFileNameScores.txt file into the
+        /// QANameScoreDictionary.
+        ///      It also sets currentMaxQAFileID, 
         /// </summary>
         public static void loadQANameScoreDictionary()
         {
-            //QANameScoreDictionary = new Dictionary<int, string>();
+            // Create a List of string to hold the lines in the input file
             List<string> inputList = new List<string>();
+            // 
             if (File.Exists(qaNameScoreFilePath))
             {
 
@@ -45,7 +63,7 @@ namespace QADataModelLib
                 {
                     string line;
                     int counter = 0;
-                    // Read the file and display it line by line.  
+                    // Read the file and enter it line by line into  inputList 
                     System.IO.StreamReader file =
                         new System.IO.StreamReader(qaNameScoreFilePath);
                     while ((line = file.ReadLine()) != null)
@@ -69,12 +87,19 @@ namespace QADataModelLib
                         }
                         string value = keyAndValue[1];
                         QANameScoreDictionary.Add(key, value);
-                    }
-                }
-            }
+                    }// End for loop parsing lines in inputList into QANameScoreDictionar
+                }// End if there are data in the file and if so read it into the dictionary
+            }// End if qaNameScoreFilePath FileExixts
         }// End setQANameScoreDictionary
 
 
+        /// <summary>
+        /// This method is called by the Dashboard's exitApplicationButton_Click( method
+        /// It converts the QANameScoreDictionary into a text file where the Key and
+        /// the value are delimitged by a '~' and the value is broken down into
+        /// qaFileName, qaParentChain, and the most recent % correct score of the most 
+        /// RECENT result on taking a qaFile Exam are delimited by '^'
+        /// </summary>
         public static void saveQAFileNameScoresFile()
         {
             // If file exists delete it
@@ -104,17 +129,38 @@ namespace QADataModelLib
          */
 
             // CHANGE- 002 change the nodeName to the cumulativeQANodeNumber string
-        public static void updateQANameScoreDictionary(string cumulativeQANumberString, int ID, string nodeName, string nodeText, string parentString)
-        {
-            // changed in change 002
-            //string value = nodeText + "^" + parentString + "^" + nodeName + "^No Test Yet";
 
-            // change 002
+        /// <summary>
+        /// Called by the QTreeForm addNewQAFileButton Click
+        /// </summary>
+        /// <param name="cumulativeQANumberString"></param>
+        /// <param name="ID"></param>
+        /// <param name="nodeName"></param>
+        /// <param name="nodeText"></param>
+        /// <param name="parentString"></param>
+        public static void updateQANameScoreDictionaryWithNewEntry(string cumulativeQANumberString, int ID, string nodeName, string nodeText, string parentString)
+        {
+            
             string value = nodeText + "^" + parentString + "^" + cumulativeQANumberString+'q' + "^No Test Yet";
             QANameScoreDictionary.Add(ID, value);
             string output = ID.ToString() + '~' + value + '\n';
 
-        }// End updateQANameScoreDictionary
+        }// End updateQANameScoreDictionaryWithNewEntry
+
+        /// <summary>
+        /// This method receives the int key to a line in the QANameScoreDictionary
+        /// it calls that line and replaces the 3rd item with the transmitted
+        /// "examResults"></param> 
+        /// It is called by: AnswerQuestionsForm.UpdateExamData() Method
+        /// </summary>
+        /// <param name="qaKeyInt"></param>
+        /// <param name="examResults"></param>
+        public static void updateQAFileNameScoresExamResults(int qaKeyInt, string examResults)
+        {
+            string desiredQALine = QANameScoreDictionary[qaKeyInt];
+            string correctedLine = StringHelperClass.replaceNthItemInDelimitedString(desiredQALine, '^', 3, examResults);
+            QANameScoreDictionary[qaKeyInt] = correctedLine;
+        }// End updateQAQNameScoreDictionaryWithExamResults
 
 
         public static void reTextNameScores(string nodeName, string oldNodeText, string newNodeText)
@@ -172,7 +218,7 @@ namespace QADataModelLib
         {
             QANameScoreDictionary = new Dictionary<int, string>();
             QANameScoreDictionary = newQANameScoreDiction;
-        }
+        }// End reCreateQANameScoreDictionary(
 
     }// End QAFileNameScoresModel
 }// End QADataModelLib

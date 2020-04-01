@@ -273,7 +273,7 @@ namespace QAProject
                 subjectTextValue.Text = "";
             }
             // Add this qa file node's  name and text value to the qaNamesDictionary
-            QAFileNameScoresModel.updateQANameScoreDictionary(nextQAFileNumberString, qaFileNumber, qaNode.Name, qaNode.Text, parentChain);
+            QAFileNameScoresModel.updateQANameScoreDictionaryWithNewEntry(nextQAFileNumberString, qaFileNumber, qaNode.Name, qaNode.Text, parentChain);
            
             if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt"))
             {
@@ -524,7 +524,7 @@ namespace QAProject
         private void editQAFileButton_Click(object sender, EventArgs e)
         {
             string qaFileName = subjectTreeView.SelectedNode.Text;
-            QAFileDataModel.setQAFileNameStr(qaFileName);
+            AnswerQuestionsDataModel.setQAFileNameStr(qaFileName);
             this.Hide();
             QuestionAndAnswerForm questionAndAnswerForm = new QuestionAndAnswerForm();
             questionAndAnswerForm.ShowDialog();
@@ -979,10 +979,16 @@ namespace QAProject
             }
         }// End updateQAFileNameScores()
 
+        private void takeQAFileTestButton_Click(object sender, EventArgs e)
+        {
+            TreeNode selectedNode = subjectTreeView.SelectedNode;
+            string selectedNodeText = selectedNode.Text;
+            AnswerQuestionsDataModel.setQAFilePath(selectedNodeText);
 
-
- 
-
+            this.Hide();
+            AnswerQuestionsForm answerQuestionsForm = new AnswerQuestionsForm();
+            answerQuestionsForm.ShowDialog();
+        }
     }// End QATreeForm
 
 
