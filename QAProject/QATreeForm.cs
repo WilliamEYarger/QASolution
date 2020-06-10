@@ -277,7 +277,11 @@ namespace QAProject
            
             if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt"))
             {
-                File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text  + ".txt");
+                // Creates the qaFile with a file stream so it can be closed so
+                //that it doesn't create 'File In Use by Another Process' Error
+                var fileStream = File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt");
+                fileStream.Close();
+                //File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text  + ".txt");
             }
         }// End addNewQAFileNodeButton_Click
 
@@ -310,10 +314,18 @@ namespace QAProject
             // Get the selected node's name and current(oldNodeText) text value
             string nodeName = subjectTreeView.SelectedNode.Name;
             int nodeLevel = subjectTreeView.SelectedNode.Level;
-
-            SubjectTreeViewModel.renameNode(nodeName, oldNodeText, newNodeText, nodeLevel);
-            //subjectTreeView.SelectedNode.Text = newNodeText;
-            SubjectTreeViewModel.filesChanged = true;
+            ////Changed 06022020
+            //if (!QACumulativeResultsModel.cumulativeResultsDictionaryContainsValue(newNodeText))
+            //{
+            //    MessageBox.Show("You Must Save this file before attempting to Rename it");
+            //}
+            //else
+            //{
+                SubjectTreeViewModel.renameNode(nodeName, oldNodeText, newNodeText, nodeLevel);
+                //subjectTreeView.SelectedNode.Text = newNodeText;
+                SubjectTreeViewModel.filesChanged = true;
+            //}
+           
         }// End renameNodeButton_Click
 
 
@@ -819,14 +831,17 @@ namespace QAProject
                         int thisNodesNumber7 = -1;
                         if (nodeNameComponents[7].IndexOf('q') != -1)
                         {
+                            // This is a QA node
+                            // Get the selectedNode from the the immediate parent index
                             TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6];
                             thisNodesNumber7 = selectedNode.GetNodeCount(true);
                         }
                         else
                         {
+                            // This is a Divisiion node so its index is derived from nodeNameComponents[7]
                             thisNodesNumber7 = Int32.Parse(nodeNameComponents[7]);
                         }
-                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes.Add(nodeText);
+                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes.Add(nodeText);
                         thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7];
                         thisNode.Name = nodeName;
                         break;
@@ -849,7 +864,7 @@ namespace QAProject
                         {
                             thisNodesNumber8 = Int32.Parse(nodeNameComponents[8]);
                         }
-                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7].Nodes.Add(nodeText);
+                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7].Nodes.Add(nodeText);
                         thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7].Nodes[thisNodesNumber8];
                         thisNode.Name = nodeName;
                         break;
@@ -873,7 +888,7 @@ namespace QAProject
                         {
                             thisNodesNumber9 = Int32.Parse(nodeNameComponents[9]);
                         }
-                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7].Nodes[thisNodesNumber8].Nodes.Add(nodeText);
+                        subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7].Nodes[thisNodesNumber8].Nodes.Add(nodeText);
                         thisNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7].Nodes[thisNodesNumber8].Nodes[thisNodesNumber9];
                         thisNode.Name = nodeName;
                         break;

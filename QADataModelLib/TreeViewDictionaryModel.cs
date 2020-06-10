@@ -84,6 +84,11 @@ namespace QADataModelLib
 
         private static void loadHyperlinkDictionary()
         {
+            // Check to see if the HyperlinkDictionary has already been created and if so clear it
+            if (HyperlinkDictionary.Count != 0)
+            {
+                HyperlinkDictionary = new Dictionary<string, string>();
+            }
             var hyperlinkDictionaryList = new List<string>();
             string hyperlinkDictionaryPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt";
 

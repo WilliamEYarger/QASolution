@@ -180,25 +180,43 @@ namespace QADataModelLib
         /// <param name="qaFilePath"></param>
         public static void loadQAFileIntoDictionary(string qaFilePath)
         {
-            string[] qaLineArray = File.ReadAllLines(qaFilePath);
-            foreach (string qaLine in qaLineArray)
+            // 20200401 Determine if the file is empty
+            if (new FileInfo(qaFilePath).Length > 0)
             {
-                string qaNumStr = StringHelperClass.returnNthItemInDelimitedString(qaLine, '^', 0);
-                int qaNumInt = Int32.Parse(qaNumStr);
-                string newQALine = qaLine;
-                newQALine = StringHelperClass.removeNthItemFromDelimitedString(qaLine, '^', 0);
-                qaDictionary.Add(qaNumInt, newQALine);
+                //File is not empty
+                // Read all lines from the file into qaLineArray
+                string[] qaLineArray = File.ReadAllLines(qaFilePath);
+                // Parse each line in the qaLineArray creating a new entry in qaDictionary
+                foreach (string qaLine in qaLineArray)
+                {
+                    string qaNumStr = StringHelperClass.returnNthItemInDelimitedString(qaLine, '^', 0);
+                    int qaNumInt = Int32.Parse(qaNumStr);
+                    string newQALine = qaLine;
+                    newQALine = StringHelperClass.removeNthItemFromDelimitedString(qaLine, '^', 0);
+                    qaDictionary.Add(qaNumInt, newQALine);
+                }
+                // Set QandADictionary to qaDictionary
+                QandADictionary = qaDictionary;
+                // Create seriatimQuestionNumberDelStr, a delimited string of seriatim question numbers, seriatimQuestionNumberDelStr
+                seriatimQuestionNumberDelStr = "";
+                for (int i = 0; i < QandADictionary.Count; i++)
+                {
+                    string q = i.ToString();
+                    seriatimQuestionNumberDelStr = seriatimQuestionNumberDelStr + q + '^';
+                }
+                // Remove last '^'
+                seriatimQuestionNumberDelStr = seriatimQuestionNumberDelStr.Substring(0, seriatimQuestionNumberDelStr.Length - 1);
+              
             }
-            QandADictionary = qaDictionary;
-            // Create delimited string of seriatim question numbers, seriatimQuestionNumberDelStr
-            seriatimQuestionNumberDelStr = "";
-            for (int i = 0; i < QandADictionary.Count; i++)
+            else
             {
-                string q = i.ToString();
-                seriatimQuestionNumberDelStr = seriatimQuestionNumberDelStr + q + '^';
+                //File is Empty
+                // Create an empty QandADictionary
+                QandADictionary = qaDictionary;
+                // Create seriatimQuestionNumberDelStr
+                seriatimQuestionNumberDelStr = "";
             }
-            // Remove last '^'
-            seriatimQuestionNumberDelStr = seriatimQuestionNumberDelStr.Substring(0, seriatimQuestionNumberDelStr.Length - 1);
+            // Create qaList from seriatimQuestionNumberDelStr
             qaList = seriatimQuestionNumberDelStr;
 
         }// End loadQAFileIntoDictionary
@@ -214,6 +232,8 @@ namespace QADataModelLib
         /// </summary>
         public static void saveQAFile()
         {
+            // TODO - find out and fix whoever is using a newly creates qaFile
+
             List<string> qaLineList = new List<string>();
             foreach (KeyValuePair<int, string> kvp in qaDictionary)
             {
@@ -223,7 +243,8 @@ namespace QADataModelLib
                 qaLineList.Add(qaNumStr + '^' + qaLine);
             }
             string qaFilePath = AnswerQuestionsDataModel.getQAFilePath();
-            File.WriteAllLines(qaFilePath, qaLineList);
+            File.AppendAllLines(qaFilePath, qaLineList);
+            //File.WriteAllLines(qaFilePath, qaLineList);
         }// EndsaveQAFile
 
 

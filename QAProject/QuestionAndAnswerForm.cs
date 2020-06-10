@@ -308,6 +308,7 @@ namespace QAProject
                 MessageBox.Show("This file already exists. Select another Edit Mode!");
                 return;
             }
+            
             currentQAPairInt = 0;
             questionNumberValue.Text = "0";
             questionValue.Text = "";
@@ -326,6 +327,11 @@ namespace QAProject
         {
             // Set the value of currentQAPairsInt
             saveThisQAPair();
+            if (appendToFile)
+            {
+                
+                questionNumberValue.Text = currentQAPairInt.ToString();
+            }
             return;
         }// End getNextQAPairButton_Click
 

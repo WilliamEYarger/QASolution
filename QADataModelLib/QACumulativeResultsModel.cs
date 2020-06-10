@@ -209,6 +209,22 @@ namespace QADataModelLib
         }// End addNewQATestFileRow(
 
 
+        // Added 06022020
+        public static Boolean cumulativeResultsDictionaryContainsValue(string thisValue)
+        {
+            bool returnValue = false;
+            if (cumulativeResultsDictionary.ContainsValue(thisValue))
+            {
+                return returnValue;
+            }          
+            else
+            {
+                return false;
+            }           
+                
+           
+        }
+
         /// <summary>
         /// This method will be called when the QACumulativeResultsForm opens and used
         /// to populate the QACumulativeResults DataGridView 
@@ -228,11 +244,14 @@ namespace QADataModelLib
         {
             // Create  a temporary holding dictionary
             Dictionary<string, string> tempCumulativeResultsDictionary = cumulativeResultsDictionary;
-            string delimitedResults = cumulativeResultsDictionary[nodeName];
-            string newDelimitedResults = StringHelperClass.replaceNthItemInDelimitedString(delimitedResults, '^', 1, newNodeText);
-            tempCumulativeResultsDictionary[nodeName] = newDelimitedResults;
-            cumulativeResultsDictionary = new Dictionary<string, string>();
-            cumulativeResultsDictionary = tempCumulativeResultsDictionary;
+            
+                string delimitedResults = cumulativeResultsDictionary[nodeName];
+                string newDelimitedResults = StringHelperClass.replaceNthItemInDelimitedString(delimitedResults, '^', 1, newNodeText);
+                tempCumulativeResultsDictionary[nodeName] = newDelimitedResults;
+                cumulativeResultsDictionary = new Dictionary<string, string>();
+                cumulativeResultsDictionary = tempCumulativeResultsDictionary;
+            
+           
         }// End reTextQANode
 
 

@@ -1,0 +1,11 @@
+﻿20200401
+1.	Added code to the QuestionAndAnswerForm to deal with an empty QAFile
+2.	Added code to update the question and answer pair number when appending questions
+3.	Make sure that tilda '~' are replaced by \n\r when questions or answers are sent to the 
+	QuestionAndAnswerForm -DONE
+4.	In the QuestionAndAnswerForm make sure that the SaveFileAndreturn menu option applies
+	when the test type is a Quiz - DONE
+5.	Changed creating a new qaFile from using File.Create to useing filestream = File.Create
+	so the file stream can be closed avoind a 'File In Use By Another Process' Error
+6.	Cleared an error that if the HyperlinkDictionary had already been defined it would
+	throw an error if an new hyperlink was called

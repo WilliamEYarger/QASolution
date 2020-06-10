@@ -109,6 +109,7 @@ namespace QADataModelLib
                 //  2. QAFileNameScores - DONE
                 QAFileNameScoresModel.reTextNameScores(nodeName, oldNodeText, newNodeText);
                 //  3. QACumulativeResults
+                
                 QACumulativeResultsModel.reTextQANode(nodeName, newNodeText);
                 //  4. You do not need to change the name of the QAFile because the nodeName has not changed
             }

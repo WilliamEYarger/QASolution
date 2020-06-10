@@ -198,7 +198,7 @@ namespace QAProject
             if (!testTypeExam)
             {
                 // This is a quiz
-                delimitedQuestionNumbersStr = delimitedQuestionNumbersStr + "," + currentQuestionNumStr;
+                delimitedQuestionNumbersStr = delimitedQuestionNumbersStr + "^" + currentQuestionNumStr;
                 questionNumberValue.Text = "";
                 currentQuestionValue.Text = "";
                 currentAnswerValue.Text = "";
@@ -237,6 +237,13 @@ namespace QAProject
                 QADashboard dashboardForm = new QADashboard();
                 dashboardForm.ShowDialog();
             }
+            else
+            {
+                this.Hide();
+                QADashboard dashboardForm = new QADashboard();
+                dashboardForm.ShowDialog();
+            }
+            
 
         }//End saveAndReturnToDashboardMenuItem_Click
 
@@ -266,15 +273,19 @@ namespace QAProject
 
             Tuple<int, string>  currentValueTuple = AnswerQuestionsDataModel.returnDelimitedValue(delimitedQuestionNumbersStr);
             int currentQuestionNumInt = currentValueTuple.Item1;
-            currentQuestionNumStr = currentQuestionNumInt.ToString();
+            currentQuestionNumStr = currentQuestionNumInt.ToString();            
             questionNumberValue.Text = currentQuestionNumStr;
             delimitedQuestionNumbersStr = currentValueTuple.Item2;
+
             // get currentQALine
             string qaLine = AnswerQuestionsDataModel.currentQALine(currentQuestionNumInt);
             // example 0^When did Aristotle live?^384-322 BCE^^
             string[] qaComponentsArray = qaLine.Split('^');
             currentQuestion = qaComponentsArray[0];
+            string newLine = Environment.NewLine;
+            currentQuestion = currentQuestion.Replace("~", newLine);
             correctAnswer = qaComponentsArray[1];
+            correctAnswer = correctAnswer.Replace("~", newLine);
             currentImageURL = qaComponentsArray[2];
             currentMp3URL = qaComponentsArray[3];
             currentQuestionValue.Text = currentQuestion;
