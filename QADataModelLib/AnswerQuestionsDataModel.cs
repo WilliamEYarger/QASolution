@@ -232,7 +232,7 @@ namespace QADataModelLib
         /// </summary>
         public static void saveQAFile()
         {
-            // TODO - find out and fix whoever is using a newly creates qaFile
+            
 
             List<string> qaLineList = new List<string>();
             foreach (KeyValuePair<int, string> kvp in qaDictionary)

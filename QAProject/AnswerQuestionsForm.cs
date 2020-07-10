@@ -28,8 +28,9 @@
 //      answerCorrectButton_Click(
 //      wrongButton_Click(
 //--------------------UTILITY METHODS-------------------//
-//     initializeVariables()
+//      initializeVariables()
 //      answerQuestions()
+//      resetLocalVariables()
 //      
 //      
 //      
@@ -120,6 +121,9 @@ namespace QAProject
         private void examToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Clicked if user wishes to take an exam
+           
+            //Get the current date time string for the cumulative results file
+            currentDatetimeStr = DateTime.Now.ToString("yyyyMMddhhmm");
             //testTypeExam is already true
             testTypeSet = true;
             if (questionSequenceSet && testTypeSet)
@@ -225,24 +229,24 @@ namespace QAProject
 
         private void saveAndReturnToDashboardMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO - create method in AnswerQuestionsDataModel to save files
-            if (testTypeExam)
-            {
-                updateExamData();
+            
+            //if (testTypeExam)
+            //{
+            //    updateExamData();
                 
-                // Update the Cumulative results file
+            //    // Update the Cumulative results file
 
-                // Return to dashboard
+            //    // Return to dashboard
+            //    this.Hide();
+            //    QADashboard dashboardForm = new QADashboard();
+            //    dashboardForm.ShowDialog();
+            //}
+            //else
+            //{
                 this.Hide();
                 QADashboard dashboardForm = new QADashboard();
                 dashboardForm.ShowDialog();
-            }
-            else
-            {
-                this.Hide();
-                QADashboard dashboardForm = new QADashboard();
-                dashboardForm.ShowDialog();
-            }
+            //}
             
 
         }//End saveAndReturnToDashboardMenuItem_Click
@@ -266,8 +270,15 @@ namespace QAProject
         {
             if(delimitedQuestionNumbersStr.Length == 0)
             {
+                if (testTypeExam)
+                {
+                    updateExamData();
+                }
+                resetLocalVariables();
+
                 // This is the last question 
                 instructionsLabel.Text = "This is the last question Save file and return to Dashboard or Repeat the Exercise!";
+                             
                 return;
             }
 
@@ -312,15 +323,27 @@ namespace QAProject
             string cumulativeResultsOutputStr = currentDatetimeStr + ":" + percentCorrectStr + ":" + incorrectAnswerNumStr + "~";
             QACumulativeResultsModel.updateCumulativeresultsDictionary(keyIntStr+"q", cumulativeResultsOutputStr);
 
-            //string cumulativeUpdateStr =
-            /*  delimitedQuestionNumbersStr does not = list of incorrect answers
-             *  1q^qa_Reeves- Roman Pagan Life and Worship-1^201910150853:95.0:1,15~
-             *  keyIntStr
-             *  
-             *  updateCumulativeresultsDictionary
-             *  String.Format("{0:00.0}", 23.4567);       // "23.5"
-             */
-        }
+
+        }// End updateExamData
+
+        private void resetLocalVariables()
+        {
+            testTypeSet = false;
+            questionSequenceSet = false;
+            testTypeExam = true;
+            questionSequenceSeriatem = true;
+            delimitedQuestionNumbersStr = "";
+            incorrectQuestionNumbersStr = "";
+            currentDatetimeStr = "";
+            currentQuestion = "";
+            correctAnswer = "";
+            currentImageURL = "";
+            currentMp3URL = "";
+            currentQuestionNumStr = "";
+            incorrectAnswerNumStr = "";
+            // do not reset this value      keyIntStr = "";
+        }// End resetLocalVariable
+
 
     }// End  class AnswerQuestionsForm
 }// End QAProject

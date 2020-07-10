@@ -1,4 +1,18 @@
-﻿20200401
+﻿20200610
+TASK 02 Create the list of questions and answers from the TreeView form, not when the AnswerQuestions
+	form is called. THIS TASK IS DEFERED TO THE NEXT VERSION SO THAT I CAN INCORPERATE USING
+	A SUBJECT NODE (FOR EXAMPLE THE GREEK NODE UNDER CHRISTIANITY HISTORY FORMATIVE ENVIORNMENT)
+	THIS WILL CREATE A QUIZ OR EXAMINATION ON ALL OF THE SUB qaFILES OF THE GREEK SUBJECT NODE
+
+TASK 01 Check to see if you can take a quiz and then take a test without closing and re-opening
+	No. When I tried to take a test without clearing it still dealt with the questions as
+	if they were a quiz, ie they repeated those incorrectly answered
+ After taking a quiz, what variables must be cleared?
+TASK 01 DOONEI HAVE succesfully modified the code so that one can take a quiz, an exam without leaving 
+	the AnswerQuestions form
+
+
+20200401
 1.	Added code to the QuestionAndAnswerForm to deal with an empty QAFile
 2.	Added code to update the question and answer pair number when appending questions
 3.	Make sure that tilda '~' are replaced by \n\r when questions or answers are sent to the 

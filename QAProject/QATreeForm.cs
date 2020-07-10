@@ -615,7 +615,7 @@ namespace QAProject
                 MessageBox.Show("No Hyperlink exists for this node");
                 return;
             }
-            System.Diagnostics.Process.Start(hyperlink);
+                System.Diagnostics.Process.Start(hyperlink);
 
         }// End openHyperlinkButton_Click(
 
@@ -998,12 +998,16 @@ namespace QAProject
         {
             TreeNode selectedNode = subjectTreeView.SelectedNode;
             string selectedNodeText = selectedNode.Text;
+            // TODO - 06/13/2020 create list of Questions and answers HERE
+
             AnswerQuestionsDataModel.setQAFilePath(selectedNodeText);
 
             this.Hide();
             AnswerQuestionsForm answerQuestionsForm = new AnswerQuestionsForm();
             answerQuestionsForm.ShowDialog();
         }
+
+        
     }// End QATreeForm
 
 

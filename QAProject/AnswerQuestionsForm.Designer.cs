@@ -97,18 +97,15 @@
             this.testTypeToolStripMenuItem1.Name = "testTypeToolStripMenuItem1";
             this.testTypeToolStripMenuItem1.Size = new System.Drawing.Size(84, 24);
             this.testTypeToolStripMenuItem1.Text = "Test Type";
-            // 
-            // examToolStripMenuItem
-            // 
             this.examToolStripMenuItem.Name = "examToolStripMenuItem";
-            this.examToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
+            this.examToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.examToolStripMenuItem.Text = "Exam";
             this.examToolStripMenuItem.Click += new System.EventHandler(this.examToolStripMenuItem_Click);
             // 
             // quizToolStripMenuItem1
             // 
             this.quizToolStripMenuItem1.Name = "quizToolStripMenuItem1";
-            this.quizToolStripMenuItem1.Size = new System.Drawing.Size(128, 26);
+            this.quizToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.quizToolStripMenuItem1.Text = "Quiz";
             this.quizToolStripMenuItem1.Click += new System.EventHandler(this.quizToolStripMenuItem1_Click);
             // 
