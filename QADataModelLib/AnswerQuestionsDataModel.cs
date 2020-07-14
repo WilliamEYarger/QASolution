@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.ComponentModel;
 
 namespace QADataModelLib
 {
@@ -39,13 +40,14 @@ namespace QADataModelLib
         private static string qaFileName = "";
 
         /// <summary>
-        /// qaDictionary is a  Dictionary<int, string> whose key is the integer question and
+        /// qaDictionary is a  Dictionary<string, string> whose key is the integerStr question and
         /// answer number and whose value is the'^' delimited string of Question text; 
         /// Answer text; any image URL, and any mp3 url. For example
         /// 0^Q0.1.1^A0.1.1^^ where the key is 0, the question in Q0.1.1, the answer is A0.1.1
         /// and both the image and mpe urls are blank
         /// </summary>
-        private static Dictionary<int, string> qaDictionary = new Dictionary<int, string>();
+        // TODO - changed 20200713 private static Dictionary<int, string> qaDictionary = new Dictionary<int, string>();
+        private static Dictionary<string, string> qaDictionary = new Dictionary<string, string>();
 
         private static string seriatimQuestionNumberDelStr = "";
         //----------------------PROPERTIES AND GETTER/SETTERS---------------------//
@@ -116,7 +118,7 @@ namespace QADataModelLib
         /// The Setter method creats a new qaDictionary from the
         /// transmitted value
         /// </summary>
-        public static Dictionary<int, string> QandADictionary
+        public static Dictionary<string, string> QandADictionary
         {
             get => QandADictionary = qaDictionary;
             set
@@ -189,11 +191,17 @@ namespace QADataModelLib
                 // Parse each line in the qaLineArray creating a new entry in qaDictionary
                 foreach (string qaLine in qaLineArray)
                 {
+                   
+                     //The question number for this qaFile is in the 0th entry of the ^ delimited qaLine                     
                     string qaNumStr = StringHelperClass.returnNthItemInDelimitedString(qaLine, '^', 0);
-                    int qaNumInt = Int32.Parse(qaNumStr);
+                    // Convert the question number into an int
+                   // int qaNumInt = Int32.Parse(qaNumStr);
+                    //strip the question number from the fron of the qaLine
                     string newQALine = qaLine;
+                    // add the revised qaLine to the dictionary using the question number int as the key
                     newQALine = StringHelperClass.removeNthItemFromDelimitedString(qaLine, '^', 0);
-                    qaDictionary.Add(qaNumInt, newQALine);
+                    // add the 
+                    qaDictionary.Add(qaNumStr, newQALine);
                 }
                 // Set QandADictionary to qaDictionary
                 QandADictionary = qaDictionary;
@@ -235,10 +243,10 @@ namespace QADataModelLib
             
 
             List<string> qaLineList = new List<string>();
-            foreach (KeyValuePair<int, string> kvp in qaDictionary)
+            foreach (KeyValuePair<string, string> kvp in qaDictionary)
             {
-                int qaNumInt = kvp.Key;
-                string qaNumStr = qaNumInt.ToString();
+                string qaNumStr = kvp.Key;
+               // string qaNumStr = qaNumStr.ToString();
                 string qaLine = kvp.Value;
                 qaLineList.Add(qaNumStr + '^' + qaLine);
             }
@@ -248,16 +256,20 @@ namespace QADataModelLib
         }// EndsaveQAFile
 
 
-        public static Tuple<int, string> returnDelimitedValue(string delimitedNumbers)
+        public static Tuple<string, string> returnDelimitedValue(string delimitedNumbersStr)
         {
-            int pos1stCarot = delimitedNumbers.IndexOf('^');
+            // get the position of the first delimiter
+            int pos1stCarot = delimitedNumbersStr.IndexOf('^');
+            // if there are no delimiters return -1
             if (pos1stCarot == -1)
             {
-                return new Tuple<int, string>(Int32.Parse(delimitedNumbers), "");
+                return new Tuple<string, string>(delimitedNumbersStr, "");
             }
-            
-            string[] numberStrValueArray = delimitedNumbers.Split('^');
+            // create a string array of the integer strings delimited by ^
+            string[] numberStrValueArray = delimitedNumbersStr.Split('^');
+            // get the string at the top of the array or the front of the string delimitedNumbersStr
             string headNumStr = numberStrValueArray[0];
+            // create a blank string to hold the remaining string-ints in the original delimitedNumbersStr string
             string newDelimitedNumbers = "";
             for (int i = 1; i < numberStrValueArray.Length-1; i++)
             {
@@ -265,8 +277,8 @@ namespace QADataModelLib
             }
             string lastValue = numberStrValueArray[numberStrValueArray.Length-1];
             newDelimitedNumbers = newDelimitedNumbers + lastValue;
-            int headInt = Int32.Parse(headNumStr);
-            return new Tuple<int, string>(headInt, newDelimitedNumbers);
+            //int headInt = Int32.Parse(headNumStr);
+            return new Tuple<string, string>(headNumStr, newDelimitedNumbers);
         }// End Tuple<int, string> returnDelimitedValue(
 
         /// <summary>
@@ -276,16 +288,41 @@ namespace QADataModelLib
         /// </summary>
         /// <param name="currentNumInt"></param>
         /// <returns></returns>
-        public static string currentQALine(int currentNumInt)
+        public static string currentQALine(string qaNumStr)
         {
-            string qaLine = QandADictionary[currentNumInt];
+            string qaLine = QandADictionary[qaNumStr];
             return qaLine;
         }
 
-        
+        /// <summary>
+        /// This procedure added in V20200710 on 20200713
+        /// Receives a List<(string,string)> containing
+        ///     a. the string representing the qaFile number
+        ///     b. the path to the qaFile
+        /// It uses this list to retrieve, seriatim, each QAFile
+        /// In implementing the AnswerQuestions() method in AnswerQuestionsForm 
+        /// it appends the the string representing the qaFile number +'-' to the question 
+        /// number to show in  questionNumberValue.Text  and then displays the question and
+        /// answer in the delimited string
+        /// </summary>
+        /// <param name="selectedQAFilesList"></param>
+        public static void createQuestionsFromSelectedQAFilesList(Dictionary<string, string> selectedQAFilesDictonary)
+        {
+            // Create the
+            // Iterate through the dictionary
+            foreach (KeyValuePair<string, string> keyValue in selectedQAFilesDictonary)
+            {
+                string qaFileNumber = keyValue.Key;
+                string qaFilePath = keyValue.Value;
+
+
+            }
+        }
+            
+
         //=================================END OF CLASS====================================//
 
 
-        //==============================END OF MODEL==========================================//
-    }// End QAFileDataModel
+            //==============================END OF MODEL==========================================//
+        }// End QAFileDataModel
 }// End QADataModelLib

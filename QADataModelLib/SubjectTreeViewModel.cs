@@ -36,7 +36,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using QADataModelLib;
-
+using System.Runtime.CompilerServices;
 
 namespace QADataModelLib
 {
@@ -56,7 +56,7 @@ namespace QADataModelLib
 
         //------------------------------GETTERS AND SETTERS-----------------------------------------//
 
-
+        private static List<string> qaFileList;
 
 
 
@@ -120,6 +120,16 @@ namespace QADataModelLib
                 QAFileNameScoresModel.reTextNameScores(nodeName, oldNodeText, newNodeText);
             }
             //ChangeNodeTextValue.changeNodeTextValue(nodeType);
+        }
+
+        public static void setListOfQAFiles(List<string> sentQAFileList)
+        {
+            qaFileList = sentQAFileList;
+        }
+
+        public static List<string> returnListOfQAFiles()
+        {
+            return qaFileList;
         }
 
         //------------------------------------UTILITY METHODS---------------------------------//

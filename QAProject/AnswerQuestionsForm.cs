@@ -53,7 +53,7 @@ namespace QAProject
     {
         //-------------------LOCAL VARIABLES--------------------//
         private bool testTypeSet = false;
-        private bool questionSequenceSet = false;
+        private bool questionSequenceSet = true; // changed in v20200710
         private bool testTypeExam = true;//If the test type is a quiz it will be false
         private bool questionSequenceSeriatem = true;//If is is random it will be false
 
@@ -90,6 +90,7 @@ namespace QAProject
         /// <param name="e"></param>
         private void AnswerQuestionsForm_Load(object sender, EventArgs e)
         {
+            // get the path to the qaFile
             string qaFilePath = AnswerQuestionsDataModel.getQAFilePath();
             // Get the int value at the end of the name
             string tempQAFilePathName = qaFilePath.Substring(0, qaFilePath.Length - 4);
@@ -104,7 +105,7 @@ namespace QAProject
             }
             // Convert this value to an integer
             keyToQAFileNameScoresDictionary = Int32.Parse(keyIntStr);
-
+            // create the QandADictionary and the ^ delimited qaList to call the questions
             AnswerQuestionsDataModel.loadQAFileIntoDictionary(qaFilePath);
             // Call initializeVariables() to initialize local variables
             initializeVariables();
@@ -125,6 +126,7 @@ namespace QAProject
             //Get the current date time string for the cumulative results file
             currentDatetimeStr = DateTime.Now.ToString("yyyyMMddhhmm");
             //testTypeExam is already true
+            delimitedQuestionNumbersStr = AnswerQuestionsDataModel.getQAList();
             testTypeSet = true;
             if (questionSequenceSet && testTypeSet)
             {
@@ -141,6 +143,7 @@ namespace QAProject
         {
             testTypeExam = false;
             testTypeSet = true;
+            delimitedQuestionNumbersStr = AnswerQuestionsDataModel.getQAList();
             if (questionSequenceSet && testTypeSet)
             {
                 answerQuestions();
@@ -268,7 +271,9 @@ namespace QAProject
         }// End initializeVariables
         private void answerQuestions()
         {
-            if(delimitedQuestionNumbersStr.Length == 0)
+            // the delimitedQuestionNumbersStr string is a ^ delimited string of string integer keys to the 
+            // qa dictionary
+            if (delimitedQuestionNumbersStr.Length == 0)
             {
                 if (testTypeExam)
                 {
@@ -281,18 +286,26 @@ namespace QAProject
                              
                 return;
             }
-
-            Tuple<int, string>  currentValueTuple = AnswerQuestionsDataModel.returnDelimitedValue(delimitedQuestionNumbersStr);
-            int currentQuestionNumInt = currentValueTuple.Item1;
-            currentQuestionNumStr = currentQuestionNumInt.ToString();            
-            questionNumberValue.Text = currentQuestionNumStr;
+            // create a tuple that returns the front value of the delimitedQuestionNumbersStr as an int and the remainder of the 
+            // string as a ^ delimited string
+            Tuple<string, string>  currentValueTuple = AnswerQuestionsDataModel.returnDelimitedValue(delimitedQuestionNumbersStr);
+            // convert the int value of the question to a string
+            string currentQuestionNumStr = currentValueTuple.Item1;
+            this.currentQuestionNumStr = currentQuestionNumStr.ToString();
+            // *** convert the currentQuestionNumStr into a string and display it in the 
+            //questionNumberValue textbox
+            questionNumberValue.Text = this.currentQuestionNumStr;
+            // convert the delimitedQuestionNumbersStr to the revised ^ delimited string returned in the tuple
             delimitedQuestionNumbersStr = currentValueTuple.Item2;
-
+            // TODO - Start Here
             // get currentQALine
-            string qaLine = AnswerQuestionsDataModel.currentQALine(currentQuestionNumInt);
+            string qaLine = AnswerQuestionsDataModel.currentQALine(currentQuestionNumStr);
             // example 0^When did Aristotle live?^384-322 BCE^^
+            // Get the components of the current qaLine, the question, the answer, the currentImageURL and the
+            //currentMp3URL
             string[] qaComponentsArray = qaLine.Split('^');
             currentQuestion = qaComponentsArray[0];
+            // adjust and line breakes int the current question and answers, represented as ~ with a new line character
             string newLine = Environment.NewLine;
             currentQuestion = currentQuestion.Replace("~", newLine);
             correctAnswer = qaComponentsArray[1];

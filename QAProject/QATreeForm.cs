@@ -75,6 +75,8 @@ namespace QAProject
         private bool addingHyperlink = false;
         private string thisHyperlink = "";
         private TreeNode hyperlinkSelectedNode = null;
+        private List<string> qaFileNames = new List<string>();
+        private TreeNodeCollection subjectTreeNodeCollection;
 
         //----------------------PUBLIC METHODS------------------------------//
 
@@ -85,6 +87,54 @@ namespace QAProject
             treeViewDictionary = TreeViewDictionaryModel.getTreeViewDictionary();
 
         }// EndQATreeFormLoad
+
+        // ADDED 20200713 START
+        // TODO - 202007130944 eliminate the following procedure
+        /// <summary>
+        /// 1. This procedure creates a tree node collection from the treeview,
+        /// 2. it them iterates recursively thru it examining each node. 
+        /// 3. If the node is a qaNode AND IF its node name begins with the
+        ///     string of the selected node's nodeName, then 
+        /// 4. its text is added to a List<string>  of qaFileNames and returned to the
+        ///     the calling program
+        ///     
+        /// </summary>
+        /// <param name="nodeName"></param>
+        /// <returns></returns>
+        public static List<String> returnListOfQAFiles(string nodeName)
+        {
+            List<String> qaFileList = new List<string>();
+            CallRecursive();
+
+
+            void DoRecursive(TreeNode treeNode)
+            {
+                // Get the node
+                // do something with the node ie
+                string treeNodeName = treeNode.Name;
+                foreach (TreeNode tn in treeNode.Nodes)
+                {
+                    DoRecursive(tn);
+                }
+            }// End DoRecursive
+
+
+            // Call the procedure using the TreeView.  
+            void CallRecursive()
+            {
+                //Print each node recursively.  
+                //TreeNodeCollection nodes = subject
+                //foreach (TreeNode n in subjectTreeNodeCollection)
+                //{
+                //    DoRecursive(n);
+                //}
+            }
+
+
+
+            return qaFileList;
+        }
+        // Added 20200713 End
 
         //-----------------------BUTTON CLICK METHODS------------------------//
 
@@ -897,8 +947,45 @@ namespace QAProject
                         break;
                 }// End switch(nodeLevel)
             }
+
+            
             subjectTreeView.EndUpdate();
-            //treeViewDictionary = TreeViewDictionaryModel
+            //TODO - ADDED 20200713
+
+            string pause = "";
+            List<String> qaFileList = new List<string>();
+
+            
+            CallRecursive();
+            SubjectTreeViewModel.setListOfQAFiles(qaFileList);
+                void DoRecursive(TreeNode treeNode)
+                  {
+                    // Get the node
+                      string treeNodeName = treeNode.Name;
+                    // See if it is a qaNode
+                    if(treeNodeName.IndexOf('q') != -1)
+                {
+                    qaFileList.Add(treeNodeName+"^"+treeNode.Text);
+                }
+                     // Iterate its child nodes recursively.  
+                     foreach (TreeNode tn in treeNode.Nodes)
+                     {
+                          DoRecursive(tn);
+                      }
+                }// End DoRecursive
+
+                
+                // Call the procedure using the TreeView.  
+                void CallRecursive()
+                {
+                    // Print each node recursively.  
+                    TreeNodeCollection nodes = subjectTreeView.Nodes;
+                    foreach (TreeNode n in nodes)
+                    {
+                        DoRecursive(n);
+                    }
+                } 
+             
         }// End CreateTreeViewFromDictionary
 
         /// <summary>
@@ -996,10 +1083,47 @@ namespace QAProject
 
         private void takeQAFileTestButton_Click(object sender, EventArgs e)
         {
+            string filePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles";
             TreeNode selectedNode = subjectTreeView.SelectedNode;
             string selectedNodeText = selectedNode.Text;
-            // TODO - 06/13/2020 create list of Questions and answers HERE
+            // TODO - 07/12/2020 create list of Questions and answers HERE
+            string nodeName = selectedNode.Name;
+            // create a List<string> qaFileNames to hold the list of qaFiles
+            if (nodeName.IndexOf('q') == -1)
+            {
+                string test = nodeName;
+                List<String> listOfQAFiles = SubjectTreeViewModel.returnListOfQAFiles();
+                Dictionary<string, string> selectedQAFilesDictionary = new Dictionary<string, string>();
+                foreach (string item in listOfQAFiles)
+                {
+                    if (item.IndexOf(nodeName) == 0)
+                    {
+                        // Get the node name and text
+                        string thisNodeName = StringHelperClass.returnNthItemInDelimitedString(item, '^', 0);
+                        string thisNodeText = StringHelperClass.returnNthItemInDelimitedString(item, '^', 1);
+                        // Get the position of the last '-' in thisNodeName
+                        int posLastDash = thisNodeText.LastIndexOf('-');
+                        string qaFileNumber = thisNodeText.Substring(posLastDash + 1);
+                        // Create the path of the qaFile
+                        string thisFilePath  = filePath+"\\"+ thisNodeText + ".txt";
+                        // Add these values to selectedQAFilesList
+                        selectedQAFilesDictionary.Add(qaFileNumber, thisFilePath);
+                    }
+                }// End if (item.IndexOf(nodeName) == 0)
+                // Send the selectedQAFilesList to AnswerQuestionsDataModel
+                AnswerQuestionsDataModel.createQuestionsFromSelectedQAFilesList(selectedQAFilesDictionary);
 
+
+            }
+            else
+            {
+                qaFileNames.Add(selectedNodeText);
+
+            }
+
+
+            // End TODO - 07/12/2020
+            // define the file path to the selected qa file in the AnswerQuestionsDataModel
             AnswerQuestionsDataModel.setQAFilePath(selectedNodeText);
 
             this.Hide();

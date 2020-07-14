@@ -35,9 +35,6 @@
             this.testTypeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.examToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quizToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.questionSequenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.seriatimToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.randomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.formPurposeLabel = new System.Windows.Forms.Label();
             this.instructionsLabel = new System.Windows.Forms.Label();
             this.questionNumberLabel = new System.Windows.Forms.Label();
@@ -60,8 +57,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.testTypeToolStripMenuItem,
             this.formInstructionsToolStripMenuItem,
-            this.testTypeToolStripMenuItem1,
-            this.questionSequenceToolStripMenuItem});
+            this.testTypeToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1782, 28);
@@ -97,6 +93,9 @@
             this.testTypeToolStripMenuItem1.Name = "testTypeToolStripMenuItem1";
             this.testTypeToolStripMenuItem1.Size = new System.Drawing.Size(84, 24);
             this.testTypeToolStripMenuItem1.Text = "Test Type";
+            // 
+            // examToolStripMenuItem
+            // 
             this.examToolStripMenuItem.Name = "examToolStripMenuItem";
             this.examToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.examToolStripMenuItem.Text = "Exam";
@@ -108,29 +107,6 @@
             this.quizToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.quizToolStripMenuItem1.Text = "Quiz";
             this.quizToolStripMenuItem1.Click += new System.EventHandler(this.quizToolStripMenuItem1_Click);
-            // 
-            // questionSequenceToolStripMenuItem
-            // 
-            this.questionSequenceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.seriatimToolStripMenuItem,
-            this.randomToolStripMenuItem});
-            this.questionSequenceToolStripMenuItem.Name = "questionSequenceToolStripMenuItem";
-            this.questionSequenceToolStripMenuItem.Size = new System.Drawing.Size(150, 24);
-            this.questionSequenceToolStripMenuItem.Text = "Question Sequence";
-            // 
-            // seriatimToolStripMenuItem
-            // 
-            this.seriatimToolStripMenuItem.Name = "seriatimToolStripMenuItem";
-            this.seriatimToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
-            this.seriatimToolStripMenuItem.Text = "Seriatim";
-            this.seriatimToolStripMenuItem.Click += new System.EventHandler(this.seriatimToolStripMenuItem_Click);
-            // 
-            // randomToolStripMenuItem
-            // 
-            this.randomToolStripMenuItem.Name = "randomToolStripMenuItem";
-            this.randomToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
-            this.randomToolStripMenuItem.Text = "Random";
-            this.randomToolStripMenuItem.Click += new System.EventHandler(this.randomToolStripMenuItem_Click);
             // 
             // formPurposeLabel
             // 
@@ -303,8 +279,5 @@
         private System.Windows.Forms.ToolStripMenuItem testTypeToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem examToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quizToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem questionSequenceToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem seriatimToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem randomToolStripMenuItem;
     }
 }

@@ -1,4 +1,35 @@
-﻿20200610
+﻿20200710 - Development of the 20200710 branch
+TASK 01 Create list of questions from the TreeView form allowing the selection of a subject node
+	as well as the currently allowed qaNode.
+	1. I am going to delete the question type menu item and set question type to seriatem 
+	waiting for some future version to add the ability to randomize the questions. DONE
+	2. Rather than revising any of the old procedures at this time I am going to create additional
+	procedures that do not yet call on the AnswerQuestions form
+		a. To get all of the qaFiles in the children of a selected subject node, including that
+		of its children divisions, I will  create a TreeNodeCollection and iterate thru it see
+		(see TreeView	Iterate thru nodes in the How To docx.) selecting all qaFile nodes whose
+		nodeName begins with the desired subject node name
+		b. I have changed to qaDictionary from an <int,string> to a <string,string> and the answer
+		question mechanism appears to work
+		c.I HAVE NOT TESTED CREATING OR EDITIND A NEW QAFILE
+		d. I will COMMIT these changes and in the next version I will change the qaDictionary to:
+			Key = int created from the current number of dictionary entries
+			Value = ^ delimited string 
+				1. Question number string = qaFileIDNumber+"-"+"question number"
+				2. Question string
+				3. Answer string
+				4. Image URL
+				5. mp3 URL
+				6. +/- a question priority intStr where:
+					1) blank or "0" means  answer only in a qaFile quiz/test
+					2) "1" = answer in a test/quiz of a qaFile Parent node
+					3) "3" = answer when the selected node is greater than a qaFile Parent node
+					
+
+ 
+
+
+20200610
 TASK 02 Create the list of questions and answers from the TreeView form, not when the AnswerQuestions
 	form is called. THIS TASK IS DEFERED TO THE NEXT VERSION SO THAT I CAN INCORPERATE USING
 	A SUBJECT NODE (FOR EXAMPLE THE GREEK NODE UNDER CHRISTIANITY HISTORY FORMATIVE ENVIORNMENT)

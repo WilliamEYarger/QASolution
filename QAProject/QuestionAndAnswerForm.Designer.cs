@@ -102,8 +102,11 @@
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
             this.openFileToolStripMenuItem.Size = new System.Drawing.Size(399, 32);
             this.openFileToolStripMenuItem.Text = "&Open File";
+            // 
+            // openQAFileToolStripMenuItem
+            // 
             this.openQAFileToolStripMenuItem.Name = "openQAFileToolStripMenuItem";
-            this.openQAFileToolStripMenuItem.Size = new System.Drawing.Size(224, 32);
+            this.openQAFileToolStripMenuItem.Size = new System.Drawing.Size(210, 32);
             this.openQAFileToolStripMenuItem.Text = "Open &QA file";
             this.openQAFileToolStripMenuItem.Click += new System.EventHandler(this.openQAFileToolStripMenuItem_Click);
             // 

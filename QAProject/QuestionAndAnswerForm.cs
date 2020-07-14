@@ -53,7 +53,7 @@ namespace QAProject
         }
 
         //----------------------------VARIABLES------------------------------------//
-        private Dictionary<int, string> qaDictionary = new Dictionary<int, string>();
+        private Dictionary<string, string> qaDictionary = new Dictionary<string, string>();
         //--------------------------Booleans---------------------------------------//
         // Edit mode is append to a new or existing file
         private bool appendToFile = false;
@@ -71,7 +71,7 @@ namespace QAProject
         private string imageURL = "";
         private string mp3URL = "";
         private string qaFilePath = "";
-        private int currentQAPairInt = -1;
+        private string currentQAPairStr = "";
 
         //--------------------------EVENT METHODS----------------------------------//
 
@@ -181,10 +181,11 @@ namespace QAProject
             // Make edityTypelable visible
             selectEditTypeLable.Visible = true;
             selectEditTypeLable.Text = "When finished with a response move by using Tab or if finished call File-> Save and return";
-            // Set the initial value of currentQAPairInt to the number of entries in the dictionary
-            currentQAPairInt = qaDictionary.Count;
+            // Set the initial value of currentQAPairStr to the number of entries in the dictionary
+            int currentQAPairInt = qaDictionary.Count;
+            currentQAPairStr = currentQAPairInt.ToString();
             // Place this value in the questionNumberValue textbox
-            string currentNumQAPairsStr = currentQAPairInt.ToString();
+            string currentNumQAPairsStr = currentQAPairStr.ToString();
             questionNumberValue.Text = currentNumQAPairsStr;
             questionValue.Select();
         }// End appendToolStripMenuItem_Click
@@ -228,9 +229,9 @@ namespace QAProject
              into an integer and use it to call the appropriate values from the
              qaDictionary. 
              */
-            currentQAPairInt = Int32.Parse(questionNumberValue.Text);
+            currentQAPairStr = questionNumberValue.Text;
             setQandA();
-            //string currentQAString = qaDictionary[currentQAPairInt];
+            //string currentQAString = qaDictionary[currentQAPairStr];
             //string[] currentQAValsArray = currentQAString.Split('^');
             //questionValue.Text = currentQAValsArray[0];
             //answerValue.Text = currentQAValsArray[1];
@@ -255,8 +256,8 @@ namespace QAProject
             editAllSeriatem = true;
             appendToFile = false;
             editSelectedQAPairs = false;
-            // Set the currentQAPairInt to 0
-            currentQAPairInt = 0;
+            // Set the currentQAPairStr to 0
+            currentQAPairStr = "";
             // Set 0th question number string
             questionNumberValue.Text = "0";
             setQandA();
@@ -309,7 +310,7 @@ namespace QAProject
                 return;
             }
             
-            currentQAPairInt = 0;
+            currentQAPairStr = "";
             questionNumberValue.Text = "0";
             questionValue.Text = "";
             answerValue.Text = "";
@@ -330,7 +331,7 @@ namespace QAProject
             if (appendToFile)
             {
                 
-                questionNumberValue.Text = currentQAPairInt.ToString();
+                questionNumberValue.Text = currentQAPairStr.ToString();
             }
             return;
         }// End getNextQAPairButton_Click
@@ -338,13 +339,13 @@ namespace QAProject
         //--------------------------HELPER METHODS-----------------------------//
 
         /// <summary>
-        /// This private method uses the global variable currentQAPairInt to
+        /// This private method uses the global variable currentQAPairStr to
         /// get the appropriate values for the questiona and answer text and any
         /// urls and loads them onto the form
         /// </summary>
         private void setQandA() 
         {
-            string [] thisQALineArray = qaDictionary[currentQAPairInt].Split('^');
+            string [] thisQALineArray = qaDictionary[currentQAPairStr].Split('^');
             string question = thisQALineArray[0];
             string answer = thisQALineArray[1];
             questionValue.Text = question.Replace("~", "\r\n");
@@ -361,11 +362,12 @@ namespace QAProject
         /// <summary>
         /// This procedure creates a line for the qaDictionary from the text in the question
         /// and answet text boxes, and the strings in the url fields
-        /// It assumes !!! the currentQAPairInt IS KNOWN !!!
+        /// It assumes !!! the currentQAPairStr IS KNOWN !!!
         /// It does NOTHING about setting the next  questions and answers
         /// </summary>
         private void saveThisQAPair()
         {
+            // Replace the return/new line characters with a ~ for storage
             string question = questionValue.Text.Replace("\r\n", "~");
             string answer = answerValue.Text.Replace("\r\n", "~");
             string qaLine = question + '^' + answer + '^' + imageURL + '^' + mp3URL;
@@ -373,15 +375,17 @@ namespace QAProject
             // If Edit seriatem or edit selected return the new value to the dictionary
             if((editSelectedQAPairs) || (editAllSeriatem))
             {
-                qaDictionary[currentQAPairInt] = qaLine;
+                qaDictionary[currentQAPairStr] = qaLine;
             }
             else
             { 
-                qaDictionary.Add(currentQAPairInt, qaLine);
+                qaDictionary.Add(currentQAPairStr, qaLine);
             }
             if (appendToFile)
             {
+                int currentQAPairInt = Int32.Parse(currentQAPairStr);
                 currentQAPairInt++;
+                currentQAPairStr = currentQAPairInt.ToString();
                 questionValue.Text = "";
                 answerValue.Text = "";
                 questionImagePictureBox.Image = null;
@@ -389,7 +393,9 @@ namespace QAProject
             }
             if (editAllSeriatem)
             {
+                int currentQAPairInt = Int32.Parse(currentQAPairStr);
                 currentQAPairInt++;
+                currentQAPairStr = currentQAPairInt.ToString();
                 if (currentQAPairInt >= qaDictionary.Count)
                 {
                     selectEditTypeLable.Visible = true;
@@ -402,7 +408,7 @@ namespace QAProject
                 }
 
                 setQandA();
-                questionNumberValue.Text = currentQAPairInt.ToString();
+                questionNumberValue.Text = currentQAPairStr.ToString();
                 return;
             }
             if (editSelectedQAPairs)

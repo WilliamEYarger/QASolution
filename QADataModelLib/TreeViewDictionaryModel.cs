@@ -1,4 +1,16 @@
-﻿using System;
+﻿//--------------------Variables--------------------
+//      string treeViewDictionaryPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\TreeViewDictionary.txt";
+//      Dictionary<string, string> TreeViewDictionary = new Dictionary<string, string>();
+//      Dictionary<string, string> HyperlinkDictionary = new Dictionary<string, string>();
+//--------------------Public Methods--------------------
+//      public static string getHyperlink(
+//      public static Dictionary<string, string> getTreeViewDictionary(
+//      public static void updateTreeViewDictionary(
+//      public static void loadTreeViewDictionary(
+//--------------------Private Methods--------------------
+//      private static void loadHyperlinkDictionary(
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -8,13 +20,18 @@ namespace QADataModelLib
     public class TreeViewDictionaryModel
     {
 
-
+        //--------------------Variables--------------------
         public static string treeViewDictionaryPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\TreeViewDictionary.txt";
-
-
         private static Dictionary<string, string> TreeViewDictionary = new Dictionary<string, string>();
         private static Dictionary<string, string> HyperlinkDictionary = new Dictionary<string, string>();
 
+        //--------------------Public Methods--------------------
+        /// <summary>
+        /// This procedure returns a string containing a hyperlink to a MSWord document containing
+        /// information related to the subject of the tree node selected
+        /// </summary>
+        /// <param name="nodeName"></param>
+        /// <returns></returns>
         public static string getHyperlink(string nodeName)
         {
             string hyperlink = "";
@@ -82,6 +99,9 @@ namespace QADataModelLib
             }// End if(File.Exists
         }// loadTreeViewDictionary
 
+       
+
+        //--------------------Private Methods--------------------
         private static void loadHyperlinkDictionary()
         {
             // Check to see if the HyperlinkDictionary has already been created and if so clear it
