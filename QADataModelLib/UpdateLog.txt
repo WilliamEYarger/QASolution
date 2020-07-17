@@ -1,4 +1,47 @@
-﻿20200710 - Development of the 20200710 branch
+﻿20200714 - Develpment of the 20200710 branch version 2
+TASK 02  Check all of the create and edit qa file procedures to make sure they still work
+	a.	Create new and append (with correnction) now work
+	b.	The Edit selecte question works
+	c.	The edit all questions works, with new code modification
+	d.	Cleanup ToDO s
+	THERE ARE 2 ERRORS IN TAKE A QUIZ
+	1.	THE ~ ARE NOT REMOVED AND WHEN THE LAST QUESTION IS ASKED THERE IS AN ERROR IN THE removeNthItemFromDelimitedString
+	These have been corrected
+COMMIT THESE CHANGES TO GITHUB 
+
+TASK 01 Change the answer questions method to using questions from multiple qa files DONE
+
+NOTE qaDictionary is used in many different procedures so I will create a new dictioary
+answerQuestionsDictionary to hold the following
+	a.	answerQuestionsDictionary which is the dictionary that holds all of the delimited qa pairs 
+		to be  asked in a quiz/test
+		1.	The dictionary is currently  <string,string>  where the first string is the question
+			number, converted to a string and the second is the delimited question/answser ect.
+		2.	I will convert it to a <int,string> where:
+			a.	The key int is derived from the current number of entries in the dictionary, rather
+				than from any input file question number
+			b.	The value string is composed of ^ delimited values
+				1)	The value to display in the questionNumber text box, which is composed of
+					the qaFileNunber + "-" + the question number. for example the entry for the 
+					3rd entry of the Docetism qaFile (File # = 16) whould be "16-2"
+				2)	The question string
+				3)	The correct answer string
+				4)	Any image URL
+				5)	Any mpe3 URL
+				6)	an options intiger indicating the questions importance as to when it will be asked
+					in a targeted (a new menu option of the Quesiotn Form) where blank or 0 all question
+					will be asked in all quizes or tests when the selected node is a qaFile; a "1" means that only these questions will be
+					asked if the selected node is a qaFile Parent and "2" means only these questions
+					will be asked when the selected node is > than a qaFile Parent 
+	b.	Step 1: In the TreeView Form, when the Take Test button is clicked create a '^' delmited
+		List<string> qaFiles where the 1st is the string representing the qaFile number and the 
+		2nd is the path to the qaFile
+		
+
+
+
+
+20200710 - Development of the 20200710 branch version 1
 TASK 01 Create list of questions from the TreeView form allowing the selection of a subject node
 	as well as the currently allowed qaNode.
 	1. I am going to delete the question type menu item and set question type to seriatem 

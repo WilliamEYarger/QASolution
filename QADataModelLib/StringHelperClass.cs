@@ -71,16 +71,24 @@ namespace QADataModelLib
 
         public static string removeNthItemFromDelimitedString(string inputString, char del, int itemNumber)
         {
+            // initialize returnStr
             string returnStr = "";
+            // create a string array with the components of the del delimited string
             string[] itemsArray = inputString.Split(del);
-            for(int i=0; i< itemsArray.Length; i++)
+            //recreate the end string minus the item at itemNumber
+            for (int i=0; i< itemsArray.Length; i++)
             {
                 if(i!= itemNumber)
                 {
                     returnStr = returnStr + itemsArray[i] + del;
                 }
             }
-            returnStr = returnStr.Substring(0, returnStr.Length - 1);
+            // 202007170834 added to correct a returnStr that is blank if there is not a missing instruction that has a delimiter at the end of the line
+            if(returnStr.Length != 0)
+            {
+                returnStr = returnStr.Substring(0, returnStr.Length - 1);
+            }
+            
 
             return returnStr;
 

@@ -29,7 +29,7 @@
 //      wrongButton_Click(
 //--------------------UTILITY METHODS-------------------//
 //      initializeVariables()
-//      answerQuestions()
+//      void answerQuestions(
 //      resetLocalVariables()
 //      
 //      
@@ -66,6 +66,7 @@ namespace QAProject
         private string delimitedQuestionNumbersStr = "";
         private string incorrectQuestionNumbersStr = "";
         private string currentDatetimeStr = "";
+        private string currentQuestionNumber = "";
         private string currentQuestion = "";
         private string correctAnswer = "";
         private string currentImageURL = "";
@@ -90,23 +91,29 @@ namespace QAProject
         /// <param name="e"></param>
         private void AnswerQuestionsForm_Load(object sender, EventArgs e)
         {
+            // TODO - 202007150657 Update of the load method for the answer question form
+            // get the delimitedQuestionNumbersStr
+            delimitedQuestionNumbersStr = AnswerQuestionsDataModel.returnDelimitedQuestionsNumbersStr();
+            // OLD Code revised 202007150656 created the dictionry and delimited string of keys to the database here
+            
+            // OLD CODE Commented out
             // get the path to the qaFile
-            string qaFilePath = AnswerQuestionsDataModel.getQAFilePath();
+            //string qaFilePath = AnswerQuestionsDataModel.getQAFilePath();
             // Get the int value at the end of the name
-            string tempQAFilePathName = qaFilePath.Substring(0, qaFilePath.Length - 4);
-            char[] tempQAFilePathNameArray = tempQAFilePathName.ToCharArray();
-            keyIntStr = "";
-            char lastChar = tempQAFilePathNameArray[tempQAFilePathNameArray.Length-1];
-            while (Char.IsDigit(lastChar))
-            {
-                keyIntStr = lastChar + keyIntStr;
-                Array.Resize(ref tempQAFilePathNameArray, tempQAFilePathNameArray.Length - 1);
-                lastChar = tempQAFilePathNameArray[tempQAFilePathNameArray.Length - 1];
-            }
+            // tempQAFilePathName = qaFilePath.Substring(0, qaFilePath.Length - 4);
+            //char[] tempQAFilePathNameArray = tempQAFilePathName.ToCharArray();
+            //keyIntStr = "";
+            //char lastChar = tempQAFilePathNameArray[tempQAFilePathNameArray.Length-1];
+            //while (Char.IsDigit(lastChar))
+            //{
+            //    keyIntStr = lastChar + keyIntStr;
+            //    Array.Resize(ref tempQAFilePathNameArray, tempQAFilePathNameArray.Length - 1);
+            //    lastChar = tempQAFilePathNameArray[tempQAFilePathNameArray.Length - 1];
+            //}
             // Convert this value to an integer
-            keyToQAFileNameScoresDictionary = Int32.Parse(keyIntStr);
+            //keyToQAFileNameScoresDictionary = Int32.Parse(keyIntStr);
             // create the QandADictionary and the ^ delimited qaList to call the questions
-            AnswerQuestionsDataModel.loadQAFileIntoDictionary(qaFilePath);
+            //AnswerQuestionsDataModel.loadQAFileIntoDictionary(qaFilePath);
             // Call initializeVariables() to initialize local variables
             initializeVariables();
 
@@ -120,18 +127,23 @@ namespace QAProject
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void examToolStripMenuItem_Click(object sender, EventArgs e)
+            
         {
+            
             // Clicked if user wishes to take an exam
            
             //Get the current date time string for the cumulative results file
             currentDatetimeStr = DateTime.Now.ToString("yyyyMMddhhmm");
             //testTypeExam is already true
-            delimitedQuestionNumbersStr = AnswerQuestionsDataModel.getQAList();
-            testTypeSet = true;
-            if (questionSequenceSet && testTypeSet)
-            {
+            // TODO - 202007150701 Revision of the select exam menu
+
+
+            //delimitedQuestionNumbersStr = AnswerQuestionsDataModel.getQAList();
+            //testTypeSet = true;
+            //if (questionSequenceSet && testTypeSet)
+            //{
                 answerQuestions();
-            }
+            //}
         }// End examToolStripMenuItem_Click(
 
         /// <summary>
@@ -141,13 +153,25 @@ namespace QAProject
         /// <param name="e"></param>
         private void quizToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            testTypeExam = false;
+            // TODO - 202007150639 Revision of the Quiz method
+            /*
+             Inasmuch as the  DelimitedQuestionsNumbersStr has already been defined
+             in the AnswerQuestionsDataModel all I need to do here is to set testTypeSet to true,
+             download DelimitedQuestionsNumbersStr and the dictionary 
+             and to call answerQuestions()
+             */             
             testTypeSet = true;
-            delimitedQuestionNumbersStr = AnswerQuestionsDataModel.getQAList();
-            if (questionSequenceSet && testTypeSet)
-            {
-                answerQuestions();
-            }
+            
+            answerQuestions();
+
+            //Old code commented out 202007150644
+            //testTypeExam = false;
+            //testTypeSet = true;
+            //delimitedQuestionNumbersStr = AnswerQuestionsDataModel.getQAList();
+            //if (questionSequenceSet && testTypeSet)
+            //{
+            //    answerQuestions();
+            //}
         }// End quizToolStripMenuItem1_Click
 
 
@@ -269,8 +293,17 @@ namespace QAProject
             // Get the initial count of correct answers
             numCorrectAnswers = AnswerQuestionsDataModel.getNumCorrectAnswers();
         }// End initializeVariables
+        
+        
+        
+        
         private void answerQuestions()
         {
+            // TODO - 202007150645 Revise the answerQuestions() method
+            /*
+              As long as delimitedQuestionNumbersStr is not blank, I need to get the current
+              questions and answer line from the AnswerQuestionDataModel
+             */
             // the delimitedQuestionNumbersStr string is a ^ delimited string of string integer keys to the 
             // qa dictionary
             if (delimitedQuestionNumbersStr.Length == 0)
@@ -286,34 +319,37 @@ namespace QAProject
                              
                 return;
             }
-            // create a tuple that returns the front value of the delimitedQuestionNumbersStr as an int and the remainder of the 
-            // string as a ^ delimited string
-            Tuple<string, string>  currentValueTuple = AnswerQuestionsDataModel.returnDelimitedValue(delimitedQuestionNumbersStr);
-            // convert the int value of the question to a string
-            string currentQuestionNumStr = currentValueTuple.Item1;
-            this.currentQuestionNumStr = currentQuestionNumStr.ToString();
-            // *** convert the currentQuestionNumStr into a string and display it in the 
+
+            // TODO - 202007150651 Revise getting the current questions and answer string from  the data model
+            // Get the leading integer string from the delimitedQuestionNumbersStr
+            string frontNumberStr = StringHelperClass.returnNthItemInDelimitedString(delimitedQuestionNumbersStr, '^', 0);
+            // Remove this item from the delimitedQuestionNumbersStr
+            delimitedQuestionNumbersStr = StringHelperClass.removeNthItemFromDelimitedString(delimitedQuestionNumbersStr, '^', 0);
+            // Convert this to an integer key to the answerQuestionsDictionary dictionary
+            int keyToQADict = Int32.Parse(frontNumberStr);
+            // Get the appropriate string from the answerQuestionsDictionary
+            string currentDelQALine = AnswerQuestionsDataModel.returnDesiredLineFromQADictionary(keyToQADict);
+            // Parse this stirng
+            string[] currentDelQALineComponents = currentDelQALine.Split('^');
+            // assign values to the correct strings
+            currentQuestionNumber = currentDelQALineComponents[0];
+            // Convert ~ to \n\r
+            currentQuestion = currentDelQALineComponents[1];
+            currentQuestion =currentQuestion.Replace("~", "\r\n");
+            correctAnswer = currentDelQALineComponents[2];
+            correctAnswer = correctAnswer.Replace("~", "\r\n");
+            currentImageURL = currentDelQALineComponents[3];
+            currentMp3URL = currentDelQALineComponents[4];
+            // Make provision here for a question value entry
+            int arraySize = currentDelQALineComponents.Length;
+            if (arraySize == 6)
+            {
+                // insert code here to deal with question level
+            }
             //questionNumberValue textbox
-            questionNumberValue.Text = this.currentQuestionNumStr;
-            // convert the delimitedQuestionNumbersStr to the revised ^ delimited string returned in the tuple
-            delimitedQuestionNumbersStr = currentValueTuple.Item2;
-            // TODO - Start Here
-            // get currentQALine
-            string qaLine = AnswerQuestionsDataModel.currentQALine(currentQuestionNumStr);
-            // example 0^When did Aristotle live?^384-322 BCE^^
-            // Get the components of the current qaLine, the question, the answer, the currentImageURL and the
-            //currentMp3URL
-            string[] qaComponentsArray = qaLine.Split('^');
-            currentQuestion = qaComponentsArray[0];
-            // adjust and line breakes int the current question and answers, represented as ~ with a new line character
-            string newLine = Environment.NewLine;
-            currentQuestion = currentQuestion.Replace("~", newLine);
-            correctAnswer = qaComponentsArray[1];
-            correctAnswer = correctAnswer.Replace("~", newLine);
-            currentImageURL = qaComponentsArray[2];
-            currentMp3URL = qaComponentsArray[3];
+            questionNumberValue.Text = currentQuestionNumber;
             currentQuestionValue.Text = currentQuestion;
-            currentQuestionValue.Focus();
+            currentQuestionValue.Focus();            
         }// End answerQuestions()
 
         /// <summary>

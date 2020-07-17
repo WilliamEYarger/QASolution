@@ -160,6 +160,8 @@ namespace QAProject
             // send the current local value of the qaDictionary to QAFileDataModel's QandADictionary
             AnswerQuestionsDataModel.QandADictionary = qaDictionary;
             AnswerQuestionsDataModel.saveQAFile();
+            // set the currentQAPairStr
+            currentQAPairStr = "0";
             this.Hide();
             this.Close();
             QADashboard dashboardForm = new QADashboard();
@@ -257,7 +259,7 @@ namespace QAProject
             appendToFile = false;
             editSelectedQAPairs = false;
             // Set the currentQAPairStr to 0
-            currentQAPairStr = "";
+            currentQAPairStr = "0";
             // Set 0th question number string
             questionNumberValue.Text = "0";
             setQandA();
@@ -309,8 +311,8 @@ namespace QAProject
                 MessageBox.Show("This file already exists. Select another Edit Mode!");
                 return;
             }
-            
-            currentQAPairStr = "";
+            // set the value of currentQAPairStr 0
+            currentQAPairStr = "0";
             questionNumberValue.Text = "0";
             questionValue.Text = "";
             answerValue.Text = "";
@@ -345,7 +347,7 @@ namespace QAProject
         /// </summary>
         private void setQandA() 
         {
-            string [] thisQALineArray = qaDictionary[currentQAPairStr].Split('^');
+            string[] thisQALineArray = qaDictionary[currentQAPairStr].Split('^');
             string question = thisQALineArray[0];
             string answer = thisQALineArray[1];
             questionValue.Text = question.Replace("~", "\r\n");
@@ -383,6 +385,7 @@ namespace QAProject
             }
             if (appendToFile)
             {
+                
                 int currentQAPairInt = Int32.Parse(currentQAPairStr);
                 currentQAPairInt++;
                 currentQAPairStr = currentQAPairInt.ToString();
