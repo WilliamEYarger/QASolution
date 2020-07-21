@@ -61,10 +61,6 @@ namespace QAProject
         private bool editSelectedQAPairs = false;
         // Edit mode is edit All files Seriatem
         private bool editAllSeriatem = false;
-        // The tab key was pressed
-        private bool tabKeyPressed = false;
-        // The Control key was pressed
-        private bool controlKeyPressed = false;
         //--------------------------String---------------------------------------//
 
 
@@ -88,10 +84,10 @@ namespace QAProject
         /// <param name="e"></param>
         private void QuestionAndAnswerForm_Load(object sender, EventArgs e)
         {
-            string qaFileNameString = AnswerQuestionsDataModel.getQAFileNameStr();
+            string qaFileNameString = AnswerQuestionsDataModel.GetQAFileNameStr();
             if (qaFileNameString != "")
             {
-                string qaFilePath = AnswerQuestionsDataModel.getQAFilePath();
+                string qaFilePath = AnswerQuestionsDataModel.GetQAFilePath();
                 if (qaFilePath == "")
                 {
                     // Get a blank dictionary
@@ -100,7 +96,7 @@ namespace QAProject
                     questionValue.Select();
                     return;
                 }
-                AnswerQuestionsDataModel.loadQAFileIntoDictionary(AnswerQuestionsDataModel.getQAFilePath());
+                AnswerQuestionsDataModel.LoadQAFileIntoDictionary(AnswerQuestionsDataModel.GetQAFilePath());
                 qaDictionary = AnswerQuestionsDataModel.QandADictionary;
                 selectEditTypeLable.Visible = true;
             }//End if (qaFileNameString != "")
@@ -113,15 +109,17 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void openQAFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenQAFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.InitialDirectory = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles";
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                InitialDirectory = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles"
+            };
             // Open qa File if it has data and create the qaDictionary
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 qaFilePath = ofd.FileName;
-                AnswerQuestionsDataModel.setQAFilePath(qaFilePath);
+                AnswerQuestionsDataModel.SetQAFilePath(qaFilePath);
                 // Determine if the file exists
                 if (File.Exists(qaFilePath))
                 {
@@ -131,7 +129,7 @@ namespace QAProject
                     if (length != 0)
                     {
                         // Load File into dictionary
-                        AnswerQuestionsDataModel.loadQAFileIntoDictionary(qaFilePath);
+                        AnswerQuestionsDataModel.LoadQAFileIntoDictionary(qaFilePath);
                         // Get dictionary
                         qaDictionary = AnswerQuestionsDataModel.QandADictionary;
                     }
@@ -155,11 +153,11 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void saveFileAndReturnToDashboardToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveFileAndReturnToDashboardToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // send the current local value of the qaDictionary to QAFileDataModel's QandADictionary
             AnswerQuestionsDataModel.QandADictionary = qaDictionary;
-            AnswerQuestionsDataModel.saveQAFile();
+            AnswerQuestionsDataModel.SaveQAFile();
             // set the currentQAPairStr
             currentQAPairStr = "0";
             this.Hide();
@@ -174,7 +172,7 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void appendToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AppendToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Set booleans
             appendToFile = true;
@@ -198,7 +196,7 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void editSelectedQAPairsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EditSelectedQAPairsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             editTypeLabel.Text = "Edit Selected Question";
             selectEditTypeLable.Visible = false;
@@ -219,7 +217,7 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void questionNumberValue_Leave(object sender, EventArgs e)
+        private void QuestionNumberValue_Leave(object sender, EventArgs e)
         {
             // If edit editSelectedQAPairs is false return without further processing
             if (!editSelectedQAPairs)
@@ -227,19 +225,8 @@ namespace QAProject
                 return;
             }
 
-            /*Convert the string numeric the user entered in the questionNumberValue 
-             into an integer and use it to call the appropriate values from the
-             qaDictionary. 
-             */
             currentQAPairStr = questionNumberValue.Text;
-            setQandA();
-            //string currentQAString = qaDictionary[currentQAPairStr];
-            //string[] currentQAValsArray = currentQAString.Split('^');
-            //questionValue.Text = currentQAValsArray[0];
-            //answerValue.Text = currentQAValsArray[1];
-            //imageURL = currentQAValsArray[2];
-            //mp3URL = currentQAValsArray[3];
-            // Move to the question value text box
+            SetQandA();
             questionValue.Select();
         }// End questionNumberValue_Leave
 
@@ -249,7 +236,7 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void editAllSeriatemToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EditAllSeriatemToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Set instructions
             editTypeLabel.Text = "Edit all Questions Seriatem. Use Tab or the Mouse to move and save responses.";
@@ -262,7 +249,7 @@ namespace QAProject
             currentQAPairStr = "0";
             // Set 0th question number string
             questionNumberValue.Text = "0";
-            setQandA();
+            SetQandA();
             questionValue.Select();
         }// End editAllSeriatemToolStripMenuItem_Click
 
@@ -281,7 +268,7 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void imagesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ImagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Use open file dialog to get an image
             OpenFileDialog ofd = new OpenFileDialog();
@@ -304,7 +291,7 @@ namespace QAProject
         }// End imagesToolStripMenuItem_Click
 
 
-        private void beginANewFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void BeginANewFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (qaDictionary.Count != 0)
             {
@@ -326,10 +313,10 @@ namespace QAProject
         }// End beginANewFileToolStripMenuItem_Click
 
 
-        private void getNextQAPairButton_Click(object sender, EventArgs e)
+        private void GetNextQAPairButton_Click(object sender, EventArgs e)
         {
             // Set the value of currentQAPairsInt
-            saveThisQAPair();
+            SaveThisQAPair();
             if (appendToFile)
             {
                 
@@ -345,7 +332,7 @@ namespace QAProject
         /// get the appropriate values for the questiona and answer text and any
         /// urls and loads them onto the form
         /// </summary>
-        private void setQandA() 
+        private void SetQandA() 
         {
             string[] thisQALineArray = qaDictionary[currentQAPairStr].Split('^');
             string question = thisQALineArray[0];
@@ -367,7 +354,7 @@ namespace QAProject
         /// It assumes !!! the currentQAPairStr IS KNOWN !!!
         /// It does NOTHING about setting the next  questions and answers
         /// </summary>
-        private void saveThisQAPair()
+        private void SaveThisQAPair()
         {
             // Replace the return/new line characters with a ~ for storage
             string question = questionValue.Text.Replace("\r\n", "~");
@@ -410,7 +397,7 @@ namespace QAProject
                     questionImagePictureBox.Image = null;
                 }
 
-                setQandA();
+                SetQandA();
                 questionNumberValue.Text = currentQAPairStr.ToString();
                 return;
             }
@@ -423,7 +410,7 @@ namespace QAProject
             }
         }// End saveThisQAPair
 
-        private void instructionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void InstructionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string instructions = "This is a list of instutions for the use of this form."
                 + '\n' + "This is line 2 of the insturctions.";

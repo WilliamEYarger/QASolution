@@ -34,9 +34,9 @@ namespace QADataModelLib
         /// <returns></returns>
         public static string getHyperlink(string nodeName)
         {
-            string hyperlink = "";
             loadHyperlinkDictionary();
-            try 
+            string hyperlink;
+            try
             {
                 hyperlink = HyperlinkDictionary[nodeName];
             }
@@ -78,7 +78,7 @@ namespace QADataModelLib
         /// </summary>
         public static void loadTreeViewDictionary()
         {
-            var treeViewdictionaryList = new List<string>();
+            _ = new List<string>();
             if (File.Exists(treeViewDictionaryPath))
             {
                 //determine if there are data in the file and if so read it into the dictionary
@@ -88,7 +88,7 @@ namespace QADataModelLib
                 {
                     // Read in the file and parse  it into the dictionary
                     var logFile = File.ReadAllLines(treeViewDictionaryPath);
-                    treeViewdictionaryList = new List<string>(logFile);
+                    List<string> treeViewdictionaryList = new List<string>(logFile);
                     //logFile.toList<string>;
                     foreach (string line in treeViewdictionaryList)
                     {
@@ -109,7 +109,7 @@ namespace QADataModelLib
             {
                 HyperlinkDictionary = new Dictionary<string, string>();
             }
-            var hyperlinkDictionaryList = new List<string>();
+
             string hyperlinkDictionaryPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt";
 
             if (File.Exists(hyperlinkDictionaryPath))
@@ -121,7 +121,7 @@ namespace QADataModelLib
                 {
                     // Read in the file and parse  it into the dictionary
                     var logFile = File.ReadAllLines(hyperlinkDictionaryPath);
-                    hyperlinkDictionaryList = new List<string>(logFile);
+                    List<string> hyperlinkDictionaryList = new List<string>(logFile);
                     //logFile.toList<string>;
                     foreach (string line in hyperlinkDictionaryList)
                     {
@@ -137,12 +137,11 @@ namespace QADataModelLib
             int count = TreeViewDictionary.Count;
             string[] treeViewDictionaryArray = new string[count];
             int counter = 0;
-            string output = "";
             foreach (KeyValuePair<string, string> kvp in TreeViewDictionary)
             {
                 string key = kvp.Key;
                 string value = kvp.Value;
-                output = key + '^' + value;
+                string output = key + '^' + value;
                 treeViewDictionaryArray[counter] = output;
                 counter++;
             }
@@ -169,15 +168,12 @@ namespace QADataModelLib
             string parentChain = "";
             while (name.Length != 0)
             {
-                string nextParentName;
-                //Dictionary<string, string> thisTreeViewDictionary = AccessData.getTreeViewDictionary();
-                bool success = copyTreeViewDictionary.TryGetValue(name, out nextParentName);
+                _ = copyTreeViewDictionary.TryGetValue(name, out string nextParentName);
                 parentChain = parentChain + nextParentName + "<";
                 name = QADataModelLib.DelimitedStringMethods.removeLastValue(name, '.');
                 if (name.IndexOf('.') == -1)
                 {
-                    success = copyTreeViewDictionary.TryGetValue(name, out nextParentName);
-                    parentChain = parentChain + nextParentName;
+                    parentChain += nextParentName;
                     return parentChain;
 
                 }

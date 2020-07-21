@@ -108,14 +108,14 @@
             this.openQAFileToolStripMenuItem.Name = "openQAFileToolStripMenuItem";
             this.openQAFileToolStripMenuItem.Size = new System.Drawing.Size(210, 32);
             this.openQAFileToolStripMenuItem.Text = "Open &QA file";
-            this.openQAFileToolStripMenuItem.Click += new System.EventHandler(this.openQAFileToolStripMenuItem_Click);
+            this.openQAFileToolStripMenuItem.Click += new System.EventHandler(this.OpenQAFileToolStripMenuItem_Click);
             // 
             // saveFileAndReturnToDashboardToolStripMenuItem
             // 
             this.saveFileAndReturnToDashboardToolStripMenuItem.Name = "saveFileAndReturnToDashboardToolStripMenuItem";
             this.saveFileAndReturnToDashboardToolStripMenuItem.Size = new System.Drawing.Size(399, 32);
             this.saveFileAndReturnToDashboardToolStripMenuItem.Text = "Save File and Return to Dashboard";
-            this.saveFileAndReturnToDashboardToolStripMenuItem.Click += new System.EventHandler(this.saveFileAndReturnToDashboardToolStripMenuItem_Click);
+            this.saveFileAndReturnToDashboardToolStripMenuItem.Click += new System.EventHandler(this.SaveFileAndReturnToDashboardToolStripMenuItem_Click);
             // 
             // editTypeToolStripMenuItem
             // 
@@ -133,28 +133,28 @@
             this.beginANewFileToolStripMenuItem.Name = "beginANewFileToolStripMenuItem";
             this.beginANewFileToolStripMenuItem.Size = new System.Drawing.Size(289, 32);
             this.beginANewFileToolStripMenuItem.Text = "Begin a New File";
-            this.beginANewFileToolStripMenuItem.Click += new System.EventHandler(this.beginANewFileToolStripMenuItem_Click);
+            this.beginANewFileToolStripMenuItem.Click += new System.EventHandler(this.BeginANewFileToolStripMenuItem_Click);
             // 
             // appendToolStripMenuItem
             // 
             this.appendToolStripMenuItem.Name = "appendToolStripMenuItem";
             this.appendToolStripMenuItem.Size = new System.Drawing.Size(289, 32);
             this.appendToolStripMenuItem.Text = "Append";
-            this.appendToolStripMenuItem.Click += new System.EventHandler(this.appendToolStripMenuItem_Click);
+            this.appendToolStripMenuItem.Click += new System.EventHandler(this.AppendToolStripMenuItem_Click);
             // 
             // editSelectedQAPairsToolStripMenuItem
             // 
             this.editSelectedQAPairsToolStripMenuItem.Name = "editSelectedQAPairsToolStripMenuItem";
             this.editSelectedQAPairsToolStripMenuItem.Size = new System.Drawing.Size(289, 32);
             this.editSelectedQAPairsToolStripMenuItem.Text = "Edit Selected QA Pairs";
-            this.editSelectedQAPairsToolStripMenuItem.Click += new System.EventHandler(this.editSelectedQAPairsToolStripMenuItem_Click);
+            this.editSelectedQAPairsToolStripMenuItem.Click += new System.EventHandler(this.EditSelectedQAPairsToolStripMenuItem_Click);
             // 
             // editAllSeriatemToolStripMenuItem
             // 
             this.editAllSeriatemToolStripMenuItem.Name = "editAllSeriatemToolStripMenuItem";
             this.editAllSeriatemToolStripMenuItem.Size = new System.Drawing.Size(289, 32);
             this.editAllSeriatemToolStripMenuItem.Text = "Edit All Seriatem";
-            this.editAllSeriatemToolStripMenuItem.Click += new System.EventHandler(this.editAllSeriatemToolStripMenuItem_Click);
+            this.editAllSeriatemToolStripMenuItem.Click += new System.EventHandler(this.EditAllSeriatemToolStripMenuItem_Click);
             // 
             // mediaToolStripMenuItem
             // 
@@ -170,7 +170,7 @@
             this.imagesToolStripMenuItem.Name = "imagesToolStripMenuItem";
             this.imagesToolStripMenuItem.Size = new System.Drawing.Size(163, 32);
             this.imagesToolStripMenuItem.Text = "Images";
-            this.imagesToolStripMenuItem.Click += new System.EventHandler(this.imagesToolStripMenuItem_Click);
+            this.imagesToolStripMenuItem.Click += new System.EventHandler(this.ImagesToolStripMenuItem_Click);
             // 
             // soundsToolStripMenuItem
             // 
@@ -183,7 +183,7 @@
             this.instructionsToolStripMenuItem.Name = "instructionsToolStripMenuItem";
             this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(127, 32);
             this.instructionsToolStripMenuItem.Text = "Instructions";
-            this.instructionsToolStripMenuItem.Click += new System.EventHandler(this.instructionsToolStripMenuItem_Click);
+            this.instructionsToolStripMenuItem.Click += new System.EventHandler(this.InstructionsToolStripMenuItem_Click);
             // 
             // errorProvider1
             // 
@@ -198,7 +198,7 @@
             this.questionNumberValue.Size = new System.Drawing.Size(100, 39);
             this.questionNumberValue.TabIndex = 0;
             this.questionNumberValue.TabStop = false;
-            this.questionNumberValue.Leave += new System.EventHandler(this.questionNumberValue_Leave);
+            this.questionNumberValue.Leave += new System.EventHandler(this.QuestionNumberValue_Leave);
             // 
             // questionNumberLabel
             // 
@@ -287,7 +287,7 @@
             this.getNextQAPairButton.TabIndex = 17;
             this.getNextQAPairButton.Text = "Get Next QA Pair";
             this.getNextQAPairButton.UseVisualStyleBackColor = true;
-            this.getNextQAPairButton.Click += new System.EventHandler(this.getNextQAPairButton_Click);
+            this.getNextQAPairButton.Click += new System.EventHandler(this.GetNextQAPairButton_Click);
             // 
             // QuestionAndAnswerForm
             // 

@@ -58,37 +58,26 @@ namespace QAProject
 
         //--------------------------------VARIALBES-----------------------------------------------//
         private string movedNodeName ="";
-        private int movedNodeChildValue;
-        private int movedNodeIndexValue = -1;
         private int movedNodeLevel = -1;
         private TreeNode movedNodesParent = null;
-        private TreeNode oldParentNode = null;
-        private TreeNode newParentNode = null;
         private TreeNode nodeToMove = null;
         private string oldParentName = "";
-        private string oldParentText = "";
-        private int oldParentsNumChildren = 0;
         private string newParentName = "";
-        private string newParentText = "";
         private int numberOfNewParentsChildren;
-        private List<string> alteredQAFileNodeTextValuesList = new List<string>();
+        private readonly List<string> alteredQAFileNodeTextValuesList = new List<string>();
         private bool movedNodeIsQA = false;
         private string newParentsChildrenNumberStr = "";
         private Dictionary<string, string> treeViewDictionary = new Dictionary<string, string>();
         private bool addingHyperlink = false;
         private string thisHyperlink = "";
         private TreeNode hyperlinkSelectedNode = null;
-        private List<string> qaFileNames = new List<string>();
-        private TreeNodeCollection subjectTreeNodeCollection;
 
         //----------------------PUBLIC METHODS------------------------------//
 
         public void QATreeForm_Load(object sender, EventArgs e)
         {
             this.ControlBox = false;
-            createTreeViewFromDictionary();
-            treeViewDictionary = TreeViewDictionaryModel.getTreeViewDictionary();
-
+            CreateTreeViewFromDictionary();
         }// EndQATreeFormLoad
 
  
@@ -100,7 +89,7 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void returnToDashboardButton_Click(object sender, EventArgs e)
+        private void ReturnToDashboardButton_Click(object sender, EventArgs e)
         {
             this.Hide();
             QADashboard dashboardForm = new QADashboard();
@@ -117,7 +106,7 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addNewSubjectButton_Click(object sender, EventArgs e)
+        private void AddNewSubjectButton_Click(object sender, EventArgs e)
         {
             // Make sure that a text value has been added
             if(subjectTextValue.Text == "")
@@ -125,9 +114,6 @@ namespace QAProject
                 MessageBox.Show("You must enter a name for the node first!");
                 return;
             }
-
-            // Get the node's text property
-            string subjectNodeTextValue = subjectTextValue.Text;
             // Create a new root, or Subject node with this text value
             TreeNode subjectTreeNode = new TreeNode(subjectTextValue.Text);
 
@@ -135,7 +121,6 @@ namespace QAProject
 
             subjectTreeNode.Name = numberOfSubjectNodes.ToString();
 
-            // SubjectTreeViewModel.returnSubjectNodeName(subjectTextValue.Text);
             // If this node name has not already beed used add this node
             if (!TreeViewDictionaryModel.AddNode(subjectTreeNode.Name, subjectTreeNode.Text))
             {
@@ -163,7 +148,7 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addNewSubjectDivisionButton_Click(object sender, EventArgs e)
+        private void AddNewSubjectDivisionButton_Click(object sender, EventArgs e)
         {
             // Make sure that a parent has been chosen first
             if(subjectTreeView.SelectedNode == null)
@@ -173,8 +158,6 @@ namespace QAProject
             }
             // Insure that this 'Division' node is not being added to a 'qaFileNode'
             TreeNode selectedNode = subjectTreeView.SelectedNode;
-            string selectedNodeText = selectedNode.Text;
-            string selectedNodeName = selectedNode.Name;
             int ln = selectedNode.Name.Length;
             char lastChar = selectedNode.Name[ln-1];
             bool lastIsNum = lastChar == 'q';
@@ -185,7 +168,7 @@ namespace QAProject
             }
             // Insure that the node is not being added to a terminal Division            
 
-            if (nodeIsTerminal(selectedNode))
+            if (NodeIsTerminal(selectedNode))
             {
 
                 MessageBox.Show("You cannot Add a node to a Terminal Division Node !! Choose a new Parent!");
@@ -193,13 +176,14 @@ namespace QAProject
             }
 
             // Get the NameExtension for this 'Division' node, create a node and add it to the selectedNode in the tree
-            //string thisNodeNameExtension = QADataModelLib.NodeChildrenDictionaryModel.returnDivisionNodeName(selectedNode.Name);
             string thisNodeNameExtension = (selectedNode.Nodes.Count).ToString();
 
             // Create a new DivisionNode with text value = subjectTextValue
-            TreeNode DivisionNode = new TreeNode(subjectTextValue.Text);
-            // Create the name by appending thisNodeNameExtension to the parentNode's name
-            DivisionNode.Name = selectedNode.Name + "." + thisNodeNameExtension;
+            TreeNode DivisionNode = new TreeNode(subjectTextValue.Text)
+            {
+                // Create the name by appending thisNodeNameExtension to the parentNode's name
+                Name = selectedNode.Name + "." + thisNodeNameExtension
+            };
             // If a node with this name is not already present add node to  the treeViewDictionary
             if (!TreeViewDictionaryModel.AddNode(DivisionNode.Name, DivisionNode.Text))
             {
@@ -226,7 +210,7 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addNewQAFileNodeButton_Click(object sender, EventArgs e)
+        private void AddNewQAFileNodeButton_Click(object sender, EventArgs e)
         {
             // Make sure that a parent has been chosen first
             if (subjectTreeView.SelectedNode == null)
@@ -238,9 +222,8 @@ namespace QAProject
             // Create a parent node from the selected node
 
             TreeNode selectedNode = subjectTreeView.SelectedNode;
-            string tempNodeName = selectedNode.Name;
             // Determine if this node has children, is so it cannot hold a QAFile
-            Boolean nodeHasChildren = NodeChildrenDictionaryModel.doesNodeHaveChildren(selectedNode.Name);
+            Boolean nodeHasChildren = NodeChildrenDictionaryModel.DoesNodeHaveChildren(selectedNode.Name);
             if (nodeHasChildren)
             {
                 MessageBox.Show("You Cannot add a QAFile Node to a Node that has Division Node Children");
@@ -256,15 +239,17 @@ namespace QAProject
             string nextQAFileNumberString = qaFileNumber.ToString();
             // Create a new qaNode whose text value is the text in the subjectTextValue 
             // with prefix qa_ to identify it as a QA File
-            TreeNode qaNode = new TreeNode("qa_" + subjectTextValue.Text+'-'+ nextQAFileNumberString);
-            // Add a new stud to the QACumulativerResultsDictionary
-
-           
-            //Create the name for this node and append 'q'
-            qaNode.Name = selectedNode.Name + "." + nextQAFileNumberString + "q";
+            TreeNode qaNode = new TreeNode("qa_" + subjectTextValue.Text + '-' + nextQAFileNumberString)
+            {
+                // Add a new stud to the QACumulativerResultsDictionary
 
 
-            QACumulativeResultsModel.addNewQATestFileRow(nextQAFileNumberString, qaNode.Name, qaNode.Text);
+                //Create the name for this node and append 'q'
+                Name = selectedNode.Name + "." + nextQAFileNumberString + "q"
+            };
+
+
+            QACumulativeResultsModel.AddNewQATestFileRow(nextQAFileNumberString, qaNode.Text);
             // Test to make sure no node with with name already exists in treeViewDictionary
             if (!TreeViewDictionaryModel.AddNode(qaNode.Name, qaNode.Text))
             {
@@ -279,7 +264,7 @@ namespace QAProject
                 subjectTextValue.Text = "";
             }
             // Add this qa file node's  name and text value to the qaNamesDictionary
-            QAFileNameScoresModel.updateQANameScoreDictionaryWithNewEntry(nextQAFileNumberString, qaFileNumber, qaNode.Name, qaNode.Text, parentChain);
+            QAFileNameScoresModel.UpdateQANameScoreDictionaryWithNewEntry(nextQAFileNumberString, qaFileNumber, qaNode.Text, parentChain);
            
             if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt"))
             {
@@ -294,7 +279,7 @@ namespace QAProject
 
        
 
-        private void renameNodeButton_Click(object sender, EventArgs e)
+        private void RenameNodeButton_Click(object sender, EventArgs e)
         {
             //Make sure the node has been selected first
             if(subjectTreeView.SelectedNode == null)
@@ -303,7 +288,7 @@ namespace QAProject
                 return;
             }
             // Get the text to apply to the node's TextValue
-            string newNodeText = "";
+            string newNodeText;
             if (subjectTreeView.SelectedNode.Text.IndexOf("qa_") == 0)
             {
                 // The node to be changed is a QA Node
@@ -320,18 +305,8 @@ namespace QAProject
             // Get the selected node's name and current(oldNodeText) text value
             string nodeName = subjectTreeView.SelectedNode.Name;
             int nodeLevel = subjectTreeView.SelectedNode.Level;
-            ////Changed 06022020
-            //if (!QACumulativeResultsModel.cumulativeResultsDictionaryContainsValue(newNodeText))
-            //{
-            //    MessageBox.Show("You Must Save this file before attempting to Rename it");
-            //}
-            //else
-            //{
-                SubjectTreeViewModel.renameNode(nodeName, oldNodeText, newNodeText, nodeLevel);
-                //subjectTreeView.SelectedNode.Text = newNodeText;
-                SubjectTreeViewModel.filesChanged = true;
-            //}
-           
+            SubjectTreeViewModel.renameNode(nodeName, oldNodeText, newNodeText, nodeLevel);
+            SubjectTreeViewModel.filesChanged = true;
         }// End renameNodeButton_Click
 
 
@@ -343,32 +318,23 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void selectNodetoMoveButton_Click(object sender, EventArgs e)
+        private void SelectNodetoMoveButton_Click(object sender, EventArgs e)
         {
             // Get needed values about the node to be moved
             nodeToMove = subjectTreeView.SelectedNode;
-            oldParentNode = nodeToMove.Parent; 
             movedNodesParent = subjectTreeView.SelectedNode.Parent;
             oldParentName = movedNodesParent.Name;
-            oldParentText = movedNodesParent.Text;
-
             movedNodeName = nodeToMove.Name;
-            movedNodeIndexValue = nodeToMove.Index;
             movedNodeLevel = nodeToMove.Level;
-            string movedNodeChildValueStr = StringHelperClass.returnNthItemInDelimitedString(movedNodeName, '.', movedNodeIndexValue);
-            movedNodeChildValue = Int32.Parse(movedNodeChildValueStr);
             // Determins if this is a QA node and if so add it to alteredQAFileNodeTextValuesList
             if (movedNodeName.IndexOf('q') != -1)
             {
                 // This is a QA Node
                 alteredQAFileNodeTextValuesList.Add(nodeToMove.Text);
                 movedNodeIsQA = true;
-                //subjectTreeView.Nodes.Remove(subjectTreeView.SelectedNode);
-
             }
             
             subjectTreeView.SelectedNode = movedNodesParent;
-            oldParentsNumChildren = subjectTreeView.SelectedNode.GetNodeCount(false);
 
         }// End selectNodetoMoveButton_Click
 
@@ -380,20 +346,19 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void selectNewParentbutton_Click(object sender, EventArgs e)
+        private void SelectNewParentbutton_Click(object sender, EventArgs e)
         {
             // Delete the node to be moved
             subjectTreeView.Nodes.Remove(nodeToMove);
             // 1. Get data on new Parent
             newParentName = subjectTreeView.SelectedNode.Name;
-            newParentText = subjectTreeView.SelectedNode.Text;
             numberOfNewParentsChildren = subjectTreeView.SelectedNode.Nodes.Count;
             newParentsChildrenNumberStr = numberOfNewParentsChildren.ToString();
             // 1.1 If node to be moved is a QA file call moveQANaod
 
             if (movedNodeIsQA)
             {
-                moveQANode();
+                MoveQANode();
                 return;
             }
 
@@ -453,9 +418,6 @@ namespace QAProject
                     }
                 }
             } // End Cycle thru treeViewDictionary alloting the lines to the appropriate list
-
-
-
             // 5.  Rename the nodes in the  movedNodesList by
             // 5.1. remove the monedNodeName.Length number of characters from the front of the nodeName
             // 5.2. create a new front string from
@@ -534,36 +496,27 @@ namespace QAProject
             TreeViewDictionaryModel.updateTreeViewDictionary(treeViewDictionary);
             // 9. Clear all the nodes in subjectTreeView and then reconstitute by calling createTreeViewFromDictionary();
             subjectTreeView.Nodes.Clear();
-            createTreeViewFromDictionary();
-            updateQAFileNameScores();
+            CreateTreeViewFromDictionary();
+            UpdateQAFileNameScores();
         }// selectNewParentbuttonClicked
 
 
-        private void editQAFileButton_Click(object sender, EventArgs e)
+        private void EditQAFileButton_Click(object sender, EventArgs e)
         {
             string qaFileName = subjectTreeView.SelectedNode.Text;
-            AnswerQuestionsDataModel.setQAFileNameStr(qaFileName);
+            AnswerQuestionsDataModel.SetQAFileNameStr(qaFileName);
             this.Hide();
             QuestionAndAnswerForm questionAndAnswerForm = new QuestionAndAnswerForm();
             questionAndAnswerForm.ShowDialog();
         }// End editQAFileButton_Click(
 
-        private void deleteNode_Click(object sender, EventArgs e)
+        private void DeleteNode_Click(object sender, EventArgs e)
         {
             // TODO - Complete code to remove a node.
 
-            //  THIS CODE IS NOT COMPLETE SINCE I HAVEN'T REMOVED THE NODE AND
-            //  ALL OF ITS CHILDREN FROM THE TREEVIEWDICTIONARY
-            // Make sure that a node has been selected first
-            //if(subjectTreeView.SelectedNode == null)
-            //{
-            //    MessageBox.Show("You Must select a node first!");
-            //    return;
-            //}
-            //subjectTreeView.SelectedNode.Remove();
         }// End deleteNode_Click(
 
-        private void addHyperlinkButton_Click(object sender, EventArgs e)
+        private void AddHyperlinkButton_Click(object sender, EventArgs e)
         {
 
             // Make sure that anode has been chosen first
@@ -585,13 +538,10 @@ namespace QAProject
                 string output = hyperlinkSelectedNode.Name + '^' + filePath + '\n';
                 File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
             }
-
-            //addingHyperlink = true;
-            //subjectTextValue.Select();
             return;
         }// End addHyperlinkButton_Click(
 
-        private void openHyperlinkButton_Click(object sender, EventArgs e)
+        private void OpenHyperlinkButton_Click(object sender, EventArgs e)
         {
             if (subjectTreeView.SelectedNode == null)
             {
@@ -616,25 +566,43 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void takeQAFileTestButton_Click(object sender, EventArgs e)
+        private void TakeQAFileTestButton_Click(object sender, EventArgs e)
         {
-            // create path to the folder holding all of the qaFiles
-            string filePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles";
             // Get the text value of the selected node
             TreeNode selectedNode = subjectTreeView.SelectedNode;
+
             string selectedNodeText = selectedNode.Text;
+            AnswerQuestionsDataModel.SelectedNodeText = selectedNodeText;
+
             // Get the name value of the selected node
             string nodeName = selectedNode.Name;
+            AnswerQuestionsDataModel.SelectedNodeName = nodeName;
+            // Get the parent string
+            TreeNode testNode = selectedNode;
+            string parentString = testNode.Parent.Text;
+            testNode = testNode.Parent;
+            while (true)
+            {
+                if(testNode.Parent != null)
+                {
+                    parentString = parentString + '<' + testNode.Parent.Text ;
+                    testNode = testNode.Parent;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            // Send the parentsString to AnswerQuestionsDataModel
+            AnswerQuestionsDataModel.SetParentsString(parentString);
             // create a List<string> qaFileNames to hold the list of qaFiles and their file number
             // each entry is a ^ deliited string of qaFile nodeNames and nodeText values
-            List<String> listOfQAFiles = new List<string>();
-            listOfQAFiles = AnswerQuestionsDataModel.returnListOfSelectedQAFiles(nodeName);
-            AnswerQuestionsDataModel.createQuestionAndAnswerDictionary(listOfQAFiles);
+            List<string> listOfQAFiles = AnswerQuestionsDataModel.ReturnListOfSelectedQAFiles(nodeName);
+            AnswerQuestionsDataModel.CreateQuestionAndAnswerDictionary(listOfQAFiles);
 
-
-            // End TODO - 07/12/2020
             // define the file path to the selected qa file in the AnswerQuestionsDataModel
-            AnswerQuestionsDataModel.setQAFilePath(selectedNodeText);
+            AnswerQuestionsDataModel.SetQAFilePath(selectedNodeText);
 
             this.Hide();
             AnswerQuestionsForm answerQuestionsForm = new AnswerQuestionsForm();
@@ -652,17 +620,13 @@ namespace QAProject
         /// </summary>
         /// <param name="selectedNode"></param>
         /// <returns></returns>
-        private bool nodeIsTerminal(TreeNode selectedNode)
+        private bool NodeIsTerminal(TreeNode selectedNode)
         {
             bool returnValue = false;
 
 
             //TreeNode firstChild = selectedNode.NextNode;
             TreeNode firstChild = selectedNode.FirstNode;
-
-            //if ( (firstChild == null) || ((firstChild != null && firstChild.Text.StartsWith("qa_"))))
-
-            //
             if (firstChild != null && firstChild.Text.StartsWith("qa_"))
             {
                 returnValue = true;
@@ -671,15 +635,15 @@ namespace QAProject
         }// End nodeIsTerminal
 
 
-        private void createTreeViewFromDictionary()
+        private void CreateTreeViewFromDictionary()
         {
-            Dictionary<string, string> treeViewDictionary = new Dictionary<string, string>();
+            Dictionary<string, string> treeViewDictionary;
             treeViewDictionary = TreeViewDictionaryModel.getTreeViewDictionary();
 
             //Cycle thru treeViewDictionary
             foreach (KeyValuePair<string, string> kvp in treeViewDictionary)
             {
-                string nodeName = kvp.Key;
+                _ = kvp.Key;
                 string nodeText = kvp.Value;
                 if (subjectTreeView.Nodes.ContainsKey(nodeText))
                     subjectTreeView.Nodes[nodeText].Remove();
@@ -696,7 +660,7 @@ namespace QAProject
                 string[] nodeNameComponents = nodeName.Split('.');
                 int nodeLevel = nodeNameComponents.Length;
                 //Create a new treeNode thisNode
-                TreeNode thisNode = new TreeNode();
+                TreeNode thisNode;//
                 switch (nodeLevel)
                 {
                     case 1:
@@ -719,7 +683,7 @@ namespace QAProject
                         // This int was defined in the previous case statement it represents the index of the immediate parent
                         thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
                         // Determine if the node to be added is a Division node (nodeNameComponents does not contain 'q'
-                        int thisNodesNumber1 = -1;
+                        int thisNodesNumber1;
                         if (nodeNameComponents[1].IndexOf('q') != -1)
                         {
                             // This is a QA node
@@ -743,7 +707,7 @@ namespace QAProject
                     case 3:
                         thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
                         thisNodesNumber1 = Int32.Parse(nodeNameComponents[1]);
-                        int thisNodesNumber2 = -1;
+                        int thisNodesNumber2;
                         if (nodeNameComponents[2].IndexOf('q') != -1)
                         {
                             TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1];
@@ -761,7 +725,7 @@ namespace QAProject
                         thisNodesNumber0 = Int32.Parse(nodeNameComponents[0]);
                         thisNodesNumber1 = Int32.Parse(nodeNameComponents[1]);
                         thisNodesNumber2 = Int32.Parse(nodeNameComponents[2]);
-                        int thisNodesNumber3 = -1;
+                        int thisNodesNumber3;
                         if (nodeNameComponents[3].IndexOf('q') != -1)
                         {
                             TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2];
@@ -780,7 +744,7 @@ namespace QAProject
                         thisNodesNumber1 = Int32.Parse(nodeNameComponents[1]);
                         thisNodesNumber2 = Int32.Parse(nodeNameComponents[2]);
                         thisNodesNumber3 = Int32.Parse(nodeNameComponents[3]);
-                        int thisNodesNumber4 = -1;
+                        int thisNodesNumber4;
                         if (nodeNameComponents[4].IndexOf('q') != -1)
                         {
                             TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3];
@@ -801,7 +765,7 @@ namespace QAProject
                         thisNodesNumber2 = Int32.Parse(nodeNameComponents[2]);
                         thisNodesNumber3 = Int32.Parse(nodeNameComponents[3]);
                         thisNodesNumber4 = Int32.Parse(nodeNameComponents[4]);
-                        int thisNodesNumber5 = -1;
+                        int thisNodesNumber5;
                         if (nodeNameComponents[5].IndexOf('q') != -1)
                         {
                             TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4];
@@ -822,7 +786,7 @@ namespace QAProject
                         thisNodesNumber3 = Int32.Parse(nodeNameComponents[3]);
                         thisNodesNumber4 = Int32.Parse(nodeNameComponents[4]);
                         thisNodesNumber5 = Int32.Parse(nodeNameComponents[5]);
-                        int thisNodesNumber6 = -1;
+                        int thisNodesNumber6;
                         if (nodeNameComponents[6].IndexOf('q') != -1)
                         {
                             // This is a QA node
@@ -851,7 +815,7 @@ namespace QAProject
                         thisNodesNumber4 = Int32.Parse(nodeNameComponents[4]);
                         thisNodesNumber5 = Int32.Parse(nodeNameComponents[5]);
                         thisNodesNumber6 = Int32.Parse(nodeNameComponents[6]);
-                        int thisNodesNumber7 = -1;
+                        int thisNodesNumber7;
                         if (nodeNameComponents[7].IndexOf('q') != -1)
                         {
                             // This is a QA node
@@ -877,7 +841,7 @@ namespace QAProject
                         thisNodesNumber5 = Int32.Parse(nodeNameComponents[5]);
                         thisNodesNumber6 = Int32.Parse(nodeNameComponents[6]);
                         thisNodesNumber7 = Int32.Parse(nodeNameComponents[7]);
-                        int thisNodesNumber8 = -1;
+                        int thisNodesNumber8;
                         if (nodeNameComponents[8].IndexOf('q') != -1)
                         {
                             TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7];
@@ -901,7 +865,7 @@ namespace QAProject
                         thisNodesNumber6 = Int32.Parse(nodeNameComponents[6]);
                         thisNodesNumber7 = Int32.Parse(nodeNameComponents[7]);
                         thisNodesNumber8 = Int32.Parse(nodeNameComponents[8]);
-                        int thisNodesNumber9 = -1;
+                        int thisNodesNumber9;
                         if (nodeNameComponents[9].IndexOf('q') != -1)
                         {
                             TreeNode selectedNode = subjectTreeView.Nodes[thisNodesNumber0].Nodes[thisNodesNumber1].Nodes[thisNodesNumber2].Nodes[thisNodesNumber3].Nodes[thisNodesNumber4].Nodes[thisNodesNumber5].Nodes[thisNodesNumber6].Nodes[thisNodesNumber7].Nodes[thisNodesNumber8];
@@ -920,14 +884,9 @@ namespace QAProject
                         break;
                 }// End switch(nodeLevel)
             }
-
-            
+                        
             subjectTreeView.EndUpdate();
-           // ADDED 20200713
-
-            string pause = "";
             List<String> qaFileList = new List<string>();
-
             
             CallRecursive();
             SubjectTreeViewModel.setListOfQAFiles(qaFileList);
@@ -946,7 +905,6 @@ namespace QAProject
                           DoRecursive(tn);
                       }
                 }// End DoRecursive
-
                 
                 // Call the procedure using the TreeView.  
                 void CallRecursive()
@@ -959,7 +917,7 @@ namespace QAProject
                     }
                 }
             // Save ordered qaFileList in the AnswerQuestionsDataModel
-            AnswerQuestionsDataModel.setListOfOrderedQAFiles(qaFileList);
+            AnswerQuestionsDataModel.SetListOfOrderedQAFiles(qaFileList);
 
         }// End CreateTreeViewFromDictionary
 
@@ -967,13 +925,11 @@ namespace QAProject
         /// This method is called by selectNewParent_Click method if
         /// the node to be moved is a QA nodde
         /// </summary>
-        private void moveQANode()
+        private void MoveQANode()
         {
 
             // 1.0 Make a copy of treeViewDictionary
             treeViewDictionary = TreeViewDictionaryModel.getTreeViewDictionary();
-            // 2. Get the name of the new parent node
-            newParentNode = subjectTreeView.SelectedNode;
             // 3. Replace the old parent's name with the new parent's name
             string newMovedNodeName = movedNodeName.Replace(oldParentName, newParentName);
             // 4. Get the moved node's text value
@@ -985,17 +941,19 @@ namespace QAProject
             //7. Update the permanent TreeViewDictionary that will be used to reconstruct the tree view
             TreeViewDictionaryModel.updateTreeViewDictionary(treeViewDictionary);
             // 8. Create a new node with the movedNodeText and its updated newMovedNodeName 
-            TreeNode newNode = new TreeNode();
-            newNode.Text = movedNodeText;
-            newNode.Name = newMovedNodeName;
+            _ = new TreeNode
+            {
+                Text = movedNodeText,
+                Name = newMovedNodeName
+            };
             // 9. Add it to the tree as a child of the new parent, SelectedNode
             subjectTreeView.SelectedNode.Nodes.Add(movedNodeText);
             // 10. update the QAFileNameScoresDictionary
-            updateQAFileNameScores();
+            UpdateQAFileNameScores();
 
         }// End  moveQANode()
 
-        private void updateQAFileNameScores()
+        private void UpdateQAFileNameScores()
         {
             
             // 3. Create a local copy of treeViewDictionary
@@ -1026,7 +984,7 @@ namespace QAProject
                     char testChar = alteredNodeText[i];
                     if (testChar >= '0' && testChar <= '9')
                     {
-                        keyStrings = keyStrings + testChar;
+                        keyStrings += testChar;
                         numericFound = true;
                     }
                     else if (numericFound)
@@ -1058,7 +1016,7 @@ namespace QAProject
 
         
 
-        private void subjectTextValue_Leave(object sender, EventArgs e)
+        private void SubjectTextValue_Leave(object sender, EventArgs e)
         {
             if (addingHyperlink)
             {
@@ -1073,72 +1031,8 @@ namespace QAProject
             }
         }// End subjectTextValue_Leave(
 
-
-        /// <summary>
-        /// Revised 20200714
-        /// Called when the user clicks the takeQAFile Test button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OLDtakeQAFileTestButton_Click(object sender, EventArgs e)
-        {
-            // create path to the folder holding all of the qaFiles
-            string filePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles";
-            // Get the text value of the selected node
-            TreeNode selectedNode = subjectTreeView.SelectedNode;
-            string selectedNodeText = selectedNode.Text;
-            // Get the name value of the selected node
-            string nodeName = selectedNode.Name;
-            // create a List<string> qaFileNames to hold the list of qaFiles and their file number
-            List<String> listOfQAFiles = new List<string>();
-            if (nodeName.IndexOf('q') == -1)
-            {
-                string test = nodeName;
-                listOfQAFiles = SubjectTreeViewModel.returnListOfQAFiles();
-                Dictionary<string, string> selectedQAFilesDictionary = new Dictionary<string, string>();
-                foreach (string item in listOfQAFiles)
-                {
-                    if (item.IndexOf(nodeName) == 0)
-                    {
-                        // Get the node name and text
-                        string thisNodeName = StringHelperClass.returnNthItemInDelimitedString(item, '^', 0);
-                        string thisNodeText = StringHelperClass.returnNthItemInDelimitedString(item, '^', 1);
-                        // Get the position of the last '-' in thisNodeName
-                        int posLastDash = thisNodeText.LastIndexOf('-');
-                        string qaFileNumber = thisNodeText.Substring(posLastDash + 1);
-                        // Create the path of the qaFile
-                        string thisFilePath  = filePath+"\\"+ thisNodeText + ".txt";
-                        // Add these values to selectedQAFilesList
-                        selectedQAFilesDictionary.Add(qaFileNumber, thisFilePath);
-                    }
-                }// End if (item.IndexOf(nodeName) == 0)
-                // Send the selectedQAFilesList to AnswerQuestionsDataModel
-                AnswerQuestionsDataModel.createQuestionsFromSelectedQAFilesList(selectedQAFilesDictionary);
-
-
-            }
-            else
-            {
-                qaFileNames.Add(selectedNodeText);
-
-            }
-
-
-            // End TODO - 07/12/2020
-            // define the file path to the selected qa file in the AnswerQuestionsDataModel
-            AnswerQuestionsDataModel.setQAFilePath(selectedNodeText);
-
-            this.Hide();
-            AnswerQuestionsForm answerQuestionsForm = new AnswerQuestionsForm();
-            answerQuestionsForm.ShowDialog();
-        }
-
         
     }// End QATreeForm
-
-
-
-
 
 }//End QAProject
 

@@ -22,7 +22,7 @@ namespace QAProject
         
         private static Boolean filesLoaded = false;
 
-        private void openSubjectsTreeButton_Click(object sender, EventArgs e)
+        private void OpenSubjectsTreeButton_Click(object sender, EventArgs e)
         {
            // QATreeForm.loadTree();
             this.Hide();
@@ -38,26 +38,28 @@ namespace QAProject
                 QADataModelLib.AccessData.openAllFiles();
                 QAFileNameScoresModel.loadQANameScoreDictionary();
                 //SubjectNodesListModel.loadSubjectNodesList();
-                QADataModelLib.NodeChildrenDictionaryModel.loadNodeChildrenDictionary();
+                QADataModelLib.NodeChildrenDictionaryModel.LoadNodeChildrenDictionary();
                 QADataModelLib.TreeViewDictionaryModel.loadTreeViewDictionary();
                 filesLoaded = true;
-                QACumulativeResultsModel.importQACumulativeResultsFile();
+                QACumulativeResultsModel.ImportQACumulativeResultsFile();
+                QACumulativeResultsModel.ImportQAExaminationResultsFile();
             }
            
         }
 
-        private void exitApplicationButton_Click(object sender, EventArgs e)
+        private void ExitApplicationButton_Click(object sender, EventArgs e)
         {
             QADataModelLib.AccessData.saveAllFiles();
             //SubjectNodesListModel.saveSubjectNodeList();
-            NodeChildrenDictionaryModel.saveNodeChildrenDictionary();
+            NodeChildrenDictionaryModel.SaveNodeChildrenDictionary();
             QAFileNameScoresModel.saveQAFileNameScoresFile();
             TreeViewDictionaryModel.saveTreeViewDictionary();
-            QACumulativeResultsModel.exportQACumulativeResutsFile();
+            QACumulativeResultsModel.ExportQACumulativeResutsFile();
+            QACumulativeResultsModel.ExportQAExamResultsFile();
             Application.Exit();
         }
 
-        private void openCeateEditQAFilesFormbutton_Click(object sender, EventArgs e)
+        private void OpenCeateEditQAFilesFormbutton_Click(object sender, EventArgs e)
         {
             
             this.Hide();

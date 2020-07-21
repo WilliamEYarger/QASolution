@@ -82,7 +82,7 @@
             this.subjectTextValue.Name = "subjectTextValue";
             this.subjectTextValue.Size = new System.Drawing.Size(315, 43);
             this.subjectTextValue.TabIndex = 6;
-            this.subjectTextValue.Leave += new System.EventHandler(this.subjectTextValue_Leave);
+            this.subjectTextValue.Leave += new System.EventHandler(this.SubjectTextValue_Leave);
             // 
             // addNewSubjectButton
             // 
@@ -92,7 +92,7 @@
             this.addNewSubjectButton.TabIndex = 7;
             this.addNewSubjectButton.Text = "Add Subject";
             this.addNewSubjectButton.UseVisualStyleBackColor = true;
-            this.addNewSubjectButton.Click += new System.EventHandler(this.addNewSubjectButton_Click);
+            this.addNewSubjectButton.Click += new System.EventHandler(this.AddNewSubjectButton_Click);
             // 
             // addNewSubjectChapterButton
             // 
@@ -102,7 +102,7 @@
             this.addNewSubjectChapterButton.TabIndex = 8;
             this.addNewSubjectChapterButton.Text = "Add Division";
             this.addNewSubjectChapterButton.UseVisualStyleBackColor = true;
-            this.addNewSubjectChapterButton.Click += new System.EventHandler(this.addNewSubjectDivisionButton_Click);
+            this.addNewSubjectChapterButton.Click += new System.EventHandler(this.AddNewSubjectDivisionButton_Click);
             // 
             // addNewQAFileNodeButton
             // 
@@ -112,7 +112,7 @@
             this.addNewQAFileNodeButton.TabIndex = 9;
             this.addNewQAFileNodeButton.Text = "Add QA File";
             this.addNewQAFileNodeButton.UseVisualStyleBackColor = true;
-            this.addNewQAFileNodeButton.Click += new System.EventHandler(this.addNewQAFileNodeButton_Click);
+            this.addNewQAFileNodeButton.Click += new System.EventHandler(this.AddNewQAFileNodeButton_Click);
             // 
             // editQAFileButton
             // 
@@ -122,7 +122,7 @@
             this.editQAFileButton.TabIndex = 10;
             this.editQAFileButton.Text = "Edit/Create this QA File";
             this.editQAFileButton.UseVisualStyleBackColor = true;
-            this.editQAFileButton.Click += new System.EventHandler(this.editQAFileButton_Click);
+            this.editQAFileButton.Click += new System.EventHandler(this.EditQAFileButton_Click);
             // 
             // takeQAFileTestButton
             // 
@@ -132,7 +132,7 @@
             this.takeQAFileTestButton.TabIndex = 11;
             this.takeQAFileTestButton.Text = "Take Test on this File";
             this.takeQAFileTestButton.UseVisualStyleBackColor = true;
-            this.takeQAFileTestButton.Click += new System.EventHandler(this.takeQAFileTestButton_Click);
+            this.takeQAFileTestButton.Click += new System.EventHandler(this.TakeQAFileTestButton_Click);
             // 
             // vewCumulativeResultsForSelectedQAFileButton
             // 
@@ -171,7 +171,7 @@
             this.selectNewParentbutton.TabIndex = 1;
             this.selectNewParentbutton.Text = "Select New Parent";
             this.selectNewParentbutton.UseVisualStyleBackColor = true;
-            this.selectNewParentbutton.Click += new System.EventHandler(this.selectNewParentbutton_Click);
+            this.selectNewParentbutton.Click += new System.EventHandler(this.SelectNewParentbutton_Click);
             // 
             // selectNodetoMoveButton
             // 
@@ -181,7 +181,7 @@
             this.selectNodetoMoveButton.TabIndex = 0;
             this.selectNodetoMoveButton.Text = "Select Node To Move";
             this.selectNodetoMoveButton.UseVisualStyleBackColor = true;
-            this.selectNodetoMoveButton.Click += new System.EventHandler(this.selectNodetoMoveButton_Click);
+            this.selectNodetoMoveButton.Click += new System.EventHandler(this.SelectNodetoMoveButton_Click);
             // 
             // returnToDashboardButton
             // 
@@ -191,7 +191,7 @@
             this.returnToDashboardButton.TabIndex = 16;
             this.returnToDashboardButton.Text = "Return to Dashboard";
             this.returnToDashboardButton.UseVisualStyleBackColor = true;
-            this.returnToDashboardButton.Click += new System.EventHandler(this.returnToDashboardButton_Click);
+            this.returnToDashboardButton.Click += new System.EventHandler(this.ReturnToDashboardButton_Click);
             // 
             // renameNodeButton
             // 
@@ -202,7 +202,7 @@
             this.renameNodeButton.TabIndex = 19;
             this.renameNodeButton.Text = "Rename Node";
             this.renameNodeButton.UseVisualStyleBackColor = true;
-            this.renameNodeButton.Click += new System.EventHandler(this.renameNodeButton_Click);
+            this.renameNodeButton.Click += new System.EventHandler(this.RenameNodeButton_Click);
             // 
             // deleteNode
             // 
@@ -213,7 +213,7 @@
             this.deleteNode.TabIndex = 20;
             this.deleteNode.Text = "Delete Node";
             this.deleteNode.UseVisualStyleBackColor = true;
-            this.deleteNode.Click += new System.EventHandler(this.deleteNode_Click);
+            this.deleteNode.Click += new System.EventHandler(this.DeleteNode_Click);
             // 
             // addHyperlinkButton
             // 
@@ -224,7 +224,7 @@
             this.addHyperlinkButton.TabIndex = 21;
             this.addHyperlinkButton.Text = "Add Link";
             this.addHyperlinkButton.UseVisualStyleBackColor = true;
-            this.addHyperlinkButton.Click += new System.EventHandler(this.addHyperlinkButton_Click);
+            this.addHyperlinkButton.Click += new System.EventHandler(this.AddHyperlinkButton_Click);
             // 
             // openHyperlinkButton
             // 
@@ -235,7 +235,7 @@
             this.openHyperlinkButton.TabIndex = 22;
             this.openHyperlinkButton.Text = "Open Link";
             this.openHyperlinkButton.UseVisualStyleBackColor = true;
-            this.openHyperlinkButton.Click += new System.EventHandler(this.openHyperlinkButton_Click);
+            this.openHyperlinkButton.Click += new System.EventHandler(this.OpenHyperlinkButton_Click);
             // 
             // QATreeForm
             // 

@@ -1,4 +1,12 @@
-﻿20200714 - Develpment of the 20200710 branch version 2
+﻿
+20200721 Final commit of 20200710 
+
+20200718 - Further development of the 202001717 commit of 20200710
+TASK 01 - Clean up code
+	1.	remove commented out procedures DONE
+	2.	Develop a method to take and track examinations, where an examinationis defined as
+		a list of questions and answers from more than one qa file DONE
+2200714 - Develpment of the 20200710 branch version 2
 TASK 02  Check all of the create and edit qa file procedures to make sure they still work
 	a.	Create new and append (with correnction) now work
 	b.	The Edit selecte question works

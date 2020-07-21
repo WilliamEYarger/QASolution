@@ -61,7 +61,7 @@
             this.openSubjectsTreeButton.TabIndex = 2;
             this.openSubjectsTreeButton.Text = "Open the Subjects Tree ";
             this.openSubjectsTreeButton.UseVisualStyleBackColor = true;
-            this.openSubjectsTreeButton.Click += new System.EventHandler(this.openSubjectsTreeButton_Click);
+            this.openSubjectsTreeButton.Click += new System.EventHandler(this.OpenSubjectsTreeButton_Click);
             // 
             // exitApplicationButton
             // 
@@ -71,7 +71,7 @@
             this.exitApplicationButton.TabIndex = 3;
             this.exitApplicationButton.Text = "Save Files and Exit";
             this.exitApplicationButton.UseVisualStyleBackColor = true;
-            this.exitApplicationButton.Click += new System.EventHandler(this.exitApplicationButton_Click);
+            this.exitApplicationButton.Click += new System.EventHandler(this.ExitApplicationButton_Click);
             // 
             // openCeateEditQAFilesFormbutton
             // 
@@ -81,7 +81,7 @@
             this.openCeateEditQAFilesFormbutton.TabIndex = 4;
             this.openCeateEditQAFilesFormbutton.Text = "Open The Create/Edit QAFiles Forl";
             this.openCeateEditQAFilesFormbutton.UseVisualStyleBackColor = true;
-            this.openCeateEditQAFilesFormbutton.Click += new System.EventHandler(this.openCeateEditQAFilesFormbutton_Click);
+            this.openCeateEditQAFilesFormbutton.Click += new System.EventHandler(this.OpenCeateEditQAFilesFormbutton_Click);
             // 
             // QADashboard
             // 

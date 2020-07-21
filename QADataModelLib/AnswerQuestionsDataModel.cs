@@ -1,7 +1,6 @@
 ﻿//-----------------------CONSTANTS----------------------//
 //      string qaFilePathFolder
 //-----------------------VARIABLES----------------------//
-//      string qaFileName
 //      Dictionary<int, string> qaDictionary
 //      string seriatimQuestionNumberDelStr
 //----------------------PROPERTIES AND GETTER/SETTERS---------------------//
@@ -15,19 +14,25 @@
 //      Dictionary<int, string> QandADictionary{
 //      setQAFileNameStr(
 //      string getQAFileNameStr()
-//      int numCorrectAnswers
 //      List<string> orderedListOfQAFiles
 //      int getNumCorrectAnswers(
+//      string delimitedQuestionNumbersStr
+//      string ReturnDelimitedQuestionsNumbersStr(
+//      Boolean examination
+//      Boolean IsExamination(
+//      string parentsString
+//      void SetParentsString(
+//      string ReturnParentsString(
+//      public string SelectedNodeName { get; set; }
+//      public string SelectedNodeText { get; set; }
 
 //--------------------------PUBLIC METHODS-----------------------//
 //      void loadQAFileIntoDictionary(string qaFilePath)
 //      void saveQAFile(
-//      Tuple<int, string> returnDelimitedValue( 
-//      string currentQALine(
-//      void createQuestionsFromSelectedQAFilesList(
-//      void setListOfOrderedQAFiles(
-//      List<string> returnListOfSelectedQAFiles(
-//      void createQuestionAndAnswerDictionary(
+//      string ReturnDesiredLineFromQADictionary(
+//      void SetListOfOrderedQAFiles(
+//      List<string> ReturnListOfSelectedQAFiles(\
+//      void CreateQuestionAndAnswerDictionary(
 
 using System;
 using System.Collections.Generic;
@@ -43,9 +48,8 @@ namespace QADataModelLib
         /// <summary>
         /// qaFilePathFolder is the QAFiles folder in the Learning\_CSharpQAFiles directory
         /// </summary>
-        private static string qaFilePathFolder = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\";
+        private static readonly string qaFilePathFolder = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\";
         //-----------------------VARIABLES----------------------//
-        private static string qaFileName = "";
 
         /// <summary>
         /// qaDictionary is a  Dictionary<string, string> whose key is the integerStr question and
@@ -54,37 +58,11 @@ namespace QADataModelLib
         /// 0^Q0.1.1^A0.1.1^^ where the key is 0, the question in Q0.1.1, the answer is A0.1.1
         /// and both the image and mpe urls are blank
         /// </summary>
-        // TODO - changed 20200713 private static Dictionary<int, string> qaDictionary = new Dictionary<int, string>();
+        
         private static Dictionary<string, string> qaDictionary = new Dictionary<string, string>();
 
         private static string seriatimQuestionNumberDelStr = "";
         //----------------------PROPERTIES AND GETTER/SETTERS---------------------//
-
-
-        /// <summary>
-        /// This property is a '^' string containing sequential numberStrings
-        /// from "0" to QandADictionary.Count -1
-        /// </summary>
-        private static string qaList = "";
-        public static void setQAList(string listOfQuestionsAndAnswers)
-        {
-            qaList = listOfQuestionsAndAnswers;
-        }
-        public static string getQAList()
-        {
-            return qaList;
-        }
-
-
-        private static string RandomQAList = "";
-
-
-        public static string returnRandomizedQAList()
-        {
-            string QAList = qaList;
-            //Randomize QAList
-            return QAList;
-        }
 
         /// <summary>
         /// qaFilePath is the private internal path to the desired qaFile
@@ -95,7 +73,7 @@ namespace QADataModelLib
         /// Returns qaFilePath which was created fromthe file name if the user selects the file
         /// </summary>
         /// <returns></returns>
-        public static string getQAFilePath()
+        public static string GetQAFilePath()
         {
             return qaFilePath;
         }
@@ -109,7 +87,7 @@ namespace QADataModelLib
         ///         menu option then qaFileNameStr is the complete path to the file        /// 
         /// </summary>
         /// <param name="qaFileNameStr"></param>
-        public static void setQAFilePath(string qaFileNameStr)
+        public static void SetQAFilePath(string qaFileNameStr)
         {
             if (qaFileNameStr.IndexOf(".txt") == -1) {
                 qaFilePath = qaFilePathFolder + qaFileNameStr + ".txt";
@@ -135,7 +113,7 @@ namespace QADataModelLib
             }
         }// End property of Dictionary<int, string> QandADictionar
 
-        private static Dictionary<int, string> answerQuestionsDictionary = new Dictionary<int, string>();
+        private static readonly Dictionary<int, string> answerQuestionsDictionary = new Dictionary<int, string>();
         private static string qaFileNameStr = "";
 
 
@@ -146,10 +124,10 @@ namespace QADataModelLib
         /// a complete path to the desired file
         /// </summary>
         /// <param name="fileNameString"></param>
-        public static void setQAFileNameStr(string fileNameString)
+        public static void SetQAFileNameStr(string fileNameString)
         {
             qaFileNameStr = fileNameString;
-            setQAFilePath(qaFileNameStr);
+            SetQAFilePath(qaFileNameStr);
             //QAFilePath(qaFileNameStr);
 
         }
@@ -161,35 +139,77 @@ namespace QADataModelLib
         /// option was selected then the value is balnk
         /// </summary>
         /// <returns></returns>
-        public static string getQAFileNameStr()
+        public static string GetQAFileNameStr()
         {
             return qaFileNameStr;
         }// End getQAFileNameStr
-
-        /// <summary>
-        /// This starts as the count of lines in qaDictionary and
-        /// in the AnswerQuestionsForm it is decremented each time
-        /// a question is answered incorrectly
-        /// </summary>
-        private static int numCorrectAnswers;
 
         /// <summary>
         /// This is a list of all qa files ordered by their appearance in the subjectTreeView
         /// </summary>
         private static List<string> orderedListOfQAFiles;
 
-        public static int getNumCorrectAnswers()
+        public static List<string> GetOrderedListOfQAFiles()
         {
-            return qaDictionary.Count;
+            return orderedListOfQAFiles;
+        }
+
+        public static int GetNumOfQuestions()
+        {
+            return answerQuestionsDictionary.Count;
         }//End getNumCorrectAnswers(
 
         private static string delimitedQuestionNumbersStr = "";
 
-        public static string returnDelimitedQuestionsNumbersStr()
+        public static string ReturnDelimitedQuestionsNumbersStr()
         {
             return delimitedQuestionNumbersStr;
         }
 
+        /* the the number of qaFiles submitted for testing is >1 then 
+         * examinstion is true and any testing report will be reported
+         * to only the 
+         * C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\CumulativeExamResults.txt
+         * file
+         */
+        private static Boolean examination;
+        public static Boolean IsExamination()
+        {
+            if (examination)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private static string parentsString;
+
+        public static void SetParentsString(string value)
+        {
+            parentsString = value;
+        }
+
+        public static string ReturnParentsString()
+        {
+            return parentsString;
+        }
+
+        private static string selectedNodeName;
+        public static string SelectedNodeName
+        {
+            get { return selectedNodeName; }
+            set { selectedNodeName = value; }
+        }
+
+        private static string selectedNodeText;
+        public static string SelectedNodeText 
+        {
+            get { return selectedNodeText; }
+            set { selectedNodeText = value; }
+        }
         //--------------------------PUBLIC METHODS-----------------------//
 
         /// <summary>
@@ -200,9 +220,9 @@ namespace QADataModelLib
         ///     of sequential numStrings
         /// </summary>
         /// <param name="qaFilePath"></param>
-        public static void loadQAFileIntoDictionary(string qaFilePath)
+        public static void LoadQAFileIntoDictionary(string qaFilePath)
         {
-            // 20200401 Determine if the file is empty
+            //  Determine if the file is empty
             if (new FileInfo(qaFilePath).Length > 0)
             {
                 //File is not empty
@@ -211,13 +231,10 @@ namespace QADataModelLib
                 // Parse each line in the qaLineArray creating a new entry in qaDictionary
                 foreach (string qaLine in qaLineArray)
                 {
-                   
-                     //The question number for this qaFile is in the 0th entry of the ^ delimited qaLine                     
+                    // Get the question number for this qaFile which is in the 0th entry of the ^ delimited qaLine                     
                     string qaNumStr = StringHelperClass.returnNthItemInDelimitedString(qaLine, '^', 0);
-                    // Convert the question number into an int
-                   // int qaNumInt = Int32.Parse(qaNumStr);
-                    //strip the question number from the fron of the qaLine
-                    string newQALine = qaLine;
+
+                    string newQALine;
                     // add the revised qaLine to the dictionary using the question number int as the key
                     newQALine = StringHelperClass.removeNthItemFromDelimitedString(qaLine, '^', 0);
                     // add the 
@@ -244,8 +261,6 @@ namespace QADataModelLib
                 // Create seriatimQuestionNumberDelStr
                 seriatimQuestionNumberDelStr = "";
             }
-            // Create qaList from seriatimQuestionNumberDelStr
-            qaList = seriatimQuestionNumberDelStr;
 
         }// End loadQAFileIntoDictionary
 
@@ -258,94 +273,34 @@ namespace QADataModelLib
         /// Once all values in the dictionary have been added the qaLineList
         /// is saved to the file designated by qaFilePath
         /// </summary>
-        public static void saveQAFile()
+        public static void SaveQAFile()
         {
-            
-
             List<string> qaLineList = new List<string>();
             foreach (KeyValuePair<string, string> kvp in qaDictionary)
             {
                 string qaNumStr = kvp.Key;
-               // string qaNumStr = qaNumStr.ToString();
                 string qaLine = kvp.Value;
                 qaLineList.Add(qaNumStr + '^' + qaLine);
             }
-            string qaFilePath = AnswerQuestionsDataModel.getQAFilePath();
-            // TODO - 202007170728 since I have already got all lines the next line may need to be SaveAllLInes
+            string qaFilePath = AnswerQuestionsDataModel.GetQAFilePath();
             File.WriteAllLines(qaFilePath, qaLineList);
-            //File.WriteAllLines(qaFilePath, qaLineList);
         }// EndsaveQAFile
 
 
-        public static Tuple<string, string> returnDelimitedValue(string delimitedNumbersStr)
+        /// <summary>
+        /// This procedure is called by the QnasweQuestionsForm.answerQuestions() Method
+        /// it receives the int key to the desired dictionary line and returns that line
+        /// </summary>
+        /// <param name="keyToQADict"></param>
+        /// <returns></returns>
+        public static string ReturnDesiredLineFromQADictionary(int keyToQADict)
         {
-            // get the position of the first delimiter
-            int pos1stCarot = delimitedNumbersStr.IndexOf('^');
-            // if there are no delimiters return -1
-            if (pos1stCarot == -1)
-            {
-                return new Tuple<string, string>(delimitedNumbersStr, "");
-            }
-            // create a string array of the integer strings delimited by ^
-            string[] numberStrValueArray = delimitedNumbersStr.Split('^');
-            // get the string at the top of the array or the front of the string delimitedNumbersStr
-            string headNumStr = numberStrValueArray[0];
-            // create a blank string to hold the remaining string-ints in the original delimitedNumbersStr string
-            string newDelimitedNumbers = "";
-            for (int i = 1; i < numberStrValueArray.Length-1; i++)
-            {
-                newDelimitedNumbers = newDelimitedNumbers + numberStrValueArray[i] + "^";
-            }
-            string lastValue = numberStrValueArray[numberStrValueArray.Length-1];
-            newDelimitedNumbers = newDelimitedNumbers + lastValue;
-            //int headInt = Int32.Parse(headNumStr);
-            return new Tuple<string, string>(headNumStr, newDelimitedNumbers);
-        }// End Tuple<int, string> returnDelimitedValue(
-
-        public static string returnDesiredLineFromQADictionary(int keyToQADict)
-        {
-            string desiredLine = "";
+            string desiredLine;
             desiredLine = answerQuestionsDictionary[keyToQADict];
             return desiredLine;
         }
 
-        /// <summary>
-        /// This method returns the line of the QandADictionary corresponding
-        /// to the "currentNumInt"></param>
-        /// It is called by the AnswerQuestionsForm's answerQuestions() method
-        /// </summary>
-        /// <param name="currentNumInt"></param>
-        /// <returns></returns>
-        public static string currentQALine(string qaNumStr)
-        {
-            string qaLine = QandADictionary[qaNumStr];
-            return qaLine;
-        }
-
-        /// <summary>
-        /// This procedure added in V20200710 on 20200713
-        /// Receives a List<(string,string)> containing
-        ///     a. the string representing the qaFile number
-        ///     b. the path to the qaFile
-        /// It uses this list to retrieve, seriatim, each QAFile
-        /// In implementing the AnswerQuestions() method in AnswerQuestionsForm 
-        /// it appends the the string representing the qaFile number +'-' to the question 
-        /// number to show in  questionNumberValue.Text  and then displays the question and
-        /// answer in the delimited string
-        /// </summary>
-        /// <param name="selectedQAFilesList"></param>
-        public static void createQuestionsFromSelectedQAFilesList(Dictionary<string, string> selectedQAFilesDictonary)
-        {
-            // Create the
-            // Iterate through the dictionary
-            foreach (KeyValuePair<string, string> keyValue in selectedQAFilesDictonary)
-            {
-                string qaFileNumber = keyValue.Key;
-                string qaFilePath = keyValue.Value;
-
-
-            }
-        }
+       
 
         /// <summary>
         /// orderedListOfQAFiles is a '^' list of all qaFile data where the
@@ -353,7 +308,7 @@ namespace QADataModelLib
         /// 2nd endry is the qaFile nodeText
         /// </summary>
         /// <param name="qaFileList"></param>
-        public static void setListOfOrderedQAFiles(List<string> qaFileList)
+        public static void SetListOfOrderedQAFiles(List<string> qaFileList)
         {
             orderedListOfQAFiles = qaFileList;
         }
@@ -366,7 +321,7 @@ namespace QADataModelLib
         /// </summary>
         /// <param name="nodeNameString"></param>
         /// <returns></returns>
-        public static List<string> returnListOfSelectedQAFiles(string nodeNameString)
+        public static List<string> ReturnListOfSelectedQAFiles(string nodeNameString)
         {
             List<string> selectedQAFilesList = new List<string>();
             foreach(string qaFileString in orderedListOfQAFiles)
@@ -389,8 +344,19 @@ namespace QADataModelLib
         /// 2)  The question; 3) The answer; 4) Any image URL; 5) Any mpe3 URL; 6) an optional integer 
         /// </summary>
         /// <param name="listOfQAFiles"></param>
-        public static void createQuestionAndAnswerDictionary(List<string> listOfQAFiles)
+        public static void CreateQuestionAndAnswerDictionary(List<string> listOfQAFiles)
         {
+            // Determine if the listOfQAFiles has more than one entry and if so set examinations true
+            List<string> thisListOfQAFiles = listOfQAFiles;
+            if(thisListOfQAFiles.Count > 1)
+            {
+                examination = true;
+            }
+            else
+            {
+                examination = false;
+            }
+
             // Store path to the qaFiles
             string qaFileFolderPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\";
             // Iterate thru listOfQAFiles getting each qaFile and uploading its questions
@@ -439,8 +405,7 @@ namespace QADataModelLib
                 delimitedQuestionNumbersStr = delimitedQuestionNumbersStr + keyStr + '^';
             }
             delimitedQuestionNumbersStr = delimitedQuestionNumbersStr.Substring(0, delimitedQuestionNumbersStr.Length - 1);
-            // TODO - GOOD TO HERE
-
+           
         }// End createQuestionAndAnswerDictionary
 
         //=================================END OF CLASS====================================//

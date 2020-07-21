@@ -1,10 +1,6 @@
 ﻿//-------------------LOCAL VARIABLES--------------------//
-//      bool testTypeSet = false;
-//      bool questionSequenceSet = false;
 //      bool testTypeExam = true;//If the test type is a quiz it will be false
-//      bool questionSequenceSeriatem = true;//If is is random it will be false
 //      string delimitedQuestionNumbersStr = "";
-//      string incorrectQuestionNumbersStr = "";
 //      string currentDatetimeStr = "";
 //      string currentQuestion = "";
 //      string correctAnswer = "";
@@ -28,8 +24,8 @@
 //      answerCorrectButton_Click(
 //      wrongButton_Click(
 //--------------------UTILITY METHODS-------------------//
-//      initializeVariables()
-//      void answerQuestions(
+//      InitializeVariables()
+//      void AnswerQuestions(
 //      resetLocalVariables()
 //      
 //      
@@ -52,10 +48,7 @@ namespace QAProject
     public partial class AnswerQuestionsForm : Form
     {
         //-------------------LOCAL VARIABLES--------------------//
-        private bool testTypeSet = false;
-        private bool questionSequenceSet = true; // changed in v20200710
-        private bool testTypeExam = true;//If the test type is a quiz it will be false
-        private bool questionSequenceSeriatem = true;//If is is random it will be false
+        private static bool testTypeExam = true;//If the test type is a quiz it will be false
 
         /// <summary>
         /// The string delimitedQuestionNumbersStr is a series of number strings 
@@ -63,19 +56,19 @@ namespace QAProject
         /// will be removed from the string and temporarily saved, converted to an 
         /// integer and used to get the correct qaLine string from the 
         /// </summary>
-        private string delimitedQuestionNumbersStr = "";
-        private string incorrectQuestionNumbersStr = "";
-        private string currentDatetimeStr = "";
-        private string currentQuestionNumber = "";
-        private string currentQuestion = "";
-        private string correctAnswer = "";
-        private string currentImageURL = "";
-        private string currentMp3URL = "";
-        private string currentQuestionNumStr = "";
-        private string incorrectAnswerNumStr = "";
-        private string keyIntStr = "";
-        private int numCorrectAnswers;
-        private int keyToQAFileNameScoresDictionary;
+        private static string delimitedQuestionNumbersStr = "";
+        private static string currentDatetimeStr = "";
+        private static string currentQuestionNumber = "";
+        private static string currentQuestion = "";
+        private static string correctAnswer = "";
+        private static string currentImageURL = "";
+        private static  string currentMp3URL = "";
+        private static string currentQuestionNumStr = "";
+        private static string incorrectAnswerNumStr = "";
+        private static string keyIntStr = "";
+        private static int numCorrectAnswers;
+        private static int keyToQAFileNameScoresDictionary;
+        private static Boolean examination;
         //-------------------EVENT METHODS--------------------//
 
         public AnswerQuestionsForm()
@@ -91,31 +84,10 @@ namespace QAProject
         /// <param name="e"></param>
         private void AnswerQuestionsForm_Load(object sender, EventArgs e)
         {
-            // TODO - 202007150657 Update of the load method for the answer question form
             // get the delimitedQuestionNumbersStr
-            delimitedQuestionNumbersStr = AnswerQuestionsDataModel.returnDelimitedQuestionsNumbersStr();
-            // OLD Code revised 202007150656 created the dictionry and delimited string of keys to the database here
-            
-            // OLD CODE Commented out
-            // get the path to the qaFile
-            //string qaFilePath = AnswerQuestionsDataModel.getQAFilePath();
-            // Get the int value at the end of the name
-            // tempQAFilePathName = qaFilePath.Substring(0, qaFilePath.Length - 4);
-            //char[] tempQAFilePathNameArray = tempQAFilePathName.ToCharArray();
-            //keyIntStr = "";
-            //char lastChar = tempQAFilePathNameArray[tempQAFilePathNameArray.Length-1];
-            //while (Char.IsDigit(lastChar))
-            //{
-            //    keyIntStr = lastChar + keyIntStr;
-            //    Array.Resize(ref tempQAFilePathNameArray, tempQAFilePathNameArray.Length - 1);
-            //    lastChar = tempQAFilePathNameArray[tempQAFilePathNameArray.Length - 1];
-            //}
-            // Convert this value to an integer
-            //keyToQAFileNameScoresDictionary = Int32.Parse(keyIntStr);
-            // create the QandADictionary and the ^ delimited qaList to call the questions
-            //AnswerQuestionsDataModel.loadQAFileIntoDictionary(qaFilePath);
-            // Call initializeVariables() to initialize local variables
-            initializeVariables();
+            delimitedQuestionNumbersStr = AnswerQuestionsDataModel.ReturnDelimitedQuestionsNumbersStr();
+            examination = AnswerQuestionsDataModel.IsExamination();
+            InitializeVariables();
 
         }// End void AnswerQuestionsForm_Load(
 
@@ -126,24 +98,13 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void examToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExamToolStripMenuItem_Click(object sender, EventArgs e)
             
-        {
-            
-            // Clicked if user wishes to take an exam
-           
+        {            
+            // Clicked if user wishes to take an exam           
             //Get the current date time string for the cumulative results file
-            currentDatetimeStr = DateTime.Now.ToString("yyyyMMddhhmm");
-            //testTypeExam is already true
-            // TODO - 202007150701 Revision of the select exam menu
-
-
-            //delimitedQuestionNumbersStr = AnswerQuestionsDataModel.getQAList();
-            //testTypeSet = true;
-            //if (questionSequenceSet && testTypeSet)
-            //{
-                answerQuestions();
-            //}
+            currentDatetimeStr = DateTime.Now.ToString("yyyyMMddHHmm");
+            AnswerQuestions();
         }// End examToolStripMenuItem_Click(
 
         /// <summary>
@@ -151,101 +112,94 @@ namespace QAProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void quizToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void QuizToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            // TODO - 202007150639 Revision of the Quiz method
-            /*
-             Inasmuch as the  DelimitedQuestionsNumbersStr has already been defined
-             in the AnswerQuestionsDataModel all I need to do here is to set testTypeSet to true,
-             download DelimitedQuestionsNumbersStr and the dictionary 
-             and to call answerQuestions()
-             */             
-            testTypeSet = true;
+            testTypeExam = false;          
+            AnswerQuestions();
             
-            answerQuestions();
-
-            //Old code commented out 202007150644
-            //testTypeExam = false;
-            //testTypeSet = true;
-            //delimitedQuestionNumbersStr = AnswerQuestionsDataModel.getQAList();
-            //if (questionSequenceSet && testTypeSet)
-            //{
-            //    answerQuestions();
-            //}
         }// End quizToolStripMenuItem1_Click
 
 
-        /// <summary>
-        /// /The Question sequence Seriatim menu option clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void seriatimToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // questionSequenceSeriatem is already true
-                questionSequenceSet = true;
-                delimitedQuestionNumbersStr = AnswerQuestionsDataModel.getQAList();
-                if (questionSequenceSet && testTypeSet)
-                {
-                    answerQuestions();
-                }
-        }// End seriatimToolStripMenuItem_Click
 
 
-        /// <summary>
-        /// The Question Sequence Random menu option clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void randomToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            questionSequenceSeriatem = false;
-            questionSequenceSet = true;
-            if (questionSequenceSet && testTypeSet)
-            {
-                answerQuestions();
-            }
-        }// End randomToolStripMenuItem_Click(
+       
 
 
         //--------------------OTHER EVENT METHODS--------------------//
-        private void seeCorrectAnswerButton_Click(object sender, EventArgs e)
+        private void SeeCorrectAnswerButton_Click(object sender, EventArgs e)
         {
             correctAnswerValue.Text = correctAnswer;
         }
 
 
-        private void answerCorrectButton_Click(object sender, EventArgs e)
+        private void AnswerCorrectButton_Click(object sender, EventArgs e)
         {
             questionNumberValue.Text = "";
             currentQuestionValue.Text = "";
             currentAnswerValue.Text = "";
             correctAnswerValue.Text = "";
-            answerQuestions();
+            AnswerQuestions();
         }// End answerCorrectButton_Click(
 
-        private void wrongButton_Click(object sender, EventArgs e)
+        private void WrongButton_Click(object sender, EventArgs e)
         {
+            // get the original question number
+            string currentQuestionNumber = questionNumberValue.Text;
+            string originalQuestionNumber = StringHelperClass.returnNthItemInDelimitedString(currentQuestionNumber, '-', 1);
             if (!testTypeExam)
             {
-                // This is a quiz
-                delimitedQuestionNumbersStr = delimitedQuestionNumbersStr + "^" + currentQuestionNumStr;
+                // This is a quiz 
+                // Determine if this quiz is on a single qaFile (=!examination) or not
+                
+                if (!examination)
+                {
+                    // since this is a quiz on a single qaFile place the originalQuestionNumber at the end of thedelimitedQuestionNumbersStr
+                    delimitedQuestionNumbersStr = delimitedQuestionNumbersStr + "^" + originalQuestionNumber;
+                }
+                else
+                {
+                    // since this is a quiz on more than 1 qaFile place the currentQuestionNumStr at the end of delimitedQuestionNumbersStr
+                    delimitedQuestionNumbersStr = delimitedQuestionNumbersStr + "^" + currentQuestionNumStr;
+                }
                 questionNumberValue.Text = "";
                 currentQuestionValue.Text = "";
                 currentAnswerValue.Text = "";
                 correctAnswerValue.Text = "";
-                answerQuestions();
+                AnswerQuestions();
             }
             else
             {
-                //This is an Exam
-                incorrectAnswerNumStr = incorrectAnswerNumStr + "," + currentQuestionNumStr;
+                //This is an exam so create the incorrectAnswerNumStr 
+                // if this exam is on a single qaFile (=!examination) place the originalQuestionNumber at the end of the 
+                //     incorrectAnswerNumStr
+                if (!examination)
+                {
+                    incorrectAnswerNumStr = incorrectAnswerNumStr  + originalQuestionNumber + ",";
+                }
+                else
+                {
+                    incorrectAnswerNumStr = incorrectAnswerNumStr + questionNumberValue.Text + ",";
+                }
+                //currentQuestionNumStr = questionNumberValue.Text;
+                //if (examination)
+                //{                   
+                //    delimitedQuestionNumbersStr = delimitedQuestionNumbersStr + "^" + questionNumberValue.Text;
+                //}
+                //else
+                //{
+                //    // This is a Test
+                //    //If this is not an examination add the questionNumberValue.Text; to the end of 
+
+                //    delimitedQuestionNumbersStr = delimitedQuestionNumbersStr + "^" + originalQuestionNumber;
+                //    incorrectAnswerNumStr = incorrectAnswerNumStr + "," + originalQuestionNumber;
+                //}
+                
                 numCorrectAnswers--;
                 questionNumberValue.Text = "";
                 currentQuestionValue.Text = "";
                 currentAnswerValue.Text = "";
                 correctAnswerValue.Text = "";
-                answerQuestions();
+                AnswerQuestions();
             }
         }// End wrongButton_Click(
 
@@ -254,26 +208,11 @@ namespace QAProject
 
 
 
-        private void saveAndReturnToDashboardMenuItem_Click(object sender, EventArgs e)
+        private void SaveAndReturnToDashboardMenuItem_Click(object sender, EventArgs e)
         {
-            
-            //if (testTypeExam)
-            //{
-            //    updateExamData();
-                
-            //    // Update the Cumulative results file
-
-            //    // Return to dashboard
-            //    this.Hide();
-            //    QADashboard dashboardForm = new QADashboard();
-            //    dashboardForm.ShowDialog();
-            //}
-            //else
-            //{
                 this.Hide();
                 QADashboard dashboardForm = new QADashboard();
                 dashboardForm.ShowDialog();
-            //}
             
 
         }//End saveAndReturnToDashboardMenuItem_Click
@@ -284,35 +223,31 @@ namespace QAProject
         /// The purpose of this method is to initialize all working variables
         /// when the form loads, or if it is reused without closing.
         /// </summary>
-        private void initializeVariables()
+        private void InitializeVariables()
         {
             //Get the current date time string for the cumulative results file
             currentDatetimeStr = DateTime.Now.ToString("yyyyMMddhhmm");
             // Set/Reset incorrectAnswerNumStr
             incorrectAnswerNumStr = "";
             // Get the initial count of correct answers
-            numCorrectAnswers = AnswerQuestionsDataModel.getNumCorrectAnswers();
+            numCorrectAnswers = AnswerQuestionsDataModel.GetNumOfQuestions();
         }// End initializeVariables
         
         
         
         
-        private void answerQuestions()
+        private void AnswerQuestions()
         {
-            // TODO - 202007150645 Revise the answerQuestions() method
-            /*
-              As long as delimitedQuestionNumbersStr is not blank, I need to get the current
-              questions and answer line from the AnswerQuestionDataModel
-             */
-            // the delimitedQuestionNumbersStr string is a ^ delimited string of string integer keys to the 
-            // qa dictionary
+            
+            /* the delimitedQuestionNumbersStr string is a ^ delimited string of string 
+               integer keys to the qa dictionary */
             if (delimitedQuestionNumbersStr.Length == 0)
             {
                 if (testTypeExam)
                 {
-                    updateExamData();
+                    UpdateExamData();
                 }
-                resetLocalVariables();
+                ResetLocalVariables();
 
                 // This is the last question 
                 instructionsLabel.Text = "This is the last question Save file and return to Dashboard or Repeat the Exercise!";
@@ -320,7 +255,6 @@ namespace QAProject
                 return;
             }
 
-            // TODO - 202007150651 Revise getting the current questions and answer string from  the data model
             // Get the leading integer string from the delimitedQuestionNumbersStr
             string frontNumberStr = StringHelperClass.returnNthItemInDelimitedString(delimitedQuestionNumbersStr, '^', 0);
             // Remove this item from the delimitedQuestionNumbersStr
@@ -328,7 +262,7 @@ namespace QAProject
             // Convert this to an integer key to the answerQuestionsDictionary dictionary
             int keyToQADict = Int32.Parse(frontNumberStr);
             // Get the appropriate string from the answerQuestionsDictionary
-            string currentDelQALine = AnswerQuestionsDataModel.returnDesiredLineFromQADictionary(keyToQADict);
+            string currentDelQALine = AnswerQuestionsDataModel.ReturnDesiredLineFromQADictionary(keyToQADict);
             // Parse this stirng
             string[] currentDelQALineComponents = currentDelQALine.Split('^');
             // assign values to the correct strings
@@ -358,31 +292,68 @@ namespace QAProject
         /// It is called by:
         ///     1. 
         /// </summary>
-        private void updateExamData()
+        private static void UpdateExamData()
         {
-            double originalQuestionsNumInt = AnswerQuestionsDataModel.getNumCorrectAnswers();
+            double originalQuestionsNumInt = AnswerQuestionsDataModel.GetNumOfQuestions();
             string currentCorrectNumAnswersStr = numCorrectAnswers.ToString();
             string orriginalNumOfQuestions = originalQuestionsNumInt.ToString();
             string outputNumCorrectStr = $"{currentCorrectNumAnswersStr} out of {orriginalNumOfQuestions} were Correct!";
-            double originalQuestions = AnswerQuestionsDataModel.getNumCorrectAnswers();
+           // _ = AnswerQuestionsDataModel.GetNumOfQuestions();
             double percentCorrect = (numCorrectAnswers / originalQuestionsNumInt) * 100;
             string percentCorrectStr = String.Format("{0:00.0}", percentCorrect);
-            QAFileNameScoresModel.updateQAFileNameScoresExamResults(keyToQAFileNameScoresDictionary, outputNumCorrectStr);
-            // Create cumulativeResultsOutputStr
-            string cumulativeResultsOutputStr = currentDatetimeStr + ":" + percentCorrectStr + ":" + incorrectAnswerNumStr + "~";
-            QACumulativeResultsModel.updateCumulativeresultsDictionary(keyIntStr+"q", cumulativeResultsOutputStr);
+            // If this is not an examination update the QAFileNameScores file
+            if (!examination)
+            {
+                // This is a test on a single qaFile
+                // The key to the qaFileNameSocresDictionary isthe qa #
+                string selectedNodeName = AnswerQuestionsDataModel.SelectedNodeName;
+                // get the position of the last '.'
+                int posLastDot = selectedNodeName.LastIndexOf('.');
+                // get the node name at the end of the qaFileName
+                string nodeNameStr = selectedNodeName.Substring(posLastDot + 1);
+                // eliminate the terminal 'q'
+                nodeNameStr = nodeNameStr.Substring(0, nodeNameStr.Length - 1);
+                //convert this to an int
+                keyToQAFileNameScoresDictionary = Int32.Parse(nodeNameStr);
+                keyIntStr = nodeNameStr;
+                QAFileNameScoresModel.updateQAFileNameScoresExamResults(keyToQAFileNameScoresDictionary, outputNumCorrectStr);
+                // Create cumulativeResultsOutputStr
+                string cumulativeResultsOutputStr = currentDatetimeStr + ":" + percentCorrectStr + ":" + incorrectAnswerNumStr + "~";
+                QACumulativeResultsModel.UpdateCumulativeresultsDictionary(keyIntStr + "q", cumulativeResultsOutputStr);
+
+            }
+            else
+            {
+                // This is an examination on multiple qaFiles belonging to a common ancestor
+                /*
+                 a string of the results of taking and examination 
+                    The format of this string is:
+                    SelectedNode.Name^ SelectedNodeText^ParentString^Date~%~#sIncorrect@  where:
+                        SelectedNode.Name is the key to the dictionary
+                        SelectedNodeText^ParentString are the hedder values, for a dictionary display line
+                         Date~%~#sIncorrect@ are the results data
+                 */
+                //Get Selected node name
+                string selectedNodeName = AnswerQuestionsDataModel.SelectedNodeName;
+                // Get Selected node text
+                string selectedNodeText = AnswerQuestionsDataModel.SelectedNodeText;
+                // Get parents
+                string parentsString = AnswerQuestionsDataModel.ReturnParentsString();
+                // send results to UpdateCumulativeExamResultsDictionary(string resultsOFExam
+                string dataStr = selectedNodeName+'^'+ selectedNodeText + '^' + parentsString + '^' +
+                    currentDatetimeStr + "~" + percentCorrectStr + "~" + incorrectAnswerNumStr + "@";
+                QACumulativeResultsModel.UpdateCumulativeExamResultsDictionary(dataStr);
+            }
+            
 
 
         }// End updateExamData
 
-        private void resetLocalVariables()
+            private void ResetLocalVariables()
         {
-            testTypeSet = false;
-            questionSequenceSet = false;
             testTypeExam = true;
-            questionSequenceSeriatem = true;
+            //questionSequenceSeriatem = true;
             delimitedQuestionNumbersStr = "";
-            incorrectQuestionNumbersStr = "";
             currentDatetimeStr = "";
             currentQuestion = "";
             correctAnswer = "";

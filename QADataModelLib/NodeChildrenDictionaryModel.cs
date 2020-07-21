@@ -7,21 +7,16 @@ namespace QADataModelLib
 {
     public static class NodeChildrenDictionaryModel
     {
-        private static string nodeChildDictionaryPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NodeChildDictionary.txt";
+        private static readonly string nodeChildDictionaryPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NodeChildDictionary.txt";
 
         /// <summary>
         /// Holds all Subject and Division nodes and each line holds a string node name
         ///   and a integer  indication how many childres that node has
         /// </summary>
-        private static Dictionary<string, int> nodeChildrenDictionary = new Dictionary<string, int>();
-
-        public static Dictionary<string, int> getNodeChildrenDictionary()
-        {
-            return nodeChildrenDictionary;
-        }// End getNodeChildrenDictionary(
+        private static readonly Dictionary<string, int> nodeChildrenDictionary = new Dictionary<string, int>();
 
 
-        public static void loadNodeChildrenDictionary()
+        public static void LoadNodeChildrenDictionary()
         {
             // Dictionary<string, int> nodeChildrenDictionary = new Dictionary<string, int>();
             if (File.Exists(nodeChildDictionaryPath))
@@ -48,7 +43,7 @@ namespace QADataModelLib
         /// <summary>
         /// This method is called when the user exit the QATreeForm
         /// </summary>
-        public static void saveNodeChildrenDictionary()
+        public static void SaveNodeChildrenDictionary()
         {
             string output = "";
             foreach (KeyValuePair<string, int> kvp in nodeChildrenDictionary)
@@ -62,29 +57,7 @@ namespace QADataModelLib
             File.WriteAllText(nodeChildDictionaryPath, output);
         }// End saveNodeChildrenDictionary
 
-        /// <summary>
-        /// This method determines the number of children in the parent node,
-        ///     converts that integer to a string and returns it as the  node name
-        /// </summary>
-        /// <param name="parentNodeName"></param>
-        /// <returns></returns>
-        public static string returnDivisionNodeName(string parentNodeName)
-        {
 
-            // Get a copy of the nodeChildrenDictionary Dictionary
-            //Dictionary<string, int> copyNodeChildrenDictionary = AccessData.getNodeChildrenDictionary();
-            if (nodeChildrenDictionary.ContainsKey(parentNodeName))
-            {
-                int numChildren = nodeChildrenDictionary[parentNodeName];
-                string divisionNodeName = numChildren.ToString();
-                SubjectTreeViewModel.filesChanged = true;
-                return divisionNodeName;
-            }
-            else
-            {
-                return "0";
-            }
-        }// End returnDivisionNodeName
 
         /// <summary>
         /// The nodes contained in nodeChildrendictionary only contain Subject and Division nodes, 
@@ -93,7 +66,7 @@ namespace QADataModelLib
         /// </summary>
         /// <param name="thisNodesName"></param>
         /// <returns></returns>
-        public static Boolean doesNodeHaveChildren(string thisNodesName)
+        public static Boolean DoesNodeHaveChildren(string thisNodesName)
         {
          
             if (nodeChildrenDictionary.ContainsKey(thisNodesName))
@@ -105,29 +78,6 @@ namespace QADataModelLib
                 return false;
             }
         }// End doesNodeHaveChildren
-
-        /// <summary>
-        /// This method receives the parent node's name
-        /// and uses it as the key to the nodeChildrenDictionary to get the
-        ///   current number of child nodes
-        ///  Increments the number of child nodes and stores it in the
-        ///     dictionary
-        /// </summary>
-        /// <param name="parentNodeName"></param>
-        public static void updateNodeChildrenDictionary(string parentNodeName)
-        {
-            if (nodeChildrenDictionary.ContainsKey(parentNodeName))
-            {
-                int currentCount = nodeChildrenDictionary[parentNodeName];
-                currentCount++;
-                nodeChildrenDictionary[parentNodeName] = currentCount;
-            }
-            else
-            {
-                nodeChildrenDictionary.Add(parentNodeName, 1);
-            }
-        }// End updateNodeChildrenDictionary
-
 
     }// EndNodeChildrenDictionaryModel
 }// End QADataModelLib

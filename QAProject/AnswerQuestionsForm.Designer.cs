@@ -77,7 +77,7 @@
             this.saveAndReturnToDashboardMenuItem.Name = "saveAndReturnToDashboardMenuItem";
             this.saveAndReturnToDashboardMenuItem.Size = new System.Drawing.Size(290, 26);
             this.saveAndReturnToDashboardMenuItem.Text = "Save and return to Dashboard";
-            this.saveAndReturnToDashboardMenuItem.Click += new System.EventHandler(this.saveAndReturnToDashboardMenuItem_Click);
+            this.saveAndReturnToDashboardMenuItem.Click += new System.EventHandler(this.SaveAndReturnToDashboardMenuItem_Click);
             // 
             // formInstructionsToolStripMenuItem
             // 
@@ -99,14 +99,14 @@
             this.examToolStripMenuItem.Name = "examToolStripMenuItem";
             this.examToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.examToolStripMenuItem.Text = "Exam";
-            this.examToolStripMenuItem.Click += new System.EventHandler(this.examToolStripMenuItem_Click);
+            this.examToolStripMenuItem.Click += new System.EventHandler(this.ExamToolStripMenuItem_Click);
             // 
             // quizToolStripMenuItem1
             // 
             this.quizToolStripMenuItem1.Name = "quizToolStripMenuItem1";
             this.quizToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.quizToolStripMenuItem1.Text = "Quiz";
-            this.quizToolStripMenuItem1.Click += new System.EventHandler(this.quizToolStripMenuItem1_Click);
+            this.quizToolStripMenuItem1.Click += new System.EventHandler(this.QuizToolStripMenuItem1_Click);
             // 
             // formPurposeLabel
             // 
@@ -194,7 +194,7 @@
             this.seeCorrectAnswerButton.TabIndex = 9;
             this.seeCorrectAnswerButton.Text = "See Correct Answer";
             this.seeCorrectAnswerButton.UseVisualStyleBackColor = true;
-            this.seeCorrectAnswerButton.Click += new System.EventHandler(this.seeCorrectAnswerButton_Click);
+            this.seeCorrectAnswerButton.Click += new System.EventHandler(this.SeeCorrectAnswerButton_Click);
             // 
             // correctAnswerValue
             // 
@@ -215,7 +215,7 @@
             this.answerCorrectButton.TabIndex = 11;
             this.answerCorrectButton.Text = "Correct";
             this.answerCorrectButton.UseVisualStyleBackColor = true;
-            this.answerCorrectButton.Click += new System.EventHandler(this.answerCorrectButton_Click);
+            this.answerCorrectButton.Click += new System.EventHandler(this.AnswerCorrectButton_Click);
             // 
             // wrongButton
             // 
@@ -226,7 +226,7 @@
             this.wrongButton.TabIndex = 12;
             this.wrongButton.Text = "Wrong";
             this.wrongButton.UseVisualStyleBackColor = true;
-            this.wrongButton.Click += new System.EventHandler(this.wrongButton_Click);
+            this.wrongButton.Click += new System.EventHandler(this.WrongButton_Click);
             // 
             // AnswerQuestionsForm
             // 
