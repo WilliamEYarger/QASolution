@@ -6,9 +6,8 @@
 //      public static string getHyperlink(
 //      public static Dictionary<string, string> getTreeViewDictionary(
 //      public static void updateTreeViewDictionary(
-//      public static void loadTreeViewDictionary(
-//--------------------Private Methods--------------------
-//      private static void loadHyperlinkDictionary(
+//      public static void loadTreeViewDictionary
+//      public static void loadHyperlinkDictionary(
 
 using System;
 using System.Collections.Generic;
@@ -100,9 +99,7 @@ namespace QADataModelLib
         }// loadTreeViewDictionary
 
        
-
-        //--------------------Private Methods--------------------
-        private static void loadHyperlinkDictionary()
+        public static void loadHyperlinkDictionary()
         {
             // Check to see if the HyperlinkDictionary has already been created and if so clear it
             if (HyperlinkDictionary.Count != 0)
@@ -216,7 +213,16 @@ namespace QADataModelLib
 
         }// End reTextNode
 
-       
-
+        public static bool HyperlinkDictionaryContainsKey(string selectedNodeName)
+        {
+            if (HyperlinkDictionary.ContainsKey(selectedNodeName))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }// End TreeViewDictionaryModel
 }// End QADataModelLib

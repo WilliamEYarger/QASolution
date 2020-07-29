@@ -1,4 +1,14 @@
-﻿
+﻿20200721 Version
+TASK01 correct code to do a review of an examination DONE
+TASK02 Change the way that hyperlinks are displayed and used
+	The objective is to make the OpenHyperlink button active only when a hyperlink is present,
+	I will also add a label and a text box to include a bookmark within the hyperlink DONE
+	1.	Change the accessibility of the OpenHyperlink button DONE
+	2.	Automatically load the bookmark entered in the bookmarkValue text box to the clipboard DONE
+	COMMIT Changes
+
+
+
 20200721 Final commit of 20200710 
 
 20200718 - Further development of the 202001717 commit of 20200710

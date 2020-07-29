@@ -47,6 +47,8 @@
             this.deleteNode = new System.Windows.Forms.Button();
             this.addHyperlinkButton = new System.Windows.Forms.Button();
             this.openHyperlinkButton = new System.Windows.Forms.Button();
+            this.bookmarkLabel = new System.Windows.Forms.Label();
+            this.bookmarkNameValue = new System.Windows.Forms.TextBox();
             this.moveNodeToNewParentGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,6 +68,7 @@
             this.subjectTreeView.Name = "subjectTreeView";
             this.subjectTreeView.Size = new System.Drawing.Size(765, 743);
             this.subjectTreeView.TabIndex = 4;
+            this.subjectTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.SubjectTreeView_AfterSelect);
             // 
             // subjectTextLabel
             // 
@@ -198,7 +201,7 @@
             this.renameNodeButton.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.renameNodeButton.Location = new System.Drawing.Point(795, 192);
             this.renameNodeButton.Name = "renameNodeButton";
-            this.renameNodeButton.Size = new System.Drawing.Size(251, 47);
+            this.renameNodeButton.Size = new System.Drawing.Size(194, 47);
             this.renameNodeButton.TabIndex = 19;
             this.renameNodeButton.Text = "Rename Node";
             this.renameNodeButton.UseVisualStyleBackColor = true;
@@ -207,9 +210,9 @@
             // deleteNode
             // 
             this.deleteNode.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteNode.Location = new System.Drawing.Point(1153, 192);
+            this.deleteNode.Location = new System.Drawing.Point(995, 192);
             this.deleteNode.Name = "deleteNode";
-            this.deleteNode.Size = new System.Drawing.Size(267, 47);
+            this.deleteNode.Size = new System.Drawing.Size(194, 47);
             this.deleteNode.TabIndex = 20;
             this.deleteNode.Text = "Delete Node";
             this.deleteNode.UseVisualStyleBackColor = true;
@@ -218,9 +221,9 @@
             // addHyperlinkButton
             // 
             this.addHyperlinkButton.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addHyperlinkButton.Location = new System.Drawing.Point(795, 286);
+            this.addHyperlinkButton.Location = new System.Drawing.Point(1195, 195);
             this.addHyperlinkButton.Name = "addHyperlinkButton";
-            this.addHyperlinkButton.Size = new System.Drawing.Size(251, 44);
+            this.addHyperlinkButton.Size = new System.Drawing.Size(194, 44);
             this.addHyperlinkButton.TabIndex = 21;
             this.addHyperlinkButton.Text = "Add Link";
             this.addHyperlinkButton.UseVisualStyleBackColor = true;
@@ -228,20 +231,41 @@
             // 
             // openHyperlinkButton
             // 
+            this.openHyperlinkButton.Enabled = false;
             this.openHyperlinkButton.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.openHyperlinkButton.Location = new System.Drawing.Point(1153, 286);
+            this.openHyperlinkButton.ForeColor = System.Drawing.Color.Black;
+            this.openHyperlinkButton.Location = new System.Drawing.Point(797, 274);
             this.openHyperlinkButton.Name = "openHyperlinkButton";
-            this.openHyperlinkButton.Size = new System.Drawing.Size(267, 44);
+            this.openHyperlinkButton.Size = new System.Drawing.Size(192, 44);
             this.openHyperlinkButton.TabIndex = 22;
             this.openHyperlinkButton.Text = "Open Link";
             this.openHyperlinkButton.UseVisualStyleBackColor = true;
             this.openHyperlinkButton.Click += new System.EventHandler(this.OpenHyperlinkButton_Click);
             // 
+            // bookmarkLabel
+            // 
+            this.bookmarkLabel.AutoSize = true;
+            this.bookmarkLabel.Enabled = false;
+            this.bookmarkLabel.Location = new System.Drawing.Point(1048, 276);
+            this.bookmarkLabel.Name = "bookmarkLabel";
+            this.bookmarkLabel.Size = new System.Drawing.Size(141, 38);
+            this.bookmarkLabel.TabIndex = 23;
+            this.bookmarkLabel.Text = "Bookmark";
+            // 
+            // bookmarkNameValue
+            // 
+            this.bookmarkNameValue.Location = new System.Drawing.Point(1195, 273);
+            this.bookmarkNameValue.Name = "bookmarkNameValue";
+            this.bookmarkNameValue.Size = new System.Drawing.Size(194, 43);
+            this.bookmarkNameValue.TabIndex = 24;
+            // 
             // QATreeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1432, 853);
+            this.ClientSize = new System.Drawing.Size(1482, 853);
+            this.Controls.Add(this.bookmarkNameValue);
+            this.Controls.Add(this.bookmarkLabel);
             this.Controls.Add(this.openHyperlinkButton);
             this.Controls.Add(this.addHyperlinkButton);
             this.Controls.Add(this.deleteNode);
@@ -291,5 +315,7 @@
         private System.Windows.Forms.Button selectNewParentbutton;
         private System.Windows.Forms.Button addHyperlinkButton;
         private System.Windows.Forms.Button openHyperlinkButton;
+        private System.Windows.Forms.Label bookmarkLabel;
+        private System.Windows.Forms.TextBox bookmarkNameValue;
     }
 }

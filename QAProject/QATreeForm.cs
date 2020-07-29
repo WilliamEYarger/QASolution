@@ -21,6 +21,7 @@
 //      void subjectTextValue_Leave(
 //      void openHyperlinkButton_Click(
 //      void takeQAFileTestButton_Click(
+//      void subjectTreeView_AfterSelect(
 
 //----------------------PRIVATE UTILITY METHODS------------------------------//
 //      bool nodeIsTerminal(
@@ -29,6 +30,7 @@
 //      void moveQANode(
 //      void updateQAFileNameScores(
 //      subjectTextValue_Leave(
+//      void subjectTreeView_AfterSelect(
 
 
 using System;
@@ -78,9 +80,9 @@ namespace QAProject
         {
             this.ControlBox = false;
             CreateTreeViewFromDictionary();
+            TreeViewDictionaryModel.loadHyperlinkDictionary();
         }// EndQATreeFormLoad
 
- 
         //-----------------------BUTTON CLICK METHODS------------------------//
 
         /// <summary>
@@ -518,7 +520,7 @@ namespace QAProject
 
         private void AddHyperlinkButton_Click(object sender, EventArgs e)
         {
-
+            string bookmark = bookmarkNameValue.Text;
             // Make sure that anode has been chosen first
             if (subjectTreeView.SelectedNode == null)
             {
@@ -535,7 +537,16 @@ namespace QAProject
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string filePath = ofd.FileName;
-                string output = hyperlinkSelectedNode.Name + '^' + filePath + '\n';
+                string output;
+                if (bookmark != "")
+                {
+                    output = hyperlinkSelectedNode.Name + '^' + filePath +"#"+ bookmark + '\n';
+
+                }
+                else
+                {
+                     output = hyperlinkSelectedNode.Name + '^' + filePath + '\n';
+                }
                 File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
             }
             return;
@@ -551,12 +562,24 @@ namespace QAProject
             TreeNode selectedNode = subjectTreeView.SelectedNode;
             string selectedNodeName = selectedNode.Name;
             string hyperlink = TreeViewDictionaryModel.getHyperlink(selectedNodeName);
-            if (hyperlink == "")
+            int posBookMark = hyperlink.LastIndexOf('#');
+            if (posBookMark != -1)
+            {
+                string bookmark = hyperlink.Substring(posBookMark + 1);
+                Clipboard.SetText(bookmark);
+                bookmarkNameValue.Text = bookmark;
+                hyperlink = hyperlink.Substring(0, posBookMark);
+            }
+            if (hyperlink == "") 
             {
                 MessageBox.Show("No Hyperlink exists for this node");
                 return;
             }
-                System.Diagnostics.Process.Start(hyperlink);
+            bookmarkNameValue.Text = "";
+            bookmarkLabel.Enabled = false;
+            openHyperlinkButton.Enabled = false;
+            openHyperlinkButton.ForeColor = Color.Black;
+            System.Diagnostics.Process.Start(hyperlink);
 
         }// End openHyperlinkButton_Click(
 
@@ -607,10 +630,36 @@ namespace QAProject
             this.Hide();
             AnswerQuestionsForm answerQuestionsForm = new AnswerQuestionsForm();
             answerQuestionsForm.ShowDialog();
+        }// End TakeQAFileTestButton_Click
+
+
+        private void SubjectTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            string selectedNodeName = subjectTreeView.SelectedNode.Name;
+
+            if (TreeViewDictionaryModel.HyperlinkDictionaryContainsKey(selectedNodeName))
+            {
+                openHyperlinkButton.Enabled = true;
+                openHyperlinkButton.ForeColor = Color.Red;
+                bookmarkLabel.Enabled = true;
+                string hyperlink = TreeViewDictionaryModel.getHyperlink(selectedNodeName);
+                int posHash = hyperlink.LastIndexOf('#');
+                if(posHash != -1)
+                {
+                    string bookmark = hyperlink.Substring(posHash + 1);
+                    bookmarkNameValue.Text = bookmark;
+                }
+            }
+            else
+            {
+                openHyperlinkButton.Enabled = false;
+                openHyperlinkButton.ForeColor = Color.Black;
+                bookmarkLabel.Enabled = false;
+                bookmarkNameValue.Text = "";
+            }
+           
+            
         }
-
-
-
         //----------------------UTILITY METHODS------------------------------//
 
 
@@ -1031,7 +1080,6 @@ namespace QAProject
             }
         }// End subjectTextValue_Leave(
 
-        
     }// End QATreeForm
 
 }//End QAProject

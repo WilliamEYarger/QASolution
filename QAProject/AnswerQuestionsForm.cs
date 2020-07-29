@@ -69,6 +69,7 @@ namespace QAProject
         private static int numCorrectAnswers;
         private static int keyToQAFileNameScoresDictionary;
         private static Boolean examination;
+        private static string currentDictionaryKey;
         //-------------------EVENT METHODS--------------------//
 
         public AnswerQuestionsForm()
@@ -148,9 +149,9 @@ namespace QAProject
             string originalQuestionNumber = StringHelperClass.returnNthItemInDelimitedString(currentQuestionNumber, '-', 1);
             if (!testTypeExam)
             {
-                // This is a quiz 
-                // Determine if this quiz is on a single qaFile (=!examination) or not
-                
+                // This is a review 
+                // Determine if this review is on a single qaFile (=!examination) or not
+
                 if (!examination)
                 {
                     // since this is a quiz on a single qaFile place the originalQuestionNumber at the end of thedelimitedQuestionNumbersStr
@@ -158,8 +159,8 @@ namespace QAProject
                 }
                 else
                 {
-                    // since this is a quiz on more than 1 qaFile place the currentQuestionNumStr at the end of delimitedQuestionNumbersStr
-                    delimitedQuestionNumbersStr = delimitedQuestionNumbersStr + "^" + currentQuestionNumStr;
+                    // since this is a quiz on more than 1 qaFile place the currentDictionaryKey at the end of delimitedQuestionNumbersStr
+                    delimitedQuestionNumbersStr = delimitedQuestionNumbersStr + "^" + currentDictionaryKey;
                 }
                 questionNumberValue.Text = "";
                 currentQuestionValue.Text = "";
@@ -255,12 +256,12 @@ namespace QAProject
                 return;
             }
 
-            // Get the leading integer string from the delimitedQuestionNumbersStr
-            string frontNumberStr = StringHelperClass.returnNthItemInDelimitedString(delimitedQuestionNumbersStr, '^', 0);
+            // Set the currentDictionaryKey to  the leading integer string from the delimitedQuestionNumbersStr
+            currentDictionaryKey = StringHelperClass.returnNthItemInDelimitedString(delimitedQuestionNumbersStr, '^', 0);
             // Remove this item from the delimitedQuestionNumbersStr
             delimitedQuestionNumbersStr = StringHelperClass.removeNthItemFromDelimitedString(delimitedQuestionNumbersStr, '^', 0);
             // Convert this to an integer key to the answerQuestionsDictionary dictionary
-            int keyToQADict = Int32.Parse(frontNumberStr);
+            int keyToQADict = Int32.Parse(currentDictionaryKey);
             // Get the appropriate string from the answerQuestionsDictionary
             string currentDelQALine = AnswerQuestionsDataModel.ReturnDesiredLineFromQADictionary(keyToQADict);
             // Parse this stirng
