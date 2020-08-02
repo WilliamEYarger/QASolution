@@ -1,4 +1,12 @@
-﻿20200721 Version
+﻿20200721 Version altered 20200729
+THE MAIN PURPOSE OF THIS VERSION OF 20200721 IS TO FLESH OUT THE PROCEDURES TO DEAL WITH THE 
+RESULTS OF TAKING AN EXAMINATION
+TASK01 - When the exam is complete publish the % correct to the window when notifying the user that the
+		test is complete.
+
+!!!!!PROBLEM I AM NOT CHECKING/CREATING A CUMULATIVE EXAM FILE
+
+20200721 Version
 TASK01 correct code to do a review of an examination DONE
 TASK02 Change the way that hyperlinks are displayed and used
 	The objective is to make the OpenHyperlink button active only when a hyperlink is present,

@@ -1,17 +1,28 @@
-﻿//--------------------GLOBAL vARIABLES--------------------//
+﻿//-------------------- GLOBAL VARIABLES --------------------//
 //      DataTable table = new DataTable();
+//      Dictionary<string, string> cumulativeResultsDictionary
+//      Dictionary<string, string> examinationResultsDictionary
+//      bool ExaminationResultsdictionaryContaineKey(
+//      Dictionary<string, string> ExaminationResultsDictionary
+//--------------------------------PRIVATE VARIABLES----------------------------//
+//      Dictionary<string, string> sortedDictionaryOfNonQAFiles 
 //      string filePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
-//      Dictionary<string, string> cumulativeResultsDictionary 
-//      Dictionary<string, string> qaExamDictionary
-//      public Dictionary<string, string> QAExamDictionary
-//-------IMPORT EXPORT QACUMULATIVERESULTS FILE-----------//
-//      importQACumulativeResultsFile(
-//      createCumulativeResultsDictionary(
-//      CreateDataTableFromDictionary(
-//      exportQACumulativeResutsFile(
-//---------------------OTHER METHODS---------------------//
-//      addNewQATestFileRow(
-//      
+//--------------------------------PRIVATE METHODS------------------------------//
+//      void CreateQADataTable()
+//      void CreateQACumulativeResultsDictionary(
+//      void CreateDataTableFromDictionary(
+//-------------------------PUBLIC METHODS------------------------------------------//
+//      void ImportQAExaminationResultsFile()
+//      void ExportExaminationResultsFile()
+//      void ImportQACumulativeResultsFile()
+//      void UpdateCumulativeExamResultsDictionary
+//      void ExportQACumulativeResutsFile()
+//      void AddNewQATestFileRow(
+//      void ReTextQANode(
+//      void UpdateCumulativeresultsDictionary(
+//      void AddNewEntryToExaminationResultsdictionary(
+//      void CreateSortedDictionaryOfNonQAFiles(
+
 
 
 using System;
@@ -23,64 +34,16 @@ using System.IO;
 namespace QADataModelLib
 {
     /// <summary>
-    /// This public staticclass handles input, output and altering the QACuulativeResultsFile
+    /// This public static class handles input, output and altering the QACuulativeResultsFile
     /// </summary>
     public static class QACumulativeResultsModel
     {
-        //--------------------GLOBAL vARIABLES--------------------//
+        //-------------------- GOBAL VARIABLES --------------------//
 
         /// <summary>
         /// The DataTable table is the vehicle for passing data to and from the QACumulativeResultsForm
         /// </summary>
         static readonly DataTable table = new DataTable();
-
-        private static void CreateDataTable()
-        {
-            table.Columns.Add("File Name", typeof(string));
-            table.Columns.Add("File Text", typeof(string));
-            table.Columns.Add("Date Taken", typeof(string));
-            table.Columns.Add("% Correct", typeof(string));
-            table.Columns.Add("Incorrect Answers", typeof(string));
-        }
-
-        public static void ImportQAExaminationResultsFile()
-        {
-            string examFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAExaminationResults.txt";
-            string[] qumulativeExamResultsLines = File.ReadAllLines(examFilePath);
-            foreach(string line in qumulativeExamResultsLines)
-            {
-                string key = StringHelperClass.returnNthItemInDelimitedString(line, '^', 0);
-                string value = StringHelperClass.removeNthItemFromDelimitedString(line, '^', 0);
-                qaExamDictionary.Add(key, value);
-            }
-
-        }
-
-
-        /// <summary>
-        /// filePath is the path to the storage file for cumulative test results
-        /// </summary>
-        static readonly string filePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
-
-
-        /// <summary>
-        /// This procedure converts the QAExamDictionary to a text file
-        /// </summary>
-        public static void ExportQAExamResultsFile()
-        {
-            string qaCumulatingFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAExaminationResults.txt";
-            string outputStr;
-            List<string> examDictionaryLines = new List<string>(); ;
-            foreach(KeyValuePair<string,string> kvp in QAExamDictionary)
-            {
-                string nodeName = kvp.Key;
-                string value = kvp.Value;
-                outputStr = nodeName + '^'+ value;
-                examDictionaryLines.Add(outputStr);
-            }
-            string[] cumulativeExamResultsArray = examDictionaryLines.ToArray();
-            File.WriteAllLines(qaCumulatingFilePath, cumulativeExamResultsArray);
-        }
 
         /// <summary>
         /// The cumulativeResultsDictionary has the nodeName as its Key and the delimited items of the 
@@ -97,7 +60,7 @@ namespace QADataModelLib
         static Dictionary<string, string> cumulativeResultsDictionary = new Dictionary<string, string>();
 
         /// <summary>
-        /// The QAExamDictionary holds the cumulative results of taking an examination
+        /// The ExaminationResultsDictionary holds the cumulative results of taking an examination
         ///     (a collection of questions from more that 1 qaFile)
         /// The key is the nodeName of the node selected in the TreeView
         /// The value is a triple delimited string
@@ -108,44 +71,73 @@ namespace QADataModelLib
         ///     is multiple lines of exam results:
         ///         date, percentCorrect and a list of questions incorrectly answered
         /// </summary>
-        private static Dictionary<string, string> qaExamDictionary = new Dictionary<string, string>();
+        private static Dictionary<string, string> examinationResultsDictionary = new Dictionary<string, string>();
 
-        public static Dictionary<string, string> QAExamDictionary 
+
+        /// <summary>
+        /// This Method is called by the QATreeViewForm's TakeQAFileTestButton Click procedure
+        /// If the examinationResultsDictionary contains the key then it returns true, else
+        /// it returns false
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static bool ExaminationResultsdictionaryContaineKey(string key)
         {
+            if (examinationResultsDictionary.ContainsKey(key))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }// END ExaminationResultsdictionaryContaineKey
 
+        /// <summary>
+        /// This property gets and sets the value of ExaminationResultsDictionary
+        /// </summary>
+        public static Dictionary<string, string> ExaminationResultsDictionary
+        {
             get
             {
-                return qaExamDictionary;
+                return examinationResultsDictionary;
             }
-            
             set
             {
-                qaExamDictionary = value;
+                examinationResultsDictionary = value;
             }
         }
-        //-------IMPORT EXPORT QACUMULATIVERESULTS FILE-----------//
+
+        //--------------------------------PRIVATE VARIABLES----------------------------//
 
         /// <summary>
-        /// This method is called by the  QADashboard_Load( procedure whenever the project is opened
+        /// This dictionary holds the results of taking an examination on a nonQA file (ie composed of
+        /// more that 1 qaFile belonging to a particulary parent node)
         /// </summary>
-        public static void ImportQACumulativeResultsFile()
-        {
-            if (File.Exists(filePath))
-            {
-                // create an array of strings to hold all the lines in the file
-                string[] lines = File.ReadAllLines(filePath);
-                CreateCumulativeResultsDictionary(lines);
-                CreateDataTableFromDictionary(cumulativeResultsDictionary);
-            }
-            return;
-        }// End  importQACumulativeResultsFile(
+        private static readonly Dictionary<string, string> sortedDictionaryOfNonQAFiles = new Dictionary<string, string>();
+
 
         /// <summary>
-        /// This method is callde by importQACumulativeResultsFile( to load the QACumulativeResults file
+        /// filePath is the path to the storage file for cumulative test results
+        /// </summary>
+        private static readonly string filePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
+
+        //--------------------------------PRIVATE METHODS------------------------------//
+        private static void CreateQADataTable()
+        {
+            table.Columns.Add("File Name", typeof(string));
+            table.Columns.Add("File Text", typeof(string));
+            table.Columns.Add("Date Taken", typeof(string));
+            table.Columns.Add("% Correct", typeof(string));
+            table.Columns.Add("Incorrect Answers", typeof(string));
+        }
+
+        /// <summary>
+        /// This method is called by importQACumulativeResultsFile( to load the QACumulativeResults file
         /// into the cumulativeResultsDictionary
         /// </summary>
         /// <param name="lines"></param>
-        private static void CreateCumulativeResultsDictionary(string[] lines)
+        private static void CreateQACumulativeResultsDictionary(string[] lines)
         {
             // If the QACumulative results file exists, load it into the cumulativeResultsDictionary
             if (File.Exists(filePath))
@@ -166,10 +158,13 @@ namespace QADataModelLib
             return;
         }// End createCumulativeResultsDictionary
 
-
+        /// <summary>
+        /// Called by ImportQACumulativeResultsFile()
+        /// </summary>
+        /// <param name="cumulativeResultsDictionary"></param>
         private static void CreateDataTableFromDictionary(Dictionary<string, string> cumulativeResultsDictionary)
         {
-            CreateDataTable();
+            CreateQADataTable();
             string[] lines = new string[cumulativeResultsDictionary.Count];
             int counter = 0;
             foreach (KeyValuePair<string, string> kvp in cumulativeResultsDictionary)
@@ -177,7 +172,7 @@ namespace QADataModelLib
                 string key = kvp.Key;
                 string value = kvp.Value;
                 int lastTilda = value.LastIndexOf('~');
-                if(lastTilda == value.Length-1)
+                if (lastTilda == value.Length - 1)
                 {
                     value = value.Substring(0, value.Length - 1);
                 }
@@ -204,22 +199,82 @@ namespace QADataModelLib
                 else
                 {
                     table.Rows.Add(fileName.Trim(), fileText.Trim());
-                }  
+                }
             }// End create all rows
             return;
-        }// End loadDictionaryIntoViewGrid(
+        }// END CreateDataTableFromDictionary 
+
+
+        //-------------------------PUBLIC METHODS------------------------------------------//
+
+        /// <summary>
+        /// This method is called by the QADashboard load procedure
+        /// It reads the QAExaminationResults.txt into the
+        /// examinationResultsDictionary where the Key is the the nodeName propert
+        /// of a non-QA node and the value is a '^' delimited string of
+        ///     the nodeText value
+        ///     the node's parent string
+        ///     a composit '@' delimited string composed of
+        ///         The datatime when the examinstion was taken
+        ///         The xx.x% score achieved
+        ///         and a ',' delimited list of the incorrectly answered questions where
+        ///         each entry is composed of the qaNode;s number (ie For the Greece node it
+        ///         is 4 and the number of the question in the appropriate qaFile) thus if 
+        ///         question 1 in qaFile 4 was answered incorrectly then the entry would be "4-1,"
+        ///         
+        /// </summary>
+        public static void ImportQAExaminationResultsFile()
+        {
+            string examFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAExaminationResults.txt";
+            string[] qumulativeExamResultsLines = File.ReadAllLines(examFilePath);
+            foreach(string line in qumulativeExamResultsLines)
+            {
+                string key = StringHelperClass.returnNthItemInDelimitedString(line, '^', 0);
+                string value = StringHelperClass.removeNthItemFromDelimitedString(line, '^', 0);
+                examinationResultsDictionary.Add(key, value);
+            }
+        }// END ImportQAExaminationResultsFile
+
 
 
         /// <summary>
-        /// This method reads in the C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\ QAExaminationResults.txt   
-        /// file into the dictiobary
+        /// This procedure is called when the QADashboard ExitApplicationButton is clicked
+        /// 
+        /// It converts the ExaminationResultsDictionary to a text file
         /// </summary>
-        public static void CreateCumulativeExamResultsDictionary()
+        public static void ExportExaminationResultsFile()
         {
-            // TODO 20200720 CreateCumulativeExamResultsDictionary
-        }
+            string qaCumulatingFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAExaminationResults.txt";
+            string outputStr;
+            List<string> examDictionaryLines = new List<string>(); ;
+            foreach(KeyValuePair<string,string> kvp in ExaminationResultsDictionary)
+            {
+                string nodeName = kvp.Key;
+                string value = kvp.Value;
+                outputStr = nodeName + '^'+ value;
+                examDictionaryLines.Add(outputStr);
+            }
+            string[] cumulativeExamResultsArray = examDictionaryLines.ToArray();
+            File.WriteAllLines(qaCumulatingFilePath, cumulativeExamResultsArray);
+        }// END ExportExaminationResultsFile
 
 
+        /// <summary>
+        /// This method is called by the  QADashboard_Load( procedure whenever the project is opened
+        /// </summary>
+        public static void ImportQACumulativeResultsFile()
+        {
+            if (File.Exists(filePath))
+            {
+                // create an array of strings to hold all the lines in the file
+                string[] lines = File.ReadAllLines(filePath);
+                CreateQACumulativeResultsDictionary(lines);
+                CreateDataTableFromDictionary(cumulativeResultsDictionary);
+            }
+            return;
+        }// End  importQACumulativeResultsFile(
+
+        
         /// <summary>
         /// This method receives a string of the results of taking and examination 
         /// The format of this string is:
@@ -233,28 +288,28 @@ namespace QADataModelLib
         {
             // get the component parts of resultsOFExam
             string[] results = resultsOFExam.Split('^');
+            string key = results[0];
             // If the CreateDataTableFromDictionary exists get the desired key value pair
-            if (qaExamDictionary.Count > 0)
+            if (examinationResultsDictionary.Count > 0)
             {
                 // the dictionary already exists so update it
                 //get the correct item from the dictionary
-                string desiredDictionaryItem = qaExamDictionary[results[0]];
-                desiredDictionaryItem = desiredDictionaryItem + results[3];
-                qaExamDictionary[results[0]] = desiredDictionaryItem;
+                string desiredDictionaryItem = examinationResultsDictionary[key];
+                desiredDictionaryItem += results[3];
+                examinationResultsDictionary[results[0]] = desiredDictionaryItem;
             }
             else
             {
                 // the dictionary doesn't exist so create it
-                string key = results[0];
+                key = results[0];
                 string nodeText = results[1];
                 string parentsStr = results[2];
                 string examResults = results[3];
-                qaExamDictionary.Add(key, nodeText + '^' + parentsStr + '^' + examResults+'@');
+                examinationResultsDictionary.Add(key, nodeText + '^' + parentsStr + '^' + examResults+'@');
             }
 
         }
 
-        //---------------------OTHER METHODS---------------------//
 
         /// <summary>
         /// This method is called by the QADashboard's exitApplicationButton_Click( method
@@ -334,5 +389,66 @@ namespace QADataModelLib
 
         }// End updateCumulativeresultsDictionary
 
+        /// <summary>
+        /// This method is called by QATReeForm's when it TakeQATestFileButton is clicked
+        /// AND there is no entry in the examinationResultsDictionary with a key = nodeName
+        /// </summary>
+        /// <param name="nodeName"></param>
+        /// <param name="selectedNodeText"></param>
+        /// <param name="parentString"></param>
+        public static void AddNewEntryToExaminationResultsdictionary(string nodeName, string selectedNodeText, string parentString)
+        {
+            string newValue = selectedNodeText+'^'+ parentString+'^';
+            examinationResultsDictionary.Add(nodeName, newValue);
+
+        }
+
+        /// <summary>
+        /// This procedure is called by QATreeForm.CreateQADictionary()
+        /// It receives a List<string> of all nonQAFiles as they appear in the TreeView
+        /// Its Purpose is to Create a Dictionary<string,string> sortedDictionaryOfNonQAFiles
+        /// where the key is the 
+        /// nonQAFile nodeName and he value in the nonQAFile text offset by 2xNode Level spaces
+        /// </summary>
+        /// <param name="nonQAFileList"></param>
+        public static void CreateSortedDictionaryOfNonQAFiles(List<string> nonQAFileList)
+        {
+            string key;
+            string value;
+            int nodeLevel;
+            string offset;
+            // Cycle thru each line in nonQAFileList
+            foreach (string line in nonQAFileList)
+            {
+                offset = "";
+                key = StringHelperClass.returnNthItemInDelimitedString(line, '^', 0);
+                value = StringHelperClass.returnNthItemInDelimitedString(line, '^', 1);
+                // Determins the node level of the item
+                nodeLevel = StringHelperClass.returnNumOfCharValuesInString(key, '.');
+                // string.Concat(Enumerable.Repeat("ab", 2));
+                for(int i=0; i< nodeLevel; i++)
+                {
+                    offset += "  ";
+                }
+                value = offset + value+"^";
+                sortedDictionaryOfNonQAFiles.Add(key, value);
+            }// END Cycle thru each line in nonQAFileList
+            foreach(KeyValuePair<string,string> kvp in examinationResultsDictionary)
+            {
+                // Get the key and the value string from the next entry in the examinationResultsDictionary
+                string currentKey = kvp.Key;
+                string currentValue = kvp.Value;
+                // Get the exam result value from currentValue
+                string examinationResults = StringHelperClass.returnNthItemInDelimitedString(currentValue, '^', 2);
+                // Get the value string of the sortedDictionaryOfNonQAFiles for the key = currentKey;
+                string oldValue = sortedDictionaryOfNonQAFiles[currentKey];
+
+                // add the results from the examinationResultsDictionary to its value
+                oldValue += examinationResults;
+                // return the ammended value
+                sortedDictionaryOfNonQAFiles[currentKey] = oldValue;
+            }
+
+        }// END CreateSortedDictionaryOfNonQAFiles
     }// End QACumulativeResultsModel
 }// End QADataModelLib

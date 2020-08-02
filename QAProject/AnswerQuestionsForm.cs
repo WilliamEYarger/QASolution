@@ -10,6 +10,7 @@
 //      string incorrectAnswerNumStr = "";
 
 //      int numCorrectAnswers;
+//      double percentCorrect;
 
 //-------------------EVENT METHODS--------------------//
 //      void AnswerQuestionsForm_Load(
@@ -70,6 +71,8 @@ namespace QAProject
         private static int keyToQAFileNameScoresDictionary;
         private static Boolean examination;
         private static string currentDictionaryKey;
+        private static double percentCorrect;
+        private static string percentCorrectStr;
         //-------------------EVENT METHODS--------------------//
 
         public AnswerQuestionsForm()
@@ -181,19 +184,6 @@ namespace QAProject
                 {
                     incorrectAnswerNumStr = incorrectAnswerNumStr + questionNumberValue.Text + ",";
                 }
-                //currentQuestionNumStr = questionNumberValue.Text;
-                //if (examination)
-                //{                   
-                //    delimitedQuestionNumbersStr = delimitedQuestionNumbersStr + "^" + questionNumberValue.Text;
-                //}
-                //else
-                //{
-                //    // This is a Test
-                //    //If this is not an examination add the questionNumberValue.Text; to the end of 
-
-                //    delimitedQuestionNumbersStr = delimitedQuestionNumbersStr + "^" + originalQuestionNumber;
-                //    incorrectAnswerNumStr = incorrectAnswerNumStr + "," + originalQuestionNumber;
-                //}
                 
                 numCorrectAnswers--;
                 questionNumberValue.Text = "";
@@ -247,7 +237,10 @@ namespace QAProject
                 if (testTypeExam)
                 {
                     UpdateExamData();
+                    MessageBox.Show("Your score on this test was " + percentCorrectStr);
                 }
+                // If this is a test or an examinstion publish the results to the screen
+                // else 
                 ResetLocalVariables();
 
                 // This is the last question 
@@ -300,8 +293,8 @@ namespace QAProject
             string orriginalNumOfQuestions = originalQuestionsNumInt.ToString();
             string outputNumCorrectStr = $"{currentCorrectNumAnswersStr} out of {orriginalNumOfQuestions} were Correct!";
            // _ = AnswerQuestionsDataModel.GetNumOfQuestions();
-            double percentCorrect = (numCorrectAnswers / originalQuestionsNumInt) * 100;
-            string percentCorrectStr = String.Format("{0:00.0}", percentCorrect);
+            percentCorrect = (numCorrectAnswers / originalQuestionsNumInt) * 100;
+            percentCorrectStr = String.Format("{0:00.0}", percentCorrect);
             // If this is not an examination update the QAFileNameScores file
             if (!examination)
             {

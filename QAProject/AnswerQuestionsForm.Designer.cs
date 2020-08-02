@@ -60,7 +60,7 @@
             this.testTypeToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1782, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1482, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -97,14 +97,14 @@
             // examToolStripMenuItem
             // 
             this.examToolStripMenuItem.Name = "examToolStripMenuItem";
-            this.examToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.examToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
             this.examToolStripMenuItem.Text = "Exam";
             this.examToolStripMenuItem.Click += new System.EventHandler(this.ExamToolStripMenuItem_Click);
             // 
             // quizToolStripMenuItem1
             // 
             this.quizToolStripMenuItem1.Name = "quizToolStripMenuItem1";
-            this.quizToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.quizToolStripMenuItem1.Size = new System.Drawing.Size(128, 26);
             this.quizToolStripMenuItem1.Text = "Quiz";
             this.quizToolStripMenuItem1.Click += new System.EventHandler(this.QuizToolStripMenuItem1_Click);
             // 
@@ -232,7 +232,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1782, 953);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(1482, 853);
             this.Controls.Add(this.wrongButton);
             this.Controls.Add(this.answerCorrectButton);
             this.Controls.Add(this.correctAnswerValue);
