@@ -14,7 +14,7 @@
 //      Dictionary<int, string> QandADictionary{
 //      setQAFileNameStr(
 //      string getQAFileNameStr()
-//      List<string> orderedListOfQAFiles
+//      List<string> orderedListOfQAFilesName_Text
 //      int getNumCorrectAnswers(
 //      string delimitedQuestionNumbersStr
 //      string ReturnDelimitedQuestionsNumbersStr(
@@ -30,15 +30,19 @@
 //      void loadQAFileIntoDictionary(string qaFilePath)
 //      void saveQAFile(
 //      string ReturnDesiredLineFromQADictionary(
-//      void SetListOfOrderedQAFiles(
+//      void SetListOfOrderedQAFilesName_Text(
 //      List<string> ReturnListOfSelectedQAFiles(\
 //      void CreateQuestionAndAnswerDictionary(
+//      void CreateDictionaryOfSortedQAFileText()
+//-----------------------------PRIVATE METHODS-------------------------------------//
+//      void PublishDictionaryOfOrderedQAFiles()
 
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.ComponentModel;
+using System.Linq;
 
 namespace QADataModelLib
 {
@@ -78,6 +82,7 @@ namespace QADataModelLib
             return qaFilePath;
         }
 
+
         /// <summary>
         /// This method sets the path to the desired qa file. 
         ///     1.  If the file was chosen by the tree view's takeQAFileTestButton_Click, the
@@ -114,6 +119,12 @@ namespace QADataModelLib
         }// End property of Dictionary<int, string> QandADictionar
 
         private static readonly Dictionary<int, string> answerQuestionsDictionary = new Dictionary<int, string>();
+        private static Dictionary<string, string> dictionaryOfSortedQAFileTextName = new Dictionary<string, string>();
+
+        private static Dictionary<string, string> dictionaryOfSortedQAFileNameText = new Dictionary<string, string>();
+        private static Dictionary<string, string> dictionaryOfSortedNonQANodeNameText = new Dictionary<string, string>();
+
+
         private static string qaFileNameStr = "";
 
 
@@ -147,11 +158,11 @@ namespace QADataModelLib
         /// <summary>
         /// This is a list of all qa files ordered by their appearance in the subjectTreeView
         /// </summary>
-        private static List<string> orderedListOfQAFiles;
+        private static List<string> orderedListOfQAFilesName_Text;
 
         public static List<string> GetOrderedListOfQAFiles()
         {
-            return orderedListOfQAFiles;
+            return orderedListOfQAFilesName_Text;
         }
 
         public static int GetNumOfQuestions()
@@ -303,15 +314,20 @@ namespace QADataModelLib
        
 
         /// <summary>
-        /// orderedListOfQAFiles is a '^' list of all qaFile data where the
+        /// orderedListOfQAFilesName_Text is a '^' list of all qaFile data where the
         /// 1st entry is the qaFile nodeName and the
         /// 2nd endry is the qaFile nodeText
         /// </summary>
         /// <param name="qaFileList"></param>
-        public static void SetListOfOrderedQAFiles(List<string> qaFileList)
+        public static void SetListOfOrderedQAFilesName_Text()
         {
-            orderedListOfQAFiles = qaFileList;
+            string [] qaFileArray = File.ReadAllLines(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllQANodesName_Text.txt");
+            List<string> qaFileList = qaFileArray.ToList();
+            orderedListOfQAFilesName_Text = qaFileList;
+           //dictionaryOfSortedNonQANodesNameText
         }
+
+       
 
         /// <summary>
         /// This procedure receives a string with a subjectTreeView node nodeName
@@ -323,8 +339,9 @@ namespace QADataModelLib
         /// <returns></returns>
         public static List<string> ReturnListOfSelectedQAFiles(string nodeNameString)
         {
+            
             List<string> selectedQAFilesList = new List<string>();
-            foreach(string qaFileString in orderedListOfQAFiles)
+            foreach(string qaFileString in orderedListOfQAFilesName_Text)
             {
                 if(qaFileString.IndexOf(nodeNameString) == 0)
                 {
@@ -407,6 +424,67 @@ namespace QADataModelLib
             delimitedQuestionNumbersStr = delimitedQuestionNumbersStr.Substring(0, delimitedQuestionNumbersStr.Length - 1);
            
         }// End createQuestionAndAnswerDictionary
+
+        /// <summary>
+        /// This Method retrieves a file of sorted node Text^Name
+        /// </summary>
+        public static void CreateDictionaryOfSortedQAFileText()
+        {
+            string[] sortedQAFileNames = File.ReadAllLines(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllQAFileText_Name.txt");
+            foreach(string line in sortedQAFileNames)
+            {
+                string[] components = line.Split('^');
+                string nodeText = components[0];
+                string nodeName = components[1];
+                dictionaryOfSortedQAFileTextName.Add(nodeText, nodeName);
+                dictionaryOfSortedQAFileNameText.Add(nodeName, components[0]);
+            }
+        }// End CreateDictionaryOfSortedQAFileText()
+
+        public static string returnFileNameOfSortedQAFile(string key)
+        {
+            string fileName = dictionaryOfSortedQAFileTextName[key];
+            return fileName;
+        }
+
+        //-----------------------------PRIVATE METHODS-------------------------------------//
+        private static void PublishDictionaryOfOrderedQAFiles()
+        {
+            // Create an '^' delimited inverted list of sorted qa Files where the File Text comes 1sr and the file name is 2nd
+           
+            List<string> invertedListOfQAFile = new List<string>();
+
+            foreach (string line in orderedListOfQAFilesName_Text)
+            {
+                string[] fileComponents = line.Split('^');
+                string fileName = fileComponents[0];
+                string fileText = fileComponents[1];
+                string newLine = fileText + '^' + fileName;
+                invertedListOfQAFile.Add(newLine);
+            }
+            // Publish this inverted List
+            File.WriteAllLines(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedQAFileNames.txt", invertedListOfQAFile);
+        }
+
+        /// <summary>
+        /// This procedure creates a dictionary<string, string> of all nonQA Files where the key in nodeName and the value in nodeTextg
+        /// </summary>
+        public static void CreateDictionaryOfAllNonQANodesName_Text()
+        {
+            string[] arrayOfAllNonQAFileName_Text = File.ReadAllLines(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllNonQANodesName_Text.txt");
+            foreach(string line in arrayOfAllNonQAFileName_Text)
+            {
+                string[] components = line.Split('^');
+                string nodeName = components[0];
+                string nodeText = components[1];
+                dictionaryOfSortedNonQANodeNameText.Add(nodeName, nodeText);
+            }
+        }// End CreateDictionaryOfAllNonQANodesName_Text
+
+        public static string ReturnNonQANodeText(string nodeName)
+        {
+            return dictionaryOfSortedNonQANodeNameText[nodeName];
+        }
 
         //=================================END OF CLASS====================================//
 

@@ -2,12 +2,19 @@
 //      string treeViewDictionaryPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\TreeViewDictionary.txt";
 //      Dictionary<string, string> TreeViewDictionary = new Dictionary<string, string>();
 //      Dictionary<string, string> HyperlinkDictionary = new Dictionary<string, string>();
+//      Dictionary<string, string> nonQAFileDictionary 
 //--------------------Public Methods--------------------
-//      public static string getHyperlink(
-//      public static Dictionary<string, string> getTreeViewDictionary(
-//      public static void updateTreeViewDictionary(
-//      public static void loadTreeViewDictionary
-//      public static void loadHyperlinkDictionary(
+//      string getHyperlink(
+//      Dictionary<string, string> getTreeViewDictionary(
+//      void updateTreeViewDictionary(
+//      void loadTreeViewDictionary
+//      void loadHyperlinkDictionary(
+//      void saveTreeViewDictionary()
+//      string returnParentChain(
+//      Boolean AddNode(
+//       void addNodeToTreeViewDictionary(
+//      void reTextNode(
+//      bool HyperlinkDictionaryContainsKey(
 
 using System;
 using System.Collections.Generic;
@@ -23,6 +30,7 @@ namespace QADataModelLib
         public static string treeViewDictionaryPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\TreeViewDictionary.txt";
         private static Dictionary<string, string> TreeViewDictionary = new Dictionary<string, string>();
         private static Dictionary<string, string> HyperlinkDictionary = new Dictionary<string, string>();
+        private static Dictionary<string, string> nonQAFileDictionary = new Dictionary<string, string>();
 
         //--------------------Public Methods--------------------
         /// <summary>
@@ -223,6 +231,9 @@ namespace QADataModelLib
             {
                 return false;
             }
-        }
+        }// End HyperlinkDictionaryContainsKey
+
+
+
     }// End TreeViewDictionaryModel
 }// End QADataModelLib

@@ -591,7 +591,6 @@ namespace QAProject
         /// <param name="e"></param>
         private void TakeQAFileTestButton_Click(object sender, EventArgs e)
         {
-            // TODO - I am not checking to see if a Cumulative exam file exists
             // Get the text value of the selected node
             TreeNode selectedNode = subjectTreeView.SelectedNode;
 
@@ -636,10 +635,13 @@ namespace QAProject
                     QACumulativeResultsModel.AddNewEntryToExaminationResultsdictionary(nodeName, selectedNodeText
                         , parentString);
                 }
-                AnswerQuestionsDataModel.CreateQuestionAndAnswerDictionary(listOfQAFiles);
+
+                // On 20200808 0951 I moved the following to spot A
+                //AnswerQuestionsDataModel.CreateQuestionAndAnswerDictionary(listOfQAFiles);
 
             }
-
+            // Spot A
+            AnswerQuestionsDataModel.CreateQuestionAndAnswerDictionary(listOfQAFiles);
             AnswerQuestionsDataModel.SetQAFilePath(selectedNodeText);
             this.Hide();
             AnswerQuestionsForm answerQuestionsForm = new AnswerQuestionsForm();
@@ -949,10 +951,9 @@ namespace QAProject
             }
                         
             subjectTreeView.EndUpdate();
+            List<string> sortedListOfAllTreeViewNodes = new List<string>();
             List<string> qaFileList = new List<string>();
-            // Added 20200801
             List <string> nonQAFileList = new List<string>();
-            // END Added 20200801
 
             CallRecursive();
             SubjectTreeViewModel.setListOfQAFiles(qaFileList);
@@ -960,9 +961,10 @@ namespace QAProject
                   {
                     
                     // Get the node Name
-                      string treeNodeName = treeNode.Name;
+                    string treeNodeName = treeNode.Name;
+                    sortedListOfAllTreeViewNodes.Add(treeNodeName + "^" + treeNode.Text);
                     // See if it is a qaNode
-                    if(treeNodeName.IndexOf('q') != -1)
+                    if (treeNodeName.IndexOf('q') != -1)
                     {
                         qaFileList.Add(treeNodeName+"^"+treeNode.Text);
                     }
@@ -989,10 +991,23 @@ namespace QAProject
                         DoRecursive(n);
                     }
                 }
-            // Save ordered qaFileList in the AnswerQuestionsDataModel
-            AnswerQuestionsDataModel.SetListOfOrderedQAFiles(qaFileList);
-            QACumulativeResultsModel.CreateSortedDictionaryOfNonQAFiles(nonQAFileList);
+            // File path to accessory files
+            string accessoryFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\";
+            // Publish sortedListOfAllTreeViewNodes
+            string filePathAllTreeViewNodes = accessoryFilePath + "SortedListOfAllTreeViewNodes.txt";
+            File.WriteAllLines(filePathAllTreeViewNodes, sortedListOfAllTreeViewNodes);
 
+            // Publish sortedList of all QA Files
+            string filePathQANodes = accessoryFilePath + "SortedListOfAllQANodes.txt";
+            File.WriteAllLines(filePathQANodes, qaFileList);
+
+            // Publish sortedList of all nonQA Files
+            string filePathNonQANodes = accessoryFilePath + "SortedListOfAllNonQANodes.txt";
+            File.WriteAllLines(filePathNonQANodes, nonQAFileList);
+            // Save ordered qaFileList in the AnswerQuestionsDataModel
+           //AnswerQuestionsDataModel.SetListOfOrderedQAFilesName_Text(qaFileList);
+            QACumulativeResultsModel.CreateSortedDictionaryOfNonQAFiles(nonQAFileList);
+            // In TreeForm
 
         }// End CreateTreeViewFromDictionary
 

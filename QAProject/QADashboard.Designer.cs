@@ -75,13 +75,13 @@
             // 
             // openCeateEditQAFilesFormbutton
             // 
-            this.openCeateEditQAFilesFormbutton.Location = new System.Drawing.Point(352, 103);
+            this.openCeateEditQAFilesFormbutton.Location = new System.Drawing.Point(373, 103);
             this.openCeateEditQAFilesFormbutton.Name = "openCeateEditQAFilesFormbutton";
             this.openCeateEditQAFilesFormbutton.Size = new System.Drawing.Size(232, 89);
             this.openCeateEditQAFilesFormbutton.TabIndex = 4;
-            this.openCeateEditQAFilesFormbutton.Text = "Open The Create/Edit QAFiles Forl";
+            this.openCeateEditQAFilesFormbutton.Text = "View Cumulative Results";
             this.openCeateEditQAFilesFormbutton.UseVisualStyleBackColor = true;
-            this.openCeateEditQAFilesFormbutton.Click += new System.EventHandler(this.OpenCeateEditQAFilesFormbutton_Click);
+            this.openCeateEditQAFilesFormbutton.Click += new System.EventHandler(this.OpenCumulativeResultsFormButton_Click);
             // 
             // QADashboard
             // 

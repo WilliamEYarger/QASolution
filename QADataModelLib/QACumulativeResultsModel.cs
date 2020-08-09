@@ -37,6 +37,7 @@ namespace QADataModelLib
     /// This public static class handles input, output and altering the QACuulativeResultsFile
     /// </summary>
     public static class QACumulativeResultsModel
+        // TODO - 20200808 The cumulative results on exams are not updating
     {
         //-------------------- GOBAL VARIABLES --------------------//
 
@@ -108,6 +109,14 @@ namespace QADataModelLib
             }
         }
 
+        public static Dictionary<string,string> SortedDictionaryOfNonQAFiles 
+        {
+            get
+            {
+                return sortedDictionaryOfNonQAFiles;
+            }
+           
+        }
         //--------------------------------PRIVATE VARIABLES----------------------------//
 
         /// <summary>
@@ -448,7 +457,27 @@ namespace QADataModelLib
                 // return the ammended value
                 sortedDictionaryOfNonQAFiles[currentKey] = oldValue;
             }
+            // Create a List of the keys and values in the sortedDictionaryOfNonQAFiles and publish it
+            List<string> listOfNonQAFiles = new List<string>();
+            foreach(KeyValuePair<string,string> kvp in sortedDictionaryOfNonQAFiles)
+            {
+                string nonQAKey = kvp.Key;
+                string nonQAValue = kvp.Value;
+                string output = nonQAKey + '^'+ nonQAValue;
+                listOfNonQAFiles.Add(output);
+            }
+            // 20200809 0742 string nonQAFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NonQAFileNames.txt";
+            string nonQAFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllQANodesName_Text.txt";
+            File.WriteAllLines(nonQAFilePath, listOfNonQAFiles);
 
         }// END CreateSortedDictionaryOfNonQAFiles
+
+        public static Dictionary<string,string> getQACumulativeResultsDictionary()
+        {
+            return cumulativeResultsDictionary;
+        }
+
+
+
     }// End QACumulativeResultsModel
 }// End QADataModelLib

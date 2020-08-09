@@ -43,6 +43,9 @@ namespace QAProject
                 filesLoaded = true;
                 QACumulativeResultsModel.ImportQACumulativeResultsFile();
                 QACumulativeResultsModel.ImportQAExaminationResultsFile();
+                AnswerQuestionsDataModel.CreateDictionaryOfSortedQAFileText();
+                AnswerQuestionsDataModel.CreateDictionaryOfAllNonQANodesName_Text();
+                AnswerQuestionsDataModel.SetListOfOrderedQAFilesName_Text();
             }
            
         }
@@ -59,12 +62,12 @@ namespace QAProject
             Application.Exit();
         }
 
-        private void OpenCeateEditQAFilesFormbutton_Click(object sender, EventArgs e)
+        private void OpenCumulativeResultsFormButton_Click(object sender, EventArgs e)
         {
             
             this.Hide();
-            QuestionAndAnswerForm createQAForm = new QuestionAndAnswerForm();
-            createQAForm.ShowDialog();
+            ViewCumulativeResultsForm cumulativeResultsForm = new ViewCumulativeResultsForm();
+            cumulativeResultsForm.ShowDialog();
         }
     }
 }
