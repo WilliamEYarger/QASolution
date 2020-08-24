@@ -73,8 +73,6 @@ namespace QADataModelLib
                     }
                     file.Close();
                     // For each line in inputList parse it into the dictionary
-                    var qaNameScoreDictionaryList = new List<string>(inputList);
-                    //string line = "";
                     for (int i = 0; i < counter; i++)
                     {
                         line = inputList[i];
@@ -123,27 +121,21 @@ namespace QADataModelLib
             }
         }// End saveQAFileNameScoresFile(
 
-        /*
-         *  If the parent's name is omitted from the string the node name value will be changed 
-         *  to only reflect its unique int ID number
-         */
 
-            // CHANGE- 002 change the nodeName to the cumulativeQANodeNumber string
 
         /// <summary>
         /// Called by the QTreeForm addNewQAFileButton Click
         /// </summary>
         /// <param name="cumulativeQANumberString"></param>
         /// <param name="ID"></param>
-        /// <param name="nodeName"></param>
         /// <param name="nodeText"></param>
         /// <param name="parentString"></param>
-        public static void updateQANameScoreDictionaryWithNewEntry(string cumulativeQANumberString, int ID, string nodeName, string nodeText, string parentString)
+        /// 
+        public static void UpdateQANameScoreDictionaryWithNewEntry(string cumulativeQANumberString, int ID, string nodeText, string parentString)
         {
-            
-            string value = nodeText + "^" + parentString + "^" + cumulativeQANumberString+'q' + "^No Test Yet";
+
+            string value = nodeText + "^" + parentString + "^" + cumulativeQANumberString + 'q' + "^No Test Yet";
             QANameScoreDictionary.Add(ID, value);
-            string output = ID.ToString() + '~' + value + '\n';
 
         }// End updateQANameScoreDictionaryWithNewEntry
 
@@ -163,7 +155,7 @@ namespace QADataModelLib
         }// End updateQAQNameScoreDictionaryWithExamResults
 
 
-        public static void reTextNameScores(string nodeName, string oldNodeText, string newNodeText)
+        public static void ReTextNameScores(string nodeName, string newNodeText)
         {
             // Create dummy dictionary to hold changed values
             Dictionary<Int32, string> tempQANAmeScoredictionary = new Dictionary<int, string>();
@@ -193,7 +185,7 @@ namespace QADataModelLib
                     // Get the item number of parentsArray to replace from 
                     int itemToReplace = numParents - numNodeItems;
                     // Repalce the itemToReplace - th  item in parents String with newNodeText
-                    if(itemToReplace != -1)
+                    if (itemToReplace != -1)
                     {
                         parentsString = StringHelperClass.replaceNthItemInDelimitedString(parentsString, '<', itemToReplace, newNodeText);
                         // Reassemble the value with the updated parentsString

@@ -9,7 +9,7 @@ namespace QADataModelLib
     {
 
 
-        public static string treeViewDictionaryPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\TreeViewDictionary.txt";
+        public static string treeViewDictionaryPath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\TreeViewDictionary.txt";
 
 
         private static Dictionary<string, string> TreeViewDictionary = new Dictionary<string, string>();
@@ -90,7 +90,7 @@ namespace QADataModelLib
                 HyperlinkDictionary = new Dictionary<string, string>();
             }
             var hyperlinkDictionaryList = new List<string>();
-            string hyperlinkDictionaryPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt";
+            string hyperlinkDictionaryPath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt";
 
             if (File.Exists(hyperlinkDictionaryPath))
             {

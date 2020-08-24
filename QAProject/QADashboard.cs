@@ -41,10 +41,12 @@ namespace QAProject
                 QADataModelLib.NodeChildrenDictionaryModel.loadNodeChildrenDictionary();
                 QADataModelLib.TreeViewDictionaryModel.loadTreeViewDictionary();
                 filesLoaded = true;
-                QACumulativeResultsModel.importQACumulativeResultsFile();
-            }
-           
-        }
+                QACumulativeResultsModel.ImportQACumulativeResultsFile();
+                AnswerQuestionsDataModel.CreateDictionaryOfSortedQAFileText();// +2020082311359
+                AnswerQuestionsDataModel.CreateDictionaryOfAllNonQANodesName_Text(); //+202008231401
+                AnswerQuestionsDataModel.SetListOfOrderedQAFilesName_Text();// +202008231402
+            }// END if (!filesLoaded)
+        }// END QADashboard_Load(
 
         private void exitApplicationButton_Click(object sender, EventArgs e)
         {
@@ -53,7 +55,8 @@ namespace QAProject
             NodeChildrenDictionaryModel.saveNodeChildrenDictionary();
             QAFileNameScoresModel.saveQAFileNameScoresFile();
             TreeViewDictionaryModel.saveTreeViewDictionary();
-            QACumulativeResultsModel.exportQACumulativeResutsFile();
+            QACumulativeResultsModel.ExportQACumulativeResutsFile();
+            QACumulativeResultsModel.ExportExaminationResultsFile();//+202008231405
             Application.Exit();
         }
 

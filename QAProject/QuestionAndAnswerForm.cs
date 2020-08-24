@@ -61,10 +61,6 @@ namespace QAProject
         private bool editSelectedQAPairs = false;
         // Edit mode is edit All files Seriatem
         private bool editAllSeriatem = false;
-        // The tab key was pressed
-        private bool tabKeyPressed = false;
-        // The Control key was pressed
-        private bool controlKeyPressed = false;
         //--------------------------String---------------------------------------//
 
 
@@ -88,10 +84,10 @@ namespace QAProject
         /// <param name="e"></param>
         private void QuestionAndAnswerForm_Load(object sender, EventArgs e)
         {
-            string qaFileNameString = AnswerQuestionsDataModel.getQAFileNameStr();
+            string qaFileNameString = AnswerQuestionsDataModel.GetQAFileNameStr();
             if (qaFileNameString != "")
             {
-                string qaFilePath = AnswerQuestionsDataModel.getQAFilePath();
+                string qaFilePath = AnswerQuestionsDataModel.GetQAFilePath();
                 if (qaFilePath == "")
                 {
                     // Get a blank dictionary
@@ -100,7 +96,7 @@ namespace QAProject
                     questionValue.Select();
                     return;
                 }
-                AnswerQuestionsDataModel.loadQAFileIntoDictionary(AnswerQuestionsDataModel.getQAFilePath());
+                AnswerQuestionsDataModel.LoadQAFileIntoDictionary(AnswerQuestionsDataModel.GetQAFilePath());
                 qaDictionary = AnswerQuestionsDataModel.QandADictionary;
                 selectEditTypeLable.Visible = true;
             }//End if (qaFileNameString != "")
@@ -116,12 +112,12 @@ namespace QAProject
         private void openQAFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.InitialDirectory = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles";
+            ofd.InitialDirectory = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles";
             // Open qa File if it has data and create the qaDictionary
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 qaFilePath = ofd.FileName;
-                AnswerQuestionsDataModel.setQAFilePath(qaFilePath);
+                AnswerQuestionsDataModel.SetQAFilePath(qaFilePath);
                 // Determine if the file exists
                 if (File.Exists(qaFilePath))
                 {
@@ -131,7 +127,7 @@ namespace QAProject
                     if (length != 0)
                     {
                         // Load File into dictionary
-                        AnswerQuestionsDataModel.loadQAFileIntoDictionary(qaFilePath);
+                        AnswerQuestionsDataModel.LoadQAFileIntoDictionary(qaFilePath);
                         // Get dictionary
                         qaDictionary = AnswerQuestionsDataModel.QandADictionary;
                     }
@@ -285,15 +281,15 @@ namespace QAProject
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string oldPathAndName = ofd.FileName;
-                int fileCount = Directory.GetFiles(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\Images").Length;
+                int fileCount = Directory.GetFiles(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\Images").Length;
                 string newFileName = fileCount.ToString()+".jpg";
-                string newPathAndName = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\Images\" + newFileName;
+                string newPathAndName = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\Images\" + newFileName;
                 System.IO.File.Copy(oldPathAndName, newPathAndName);
                 imageURL = newPathAndName;
                 string oldFileName = Path.GetFileName(oldPathAndName);
                 string fileNameConversionStr = newFileName + " = " + oldFileName;
                 // write this string to the   folder
-                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\ImageFilesOriginalNames.txt", fileNameConversionStr);
+                File.AppendAllText(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\ImageFilesOriginalNames.txt", fileNameConversionStr);
 
                 //add the image from the _CSharpQAFiles\Images\ folder to the questionImagePictureBox
                 questionImagePictureBox.ImageLocation = newPathAndName;

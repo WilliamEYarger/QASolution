@@ -81,7 +81,7 @@
             this.saveAndReturnToDashboardMenuItem.Name = "saveAndReturnToDashboardMenuItem";
             this.saveAndReturnToDashboardMenuItem.Size = new System.Drawing.Size(290, 26);
             this.saveAndReturnToDashboardMenuItem.Text = "Save and return to Dashboard";
-            this.saveAndReturnToDashboardMenuItem.Click += new System.EventHandler(this.saveAndReturnToDashboardMenuItem_Click);
+            this.saveAndReturnToDashboardMenuItem.Click += new System.EventHandler(this.SaveAndReturnToDashboardMenuItem_Click);
             // 
             // formInstructionsToolStripMenuItem
             // 
@@ -123,14 +123,14 @@
             this.seriatimToolStripMenuItem.Name = "seriatimToolStripMenuItem";
             this.seriatimToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
             this.seriatimToolStripMenuItem.Text = "Seriatim";
-            this.seriatimToolStripMenuItem.Click += new System.EventHandler(this.seriatimToolStripMenuItem_Click);
+            //this.seriatimToolStripMenuItem.Click += new System.EventHandler(this.SeriatimToolStripMenuItem_Click);
             // 
             // randomToolStripMenuItem
             // 
             this.randomToolStripMenuItem.Name = "randomToolStripMenuItem";
             this.randomToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
             this.randomToolStripMenuItem.Text = "Random";
-            this.randomToolStripMenuItem.Click += new System.EventHandler(this.randomToolStripMenuItem_Click);
+            //this.randomToolStripMenuItem.Click += new System.EventHandler(this.randomToolStripMenuItem_Click);
             // 
             // formPurposeLabel
             // 
@@ -239,7 +239,7 @@
             this.answerCorrectButton.TabIndex = 11;
             this.answerCorrectButton.Text = "Correct";
             this.answerCorrectButton.UseVisualStyleBackColor = true;
-            this.answerCorrectButton.Click += new System.EventHandler(this.answerCorrectButton_Click);
+            this.answerCorrectButton.Click += new System.EventHandler(this.AnswerCorrectButton_Click);
             // 
             // wrongButton
             // 
@@ -250,7 +250,7 @@
             this.wrongButton.TabIndex = 12;
             this.wrongButton.Text = "Wrong";
             this.wrongButton.UseVisualStyleBackColor = true;
-            this.wrongButton.Click += new System.EventHandler(this.wrongButton_Click);
+            this.wrongButton.Click += new System.EventHandler(this.WrongButton_Click);
             // 
             // AnswerQuestionsForm
             // 

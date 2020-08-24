@@ -258,7 +258,7 @@ namespace QAProject
             qaNode.Name = selectedNode.Name + "." + nextQAFileNumberString + "q";
 
 
-            QACumulativeResultsModel.addNewQATestFileRow(nextQAFileNumberString, qaNode.Name, qaNode.Text);
+            QACumulativeResultsModel.AddNewQATestFileRow(nextQAFileNumberString, qaNode.Text);
             // Test to make sure no node with with name already exists in treeViewDictionary
             if (!TreeViewDictionaryModel.AddNode(qaNode.Name, qaNode.Text))
             {
@@ -273,15 +273,15 @@ namespace QAProject
                 subjectTextValue.Text = "";
             }
             // Add this qa file node's  name and text value to the qaNamesDictionary
-            QAFileNameScoresModel.updateQANameScoreDictionaryWithNewEntry(nextQAFileNumberString, qaFileNumber, qaNode.Name, qaNode.Text, parentChain);
+            QAFileNameScoresModel.UpdateQANameScoreDictionaryWithNewEntry(nextQAFileNumberString, qaFileNumber, qaNode.Text, parentChain);
            
-            if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt"))
+            if (!File.Exists(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt"))
             {
                 // Creates the qaFile with a file stream so it can be closed so
                 //that it doesn't create 'File In Use by Another Process' Error
-                var fileStream = File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt");
+                var fileStream = File.Create(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt");
                 fileStream.Close();
-                //File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text  + ".txt");
+                //File.Create(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text  + ".txt");
             }
         }// End addNewQAFileNodeButton_Click
 
@@ -536,7 +536,7 @@ namespace QAProject
         private void editQAFileButton_Click(object sender, EventArgs e)
         {
             string qaFileName = subjectTreeView.SelectedNode.Text;
-            AnswerQuestionsDataModel.setQAFileNameStr(qaFileName);
+            AnswerQuestionsDataModel.SetQAFileNameStr(qaFileName);
             this.Hide();
             QuestionAndAnswerForm questionAndAnswerForm = new QuestionAndAnswerForm();
             questionAndAnswerForm.ShowDialog();
@@ -568,16 +568,16 @@ namespace QAProject
             }
             //subjectTextLabel.Text = "Enter HyperLink";
             hyperlinkSelectedNode = subjectTreeView.SelectedNode;
-            if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt"))
+            if (!File.Exists(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt"))
             {
-                File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt");
+                File.Create(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt");
             }
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string filePath = ofd.FileName;
                 string output = hyperlinkSelectedNode.Name + '^' + filePath + '\n';
-                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
+                File.AppendAllText(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
             }
 
             //addingHyperlink = true;
@@ -591,7 +591,7 @@ namespace QAProject
             {
                 thisHyperlink = subjectTextValue.Text;
                 string output = hyperlinkSelectedNode.Name + '^' + thisHyperlink + '\n';
-                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
+                File.AppendAllText(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
                 subjectTextLabel.Text = "Enter Name ->";
                 thisHyperlink = "";
                 addingHyperlink = false;
@@ -1000,7 +1000,7 @@ namespace QAProject
             string selectedNodeText = selectedNode.Text;
             // TODO - 06/13/2020 create list of Questions and answers HERE
 
-            AnswerQuestionsDataModel.setQAFilePath(selectedNodeText);
+            AnswerQuestionsDataModel.SetQAFilePath(selectedNodeText);
 
             this.Hide();
             AnswerQuestionsForm answerQuestionsForm = new AnswerQuestionsForm();

@@ -36,7 +36,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using QADataModelLib;
-
+using System.Runtime.CompilerServices;
 
 namespace QADataModelLib
 {
@@ -44,9 +44,9 @@ namespace QADataModelLib
 
 
     {
-        
 
-        
+
+
 
         /// <summary>
         /// It true if the TreeView and its associated accessory files were changed
@@ -56,7 +56,7 @@ namespace QADataModelLib
 
         //------------------------------GETTERS AND SETTERS-----------------------------------------//
 
-
+        private static List<string> qaFileList;
 
 
 
@@ -99,27 +99,37 @@ namespace QADataModelLib
             {
                 //SubjectNodesListModel.changeSubjectNodeList(nodeName, oldNodeText, newNodeText);
                 TreeViewDictionaryModel.reTextNode(nodeName, newNodeText);
-                QAFileNameScoresModel.reTextNameScores(nodeName, oldNodeText, newNodeText);
+                QAFileNameScoresModel.ReTextNameScores(nodeName, newNodeText);
             }
-            else if(oldNodeText.IndexOf("qa_") == 0)
+            else if (oldNodeText.IndexOf("qa_") == 0)
             {
                 //files that need to be changes are:
                 //  1. TreeViewDictionary -DONE
                 TreeViewDictionaryModel.reTextNode(nodeName, newNodeText);
                 //  2. QAFileNameScores - DONE
-                QAFileNameScoresModel.reTextNameScores(nodeName, oldNodeText, newNodeText);
+                QAFileNameScoresModel.ReTextNameScores(nodeName, newNodeText);
                 //  3. QACumulativeResults
-                
-                QACumulativeResultsModel.reTextQANode(nodeName, newNodeText);
+
+                QACumulativeResultsModel.ReTextQANode(nodeName, newNodeText);
                 //  4. You do not need to change the name of the QAFile because the nodeName has not changed
             }
             else
             {
                 //nodeType = 'D';
                 TreeViewDictionaryModel.reTextNode(nodeName, newNodeText);
-                QAFileNameScoresModel.reTextNameScores(nodeName, oldNodeText, newNodeText);
+                QAFileNameScoresModel.ReTextNameScores(nodeName, newNodeText);
             }
             //ChangeNodeTextValue.changeNodeTextValue(nodeType);
+        }
+
+        public static void setListOfQAFiles(List<string> sentQAFileList)
+        {
+            qaFileList = sentQAFileList;
+        }
+
+        public static List<string> returnListOfQAFiles()
+        {
+            return qaFileList;
         }
 
         //------------------------------------UTILITY METHODS---------------------------------//

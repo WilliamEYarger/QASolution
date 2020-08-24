@@ -86,5 +86,14 @@ namespace QADataModelLib
 
         }// End removeNthItemFromDelimitedString
 
+        public static int ReturnNumOfCharValuesInString(string inputLine, char charName)
+        {
+            int count = 0;
+            foreach (char thisChar in inputLine)
+            {
+                if (thisChar == charName) count++;
+            }
+            return count;
+        }
     }// End StringHelperClass
 }// End namespace QADataModelLib
