@@ -52,7 +52,7 @@ namespace QADataModelLib
         /// <summary>
         /// qaFilePathFolder is the QAFiles folder in the Learning\_CSharpQAFiles directory
         /// </summary>
-        private static readonly string qaFilePathFolder = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\";
+        private static readonly string qaFilePathFolder = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\";
         //-----------------------VARIABLES----------------------//
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace QADataModelLib
         /* the the number of qaFiles submitted for testing is >1 then 
          * examinstion is true and any testing report will be reported
          * to only the 
-         * C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\CumulativeExamResults.txt
+         * C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\CumulativeExamResults.txt
          * file
          */
         private static Boolean examination;
@@ -321,7 +321,7 @@ namespace QADataModelLib
         /// <param name="qaFileList"></param>
         public static void SetListOfOrderedQAFilesName_Text()
         {
-            string [] qaFileArray = File.ReadAllLines(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllQANodesName_Text.txt");
+            string [] qaFileArray = File.ReadAllLines(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllQANodesName_Text.txt");
             List<string> qaFileList = qaFileArray.ToList();
             orderedListOfQAFilesName_Text = qaFileList;
            //dictionaryOfSortedNonQANodesNameText
@@ -375,7 +375,7 @@ namespace QADataModelLib
             }
 
             // Store path to the qaFiles
-            string qaFileFolderPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\";
+            string qaFileFolderPath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\";
             // Iterate thru listOfQAFiles getting each qaFile and uploading its questions
             foreach(string item in listOfQAFiles)
             {
@@ -430,7 +430,7 @@ namespace QADataModelLib
         /// </summary>
         public static void CreateDictionaryOfSortedQAFileText()
         {
-            string[] sortedQAFileNames = File.ReadAllLines(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllQAFileText_Name.txt");
+            string[] sortedQAFileNames = File.ReadAllLines(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllQAFileText_Name.txt");
             foreach(string line in sortedQAFileNames)
             {
                 string[] components = line.Split('^');
@@ -463,7 +463,7 @@ namespace QADataModelLib
                 invertedListOfQAFile.Add(newLine);
             }
             // Publish this inverted List
-            File.WriteAllLines(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedQAFileNames.txt", invertedListOfQAFile);
+            File.WriteAllLines(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedQAFileNames.txt", invertedListOfQAFile);
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace QADataModelLib
         /// </summary>
         public static void CreateDictionaryOfAllNonQANodesName_Text()
         {
-            string[] arrayOfAllNonQAFileName_Text = File.ReadAllLines(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllNonQANodesName_Text.txt");
+            string[] arrayOfAllNonQAFileName_Text = File.ReadAllLines(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllNonQANodesName_Text.txt");
             foreach(string line in arrayOfAllNonQAFileName_Text)
             {
                 string[] components = line.Split('^');

@@ -6,7 +6,7 @@
 //      Dictionary<string, string> ExaminationResultsDictionary
 //--------------------------------PRIVATE VARIABLES----------------------------//
 //      Dictionary<string, string> sortedDictionaryOfNonQAFiles 
-//      string filePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
+//      string filePath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
 //--------------------------------PRIVATE METHODS------------------------------//
 //      void CreateQADataTable()
 //      void CreateQACumulativeResultsDictionary(
@@ -129,7 +129,7 @@ namespace QADataModelLib
         /// <summary>
         /// filePath is the path to the storage file for cumulative test results
         /// </summary>
-        private static readonly string filePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
+        private static readonly string filePath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
 
         //--------------------------------PRIVATE METHODS------------------------------//
         private static void CreateQADataTable()
@@ -234,7 +234,7 @@ namespace QADataModelLib
         /// </summary>
         public static void ImportQAExaminationResultsFile()
         {
-            string examFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAExaminationResults.txt";
+            string examFilePath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAExaminationResults.txt";
             string[] qumulativeExamResultsLines = File.ReadAllLines(examFilePath);
             foreach(string line in qumulativeExamResultsLines)
             {
@@ -253,7 +253,7 @@ namespace QADataModelLib
         /// </summary>
         public static void ExportExaminationResultsFile()
         {
-            string qaCumulatingFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAExaminationResults.txt";
+            string qaCumulatingFilePath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAExaminationResults.txt";
             string outputStr;
             List<string> examDictionaryLines = new List<string>(); ;
             foreach(KeyValuePair<string,string> kvp in ExaminationResultsDictionary)
@@ -466,8 +466,8 @@ namespace QADataModelLib
                 string output = nonQAKey + '^'+ nonQAValue;
                 listOfNonQAFiles.Add(output);
             }
-            // 20200809 0742 string nonQAFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NonQAFileNames.txt";
-            string nonQAFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllQANodesName_Text.txt";
+            // 20200809 0742 string nonQAFilePath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NonQAFileNames.txt";
+            string nonQAFilePath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllQANodesName_Text.txt";
             File.WriteAllLines(nonQAFilePath, listOfNonQAFiles);
 
         }// END CreateSortedDictionaryOfNonQAFiles

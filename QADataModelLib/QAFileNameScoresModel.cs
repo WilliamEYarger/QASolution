@@ -16,7 +16,7 @@ namespace QADataModelLib
         /// <summary>
         /// The path to the text file that holds the FileNameScores data
         /// </summary>
-        private static string qaNameScoreFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAFileNameScores.txt";
+        private static string qaNameScoreFilePath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAFileNameScores.txt";
 
         /// <summary>
         /// This Int32 value is used (after incrementation) to be both the ID and in the Name

@@ -34,7 +34,7 @@ namespace QAProject
         DataTable examResultsTable = new DataTable();
         DataTable quizTable = new DataTable();
         DataTable examTable = new DataTable();
-        //string filePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
+        //string filePath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
 
 
         //------------------------------PUBLIC METHODS--------------------------------//
@@ -189,7 +189,7 @@ namespace QAProject
             examTable.Columns.Add("% Correct", typeof(string));
             examTable.Columns.Add("Missed Questions", typeof(string));
             // get the SortedListOfAllNonQANodesName_Text which contains nodeName^nodeText
-            string[] nonQAFileResultsArray = File.ReadAllLines(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllNonQANodesName_Text.txt");
+            string[] nonQAFileResultsArray = File.ReadAllLines(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllNonQANodesName_Text.txt");
             // convert this array into a dictionary
             Dictionary<string, string> nonQAFileResultDictionary = new Dictionary<string, string>();
             foreach(string line in nonQAFileResultsArray)
@@ -200,7 +200,7 @@ namespace QAProject
                 nonQAFileResultDictionary.Add(key, value);
             }
             // Get QAExaminationResults and add the results to nonQAFileResultsArray
-            string[] nonQAExamResults = File.ReadAllLines(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAExaminationResults.txt");
+            string[] nonQAExamResults = File.ReadAllLines(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QAExaminationResults.txt");
             foreach(string examResultsLine in nonQAExamResults)
             {
                 string[] examResultsLineParts = examResultsLine.Split('^');
@@ -267,7 +267,7 @@ namespace QAProject
 
         private void ImportSortedDictionaryOfNonQAFiles()
         {
-            string[] arrayOfNonQASortedFiles = File.ReadAllLines(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NonQAFileNames.txt");
+            string[] arrayOfNonQASortedFiles = File.ReadAllLines(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NonQAFileNames.txt");
 
         }// End ImportSortedDictionaryOfNonQAFiles()
 

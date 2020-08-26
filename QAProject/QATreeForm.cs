@@ -268,13 +268,13 @@ namespace QAProject
             // Add this qa file node's  name and text value to the qaNamesDictionary
             QAFileNameScoresModel.UpdateQANameScoreDictionaryWithNewEntry(nextQAFileNumberString, qaFileNumber, qaNode.Text, parentChain);
            
-            if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt"))
+            if (!File.Exists(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt"))
             {
                 // Creates the qaFile with a file stream so it can be closed so
                 //that it doesn't create 'File In Use by Another Process' Error
-                var fileStream = File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt");
+                var fileStream = File.Create(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt");
                 fileStream.Close();
-                //File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text  + ".txt");
+                //File.Create(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text  + ".txt");
             }
         }// End addNewQAFileNodeButton_Click
 
@@ -529,9 +529,9 @@ namespace QAProject
             }
             //subjectTextLabel.Text = "Enter HyperLink";
             hyperlinkSelectedNode = subjectTreeView.SelectedNode;
-            if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt"))
+            if (!File.Exists(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt"))
             {
-                File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt");
+                File.Create(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt");
             }
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -547,7 +547,7 @@ namespace QAProject
                 {
                      output = hyperlinkSelectedNode.Name + '^' + filePath + '\n';
                 }
-                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
+                File.AppendAllText(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
             }
             return;
         }// End addHyperlinkButton_Click(
@@ -992,7 +992,7 @@ namespace QAProject
                     }
                 }
             // File path to accessory files
-            string accessoryFilePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\";
+            string accessoryFilePath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\";
             // Publish sortedListOfAllTreeViewNodes
             string filePathAllTreeViewNodes = accessoryFilePath + "SortedListOfAllTreeViewNodes.txt";
             File.WriteAllLines(filePathAllTreeViewNodes, sortedListOfAllTreeViewNodes);
@@ -1112,7 +1112,7 @@ namespace QAProject
             {
                 thisHyperlink = subjectTextValue.Text;
                 string output = hyperlinkSelectedNode.Name + '^' + thisHyperlink + '\n';
-                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
+                File.AppendAllText(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
                 subjectTextLabel.Text = "Enter Name ->";
                 thisHyperlink = "";
                 addingHyperlink = false;

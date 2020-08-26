@@ -113,7 +113,7 @@ namespace QAProject
         {
             OpenFileDialog ofd = new OpenFileDialog
             {
-                InitialDirectory = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles"
+                InitialDirectory = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles"
             };
             // Open qa File if it has data and create the qaDictionary
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -275,15 +275,15 @@ namespace QAProject
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string oldPathAndName = ofd.FileName;
-                int fileCount = Directory.GetFiles(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\Images").Length;
+                int fileCount = Directory.GetFiles(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\Images").Length;
                 string newFileName = fileCount.ToString()+".jpg";
-                string newPathAndName = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\Images\" + newFileName;
+                string newPathAndName = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\Images\" + newFileName;
                 System.IO.File.Copy(oldPathAndName, newPathAndName);
                 imageURL = newPathAndName;
                 string oldFileName = Path.GetFileName(oldPathAndName);
                 string fileNameConversionStr = newFileName + " = " + oldFileName;
                 // write this string to the   folder
-                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\ImageFilesOriginalNames.txt", fileNameConversionStr);
+                File.AppendAllText(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\ImageFilesOriginalNames.txt", fileNameConversionStr);
 
                 //add the image from the _CSharpQAFiles\Images\ folder to the questionImagePictureBox
                 questionImagePictureBox.ImageLocation = newPathAndName;
