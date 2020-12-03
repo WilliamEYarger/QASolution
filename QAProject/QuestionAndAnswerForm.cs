@@ -275,18 +275,25 @@ namespace QAProject
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string oldPathAndName = ofd.FileName;
+                //Get the number of files in the Images folder
                 int fileCount = Directory.GetFiles(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\Images").Length;
+                // Create a new file name from the number of files in the Images folder
                 string newFileName = fileCount.ToString()+".jpg";
+                //Set the newPath to the renamed file
                 string newPathAndName = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\Images\" + newFileName;
+                //copy the file from its original location to the Images folder
                 System.IO.File.Copy(oldPathAndName, newPathAndName);
+                //Set the imageURL to the new path and file name
                 imageURL = newPathAndName;
+                // Create the entry for the ImageFilesOriginalName file so that the user and correcate the 
+                // meaningless new file name with the original meaningful file name
                 string oldFileName = Path.GetFileName(oldPathAndName);
                 string fileNameConversionStr = newFileName + " = " + oldFileName;
                 // write this string to the   folder
                 File.AppendAllText(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\ImageFilesOriginalNames.txt", fileNameConversionStr);
-
-                //add the image from the _CSharpQAFiles\Images\ folder to the questionImagePictureBox
-                questionImagePictureBox.ImageLocation = newPathAndName;
+                //display the image
+                  System.Diagnostics.Process.Start(newPathAndName);
+                
             }// End open file dialog
         }// End imagesToolStripMenuItem_Click
 
@@ -342,7 +349,7 @@ namespace QAProject
             imageURL = thisQALineArray[2];
             if(imageURL != "")
             {
-                questionImagePictureBox.ImageLocation = imageURL;
+               // questionImagePictureBox.ImageLocation = imageURL;
             }
             mp3URL = thisQALineArray[3];
             return;
@@ -378,7 +385,7 @@ namespace QAProject
                 currentQAPairStr = currentQAPairInt.ToString();
                 questionValue.Text = "";
                 answerValue.Text = "";
-                questionImagePictureBox.Image = null;
+                //questionImagePictureBox.Image = null;
                 return;
             }
             if (editAllSeriatem)
@@ -394,7 +401,7 @@ namespace QAProject
                 }
                 if(imageURL != "")
                 {
-                    questionImagePictureBox.Image = null;
+                    //questionImagePictureBox.Image = null;
                 }
 
                 SetQandA();

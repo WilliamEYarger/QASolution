@@ -267,6 +267,11 @@ namespace QAProject
             correctAnswer = currentDelQALineComponents[2];
             correctAnswer = correctAnswer.Replace("~", "\r\n");
             currentImageURL = currentDelQALineComponents[3];
+            if(currentImageURL.Length > 0)
+            {
+                string imageFileName = currentImageURL;
+                System.Diagnostics.Process.Start(imageFileName);
+            }
             currentMp3URL = currentDelQALineComponents[4];
             // Make provision here for a question value entry
             int arraySize = currentDelQALineComponents.Length;

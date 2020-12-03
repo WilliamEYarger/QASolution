@@ -36,6 +36,7 @@ namespace QADataModelLib
 
         public static string returnNthItemInDelimitedString(string inputString, char del, int itemNumber)
         {
+            if (inputString.IndexOf(del) == -1) return inputString;
             string[] items = inputString.Split(del);
             string outputString = items[itemNumber];
             return outputString;

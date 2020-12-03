@@ -1121,6 +1121,15 @@ namespace QAProject
             }
         }// End subjectTextValue_Leave(
 
+        private void bookmarkLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bookmarkNameValue_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }// End QATreeForm
 
 }//End QAProject

@@ -311,17 +311,20 @@ namespace QADataModelLib
             return desiredLine;
         }
 
-       
+
 
         /// <summary>
         /// orderedListOfQAFilesName_Text is a '^' list of all qaFile data where the
         /// 1st entry is the qaFile nodeName and the
         /// 2nd endry is the qaFile nodeText
+        ///         NOTE: FOR SOME REASON THE SortedListOfAllQANodesName_Text FILE
+        ///         LISTS THE NON-QA FILES!!! I DON;T KNOW WHY
+        ///         ON 20209280608 I SUBSTITUTED SortedListOfAllQANodes
         /// </summary>
         /// <param name="qaFileList"></param>
         public static void SetListOfOrderedQAFilesName_Text()
         {
-            string [] qaFileArray = File.ReadAllLines(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllQANodesName_Text.txt");
+            string [] qaFileArray = File.ReadAllLines(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\SortedListOfAllQANodes.txt");
             List<string> qaFileList = qaFileArray.ToList();
             orderedListOfQAFilesName_Text = qaFileList;
            //dictionaryOfSortedNonQANodesNameText
@@ -375,6 +378,7 @@ namespace QADataModelLib
             }
 
             // Store path to the qaFiles
+            // ON 20200928 I added a terminl '\' to the qaFileFolderPath
             string qaFileFolderPath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\";
             // Iterate thru listOfQAFiles getting each qaFile and uploading its questions
             foreach(string item in listOfQAFiles)

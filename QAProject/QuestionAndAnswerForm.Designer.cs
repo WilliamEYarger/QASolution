@@ -47,7 +47,6 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.questionNumberValue = new System.Windows.Forms.TextBox();
             this.questionNumberLabel = new System.Windows.Forms.Label();
-            this.questionImagePictureBox = new System.Windows.Forms.PictureBox();
             this.questionValue = new System.Windows.Forms.TextBox();
             this.questionLabel = new System.Windows.Forms.Label();
             this.answerLable = new System.Windows.Forms.Label();
@@ -57,7 +56,6 @@
             this.getNextQAPairButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.questionImagePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // formTitleLabel
@@ -168,14 +166,14 @@
             // imagesToolStripMenuItem
             // 
             this.imagesToolStripMenuItem.Name = "imagesToolStripMenuItem";
-            this.imagesToolStripMenuItem.Size = new System.Drawing.Size(163, 32);
+            this.imagesToolStripMenuItem.Size = new System.Drawing.Size(224, 32);
             this.imagesToolStripMenuItem.Text = "Images";
             this.imagesToolStripMenuItem.Click += new System.EventHandler(this.ImagesToolStripMenuItem_Click);
             // 
             // soundsToolStripMenuItem
             // 
             this.soundsToolStripMenuItem.Name = "soundsToolStripMenuItem";
-            this.soundsToolStripMenuItem.Size = new System.Drawing.Size(163, 32);
+            this.soundsToolStripMenuItem.Size = new System.Drawing.Size(224, 32);
             this.soundsToolStripMenuItem.Text = "Sounds";
             // 
             // instructionsToolStripMenuItem
@@ -210,22 +208,13 @@
             this.questionNumberLabel.TabIndex = 6;
             this.questionNumberLabel.Text = "Current Question Number";
             // 
-            // questionImagePictureBox
-            // 
-            this.questionImagePictureBox.Location = new System.Drawing.Point(1067, 166);
-            this.questionImagePictureBox.Name = "questionImagePictureBox";
-            this.questionImagePictureBox.Size = new System.Drawing.Size(397, 500);
-            this.questionImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.questionImagePictureBox.TabIndex = 7;
-            this.questionImagePictureBox.TabStop = false;
-            // 
             // questionValue
             // 
             this.questionValue.Location = new System.Drawing.Point(19, 166);
             this.questionValue.Multiline = true;
             this.questionValue.Name = "questionValue";
             this.questionValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.questionValue.Size = new System.Drawing.Size(1000, 203);
+            this.questionValue.Size = new System.Drawing.Size(1437, 203);
             this.questionValue.TabIndex = 0;
             // 
             // questionLabel
@@ -254,7 +243,7 @@
             this.answerValue.Multiline = true;
             this.answerValue.Name = "answerValue";
             this.answerValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.answerValue.Size = new System.Drawing.Size(1000, 203);
+            this.answerValue.Size = new System.Drawing.Size(1437, 203);
             this.answerValue.TabIndex = 1;
             // 
             // editTypeLabel
@@ -301,7 +290,6 @@
             this.Controls.Add(this.answerLable);
             this.Controls.Add(this.questionLabel);
             this.Controls.Add(this.questionValue);
-            this.Controls.Add(this.questionImagePictureBox);
             this.Controls.Add(this.questionNumberLabel);
             this.Controls.Add(this.questionNumberValue);
             this.Controls.Add(this.formTitleLabel);
@@ -316,7 +304,6 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.questionImagePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -333,7 +320,6 @@
         private System.Windows.Forms.Label answerLable;
         private System.Windows.Forms.Label questionLabel;
         private System.Windows.Forms.TextBox questionValue;
-        private System.Windows.Forms.PictureBox questionImagePictureBox;
         private System.Windows.Forms.Label questionNumberLabel;
         private System.Windows.Forms.TextBox questionNumberValue;
         private System.Windows.Forms.ToolStripMenuItem editTypeToolStripMenuItem;

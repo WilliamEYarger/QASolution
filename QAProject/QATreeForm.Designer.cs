@@ -119,7 +119,7 @@
             // 
             // editQAFileButton
             // 
-            this.editQAFileButton.Location = new System.Drawing.Point(795, 374);
+            this.editQAFileButton.Location = new System.Drawing.Point(797, 311);
             this.editQAFileButton.Name = "editQAFileButton";
             this.editQAFileButton.Size = new System.Drawing.Size(321, 54);
             this.editQAFileButton.TabIndex = 10;
@@ -129,9 +129,9 @@
             // 
             // takeQAFileTestButton
             // 
-            this.takeQAFileTestButton.Location = new System.Drawing.Point(1153, 374);
+            this.takeQAFileTestButton.Location = new System.Drawing.Point(1155, 311);
             this.takeQAFileTestButton.Name = "takeQAFileTestButton";
-            this.takeQAFileTestButton.Size = new System.Drawing.Size(267, 54);
+            this.takeQAFileTestButton.Size = new System.Drawing.Size(299, 54);
             this.takeQAFileTestButton.TabIndex = 11;
             this.takeQAFileTestButton.Text = "Take Test on this File";
             this.takeQAFileTestButton.UseVisualStyleBackColor = true;
@@ -139,7 +139,7 @@
             // 
             // vewCumulativeResultsForSelectedQAFileButton
             // 
-            this.vewCumulativeResultsForSelectedQAFileButton.Location = new System.Drawing.Point(797, 455);
+            this.vewCumulativeResultsForSelectedQAFileButton.Location = new System.Drawing.Point(791, 382);
             this.vewCumulativeResultsForSelectedQAFileButton.Name = "vewCumulativeResultsForSelectedQAFileButton";
             this.vewCumulativeResultsForSelectedQAFileButton.Size = new System.Drawing.Size(319, 124);
             this.vewCumulativeResultsForSelectedQAFileButton.TabIndex = 13;
@@ -148,9 +148,9 @@
             // 
             // viewCumResAllFilesButton
             // 
-            this.viewCumResAllFilesButton.Location = new System.Drawing.Point(1153, 455);
+            this.viewCumResAllFilesButton.Location = new System.Drawing.Point(1155, 382);
             this.viewCumResAllFilesButton.Name = "viewCumResAllFilesButton";
-            this.viewCumResAllFilesButton.Size = new System.Drawing.Size(267, 124);
+            this.viewCumResAllFilesButton.Size = new System.Drawing.Size(291, 124);
             this.viewCumResAllFilesButton.TabIndex = 14;
             this.viewCumResAllFilesButton.Text = "View cumulative results for all QAFiles";
             this.viewCumResAllFilesButton.UseVisualStyleBackColor = true;
@@ -159,28 +159,30 @@
             // 
             this.moveNodeToNewParentGroupBox.Controls.Add(this.selectNewParentbutton);
             this.moveNodeToNewParentGroupBox.Controls.Add(this.selectNodetoMoveButton);
-            this.moveNodeToNewParentGroupBox.Location = new System.Drawing.Point(797, 585);
+            this.moveNodeToNewParentGroupBox.Location = new System.Drawing.Point(797, 527);
             this.moveNodeToNewParentGroupBox.Name = "moveNodeToNewParentGroupBox";
-            this.moveNodeToNewParentGroupBox.Size = new System.Drawing.Size(605, 148);
+            this.moveNodeToNewParentGroupBox.Size = new System.Drawing.Size(649, 118);
             this.moveNodeToNewParentGroupBox.TabIndex = 15;
             this.moveNodeToNewParentGroupBox.TabStop = false;
             this.moveNodeToNewParentGroupBox.Text = "Move Node";
             // 
             // selectNewParentbutton
             // 
-            this.selectNewParentbutton.Location = new System.Drawing.Point(356, 39);
+            this.selectNewParentbutton.Location = new System.Drawing.Point(338, 39);
+            this.selectNewParentbutton.MinimumSize = new System.Drawing.Size(200, 0);
             this.selectNewParentbutton.Name = "selectNewParentbutton";
-            this.selectNewParentbutton.Size = new System.Drawing.Size(267, 87);
+            this.selectNewParentbutton.Size = new System.Drawing.Size(311, 57);
             this.selectNewParentbutton.TabIndex = 1;
             this.selectNewParentbutton.Text = "Select New Parent";
+            this.selectNewParentbutton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.selectNewParentbutton.UseVisualStyleBackColor = true;
             this.selectNewParentbutton.Click += new System.EventHandler(this.SelectNewParentbutton_Click);
             // 
             // selectNodetoMoveButton
             // 
-            this.selectNodetoMoveButton.Location = new System.Drawing.Point(6, 39);
+            this.selectNodetoMoveButton.Location = new System.Drawing.Point(-2, 39);
             this.selectNodetoMoveButton.Name = "selectNodetoMoveButton";
-            this.selectNodetoMoveButton.Size = new System.Drawing.Size(313, 87);
+            this.selectNodetoMoveButton.Size = new System.Drawing.Size(313, 57);
             this.selectNodetoMoveButton.TabIndex = 0;
             this.selectNodetoMoveButton.Text = "Select Node To Move";
             this.selectNodetoMoveButton.UseVisualStyleBackColor = true;
@@ -188,7 +190,7 @@
             // 
             // returnToDashboardButton
             // 
-            this.returnToDashboardButton.Location = new System.Drawing.Point(959, 758);
+            this.returnToDashboardButton.Location = new System.Drawing.Point(963, 677);
             this.returnToDashboardButton.Name = "returnToDashboardButton";
             this.returnToDashboardButton.Size = new System.Drawing.Size(307, 47);
             this.returnToDashboardButton.TabIndex = 16;
@@ -234,7 +236,7 @@
             this.openHyperlinkButton.Enabled = false;
             this.openHyperlinkButton.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.openHyperlinkButton.ForeColor = System.Drawing.Color.Black;
-            this.openHyperlinkButton.Location = new System.Drawing.Point(797, 274);
+            this.openHyperlinkButton.Location = new System.Drawing.Point(797, 250);
             this.openHyperlinkButton.Name = "openHyperlinkButton";
             this.openHyperlinkButton.Size = new System.Drawing.Size(192, 44);
             this.openHyperlinkButton.TabIndex = 22;
@@ -246,18 +248,20 @@
             // 
             this.bookmarkLabel.AutoSize = true;
             this.bookmarkLabel.Enabled = false;
-            this.bookmarkLabel.Location = new System.Drawing.Point(1048, 276);
+            this.bookmarkLabel.Location = new System.Drawing.Point(1048, 252);
             this.bookmarkLabel.Name = "bookmarkLabel";
             this.bookmarkLabel.Size = new System.Drawing.Size(141, 38);
             this.bookmarkLabel.TabIndex = 23;
             this.bookmarkLabel.Text = "Bookmark";
+            this.bookmarkLabel.Click += new System.EventHandler(this.bookmarkLabel_Click);
             // 
             // bookmarkNameValue
             // 
-            this.bookmarkNameValue.Location = new System.Drawing.Point(1195, 273);
+            this.bookmarkNameValue.Location = new System.Drawing.Point(1195, 249);
             this.bookmarkNameValue.Name = "bookmarkNameValue";
             this.bookmarkNameValue.Size = new System.Drawing.Size(194, 43);
             this.bookmarkNameValue.TabIndex = 24;
+            this.bookmarkNameValue.TextChanged += new System.EventHandler(this.bookmarkNameValue_TextChanged);
             // 
             // QATreeForm
             // 

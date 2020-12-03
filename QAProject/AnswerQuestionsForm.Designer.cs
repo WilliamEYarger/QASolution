@@ -40,7 +40,6 @@
             this.questionNumberLabel = new System.Windows.Forms.Label();
             this.questionNumberValue = new System.Windows.Forms.TextBox();
             this.currentQuestionValue = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.enterAnswerLabel = new System.Windows.Forms.Label();
             this.currentAnswerValue = new System.Windows.Forms.TextBox();
             this.seeCorrectAnswerButton = new System.Windows.Forms.Button();
@@ -48,7 +47,6 @@
             this.answerCorrectButton = new System.Windows.Forms.Button();
             this.wrongButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -60,7 +58,7 @@
             this.testTypeToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1482, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1709, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -154,22 +152,14 @@
             this.currentQuestionValue.Multiline = true;
             this.currentQuestionValue.Name = "currentQuestionValue";
             this.currentQuestionValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.currentQuestionValue.Size = new System.Drawing.Size(1253, 200);
+            this.currentQuestionValue.Size = new System.Drawing.Size(860, 472);
             this.currentQuestionValue.TabIndex = 5;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(1340, 174);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(391, 497);
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
             // 
             // enterAnswerLabel
             // 
             this.enterAnswerLabel.AutoSize = true;
             this.enterAnswerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enterAnswerLabel.Location = new System.Drawing.Point(25, 365);
+            this.enterAnswerLabel.Location = new System.Drawing.Point(842, 104);
             this.enterAnswerLabel.Name = "enterAnswerLabel";
             this.enterAnswerLabel.Size = new System.Drawing.Size(175, 25);
             this.enterAnswerLabel.TabIndex = 7;
@@ -178,11 +168,11 @@
             // currentAnswerValue
             // 
             this.currentAnswerValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.currentAnswerValue.Location = new System.Drawing.Point(30, 405);
+            this.currentAnswerValue.Location = new System.Drawing.Point(933, 140);
             this.currentAnswerValue.Multiline = true;
             this.currentAnswerValue.Name = "currentAnswerValue";
             this.currentAnswerValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.currentAnswerValue.Size = new System.Drawing.Size(1253, 200);
+            this.currentAnswerValue.Size = new System.Drawing.Size(731, 472);
             this.currentAnswerValue.TabIndex = 8;
             // 
             // seeCorrectAnswerButton
@@ -233,14 +223,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1482, 853);
+            this.ClientSize = new System.Drawing.Size(1709, 853);
             this.Controls.Add(this.wrongButton);
             this.Controls.Add(this.answerCorrectButton);
             this.Controls.Add(this.correctAnswerValue);
             this.Controls.Add(this.seeCorrectAnswerButton);
             this.Controls.Add(this.currentAnswerValue);
             this.Controls.Add(this.enterAnswerLabel);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.currentQuestionValue);
             this.Controls.Add(this.questionNumberValue);
             this.Controls.Add(this.questionNumberLabel);
@@ -253,7 +242,6 @@
             this.Load += new System.EventHandler(this.AnswerQuestionsForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -270,7 +258,6 @@
         private System.Windows.Forms.Label questionNumberLabel;
         private System.Windows.Forms.TextBox questionNumberValue;
         private System.Windows.Forms.TextBox currentQuestionValue;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label enterAnswerLabel;
         private System.Windows.Forms.TextBox currentAnswerValue;
         private System.Windows.Forms.Button seeCorrectAnswerButton;

@@ -306,8 +306,7 @@ namespace QADataModelLib
                 string desiredDictionaryItem = examinationResultsDictionary[key];
                 desiredDictionaryItem += results[3];
                 examinationResultsDictionary[results[0]] = desiredDictionaryItem;
-            }
-            else
+            } 
             {
                 // the dictionary doesn't exist so create it
                 key = results[0];
