@@ -166,14 +166,14 @@
             // imagesToolStripMenuItem
             // 
             this.imagesToolStripMenuItem.Name = "imagesToolStripMenuItem";
-            this.imagesToolStripMenuItem.Size = new System.Drawing.Size(224, 32);
+            this.imagesToolStripMenuItem.Size = new System.Drawing.Size(163, 32);
             this.imagesToolStripMenuItem.Text = "Images";
             this.imagesToolStripMenuItem.Click += new System.EventHandler(this.ImagesToolStripMenuItem_Click);
             // 
             // soundsToolStripMenuItem
             // 
             this.soundsToolStripMenuItem.Name = "soundsToolStripMenuItem";
-            this.soundsToolStripMenuItem.Size = new System.Drawing.Size(224, 32);
+            this.soundsToolStripMenuItem.Size = new System.Drawing.Size(163, 32);
             this.soundsToolStripMenuItem.Text = "Sounds";
             // 
             // instructionsToolStripMenuItem
@@ -210,18 +210,18 @@
             // 
             // questionValue
             // 
-            this.questionValue.Location = new System.Drawing.Point(19, 166);
+            this.questionValue.Location = new System.Drawing.Point(19, 209);
             this.questionValue.Multiline = true;
             this.questionValue.Name = "questionValue";
             this.questionValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.questionValue.Size = new System.Drawing.Size(1437, 203);
+            this.questionValue.Size = new System.Drawing.Size(737, 520);
             this.questionValue.TabIndex = 0;
             // 
             // questionLabel
             // 
             this.questionLabel.AutoSize = true;
             this.questionLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.questionLabel.Location = new System.Drawing.Point(13, 118);
+            this.questionLabel.Location = new System.Drawing.Point(192, 161);
             this.questionLabel.Name = "questionLabel";
             this.questionLabel.Size = new System.Drawing.Size(174, 32);
             this.questionLabel.TabIndex = 9;
@@ -231,7 +231,7 @@
             // 
             this.answerLable.AutoSize = true;
             this.answerLable.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.answerLable.Location = new System.Drawing.Point(13, 401);
+            this.answerLable.Location = new System.Drawing.Point(1022, 150);
             this.answerLable.Name = "answerLable";
             this.answerLable.Size = new System.Drawing.Size(147, 32);
             this.answerLable.TabIndex = 10;
@@ -239,11 +239,11 @@
             // 
             // answerValue
             // 
-            this.answerValue.Location = new System.Drawing.Point(19, 463);
+            this.answerValue.Location = new System.Drawing.Point(784, 209);
             this.answerValue.Multiline = true;
             this.answerValue.Name = "answerValue";
             this.answerValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.answerValue.Size = new System.Drawing.Size(1437, 203);
+            this.answerValue.Size = new System.Drawing.Size(692, 520);
             this.answerValue.TabIndex = 1;
             // 
             // editTypeLabel
@@ -270,7 +270,7 @@
             // getNextQAPairButton
             // 
             this.getNextQAPairButton.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.getNextQAPairButton.Location = new System.Drawing.Point(85, 692);
+            this.getNextQAPairButton.Location = new System.Drawing.Point(593, 750);
             this.getNextQAPairButton.Name = "getNextQAPairButton";
             this.getNextQAPairButton.Size = new System.Drawing.Size(250, 49);
             this.getNextQAPairButton.TabIndex = 17;
@@ -282,7 +282,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1488, 753);
+            this.ClientSize = new System.Drawing.Size(1488, 831);
             this.Controls.Add(this.getNextQAPairButton);
             this.Controls.Add(this.selectEditTypeLable);
             this.Controls.Add(this.editTypeLabel);

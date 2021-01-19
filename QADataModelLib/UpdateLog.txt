@@ -1,4 +1,8 @@
-﻿20200721 Version altered 20200729
+﻿20210119
+
+I have altered the enter/edit questions and answers form by making the input text boxes side by side
+
+20200721 Version altered 20200729
 THE MAIN PURPOSE OF THIS VERSION OF 20200721 IS TO FLESH OUT THE PROCEDURES TO DEAL WITH THE 
 RESULTS OF TAKING AN EXAMINATION
 TASK01 - When the exam is complete publish the % correct to the window when notifying the user that the

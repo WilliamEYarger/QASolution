@@ -951,8 +951,11 @@ namespace QAProject
             }
                         
             subjectTreeView.EndUpdate();
+            // Create a list to hold all nodes in the TreeView
             List<string> sortedListOfAllTreeViewNodes = new List<string>();
+            // Create a list to hold all the qaFile nodes in the tree
             List<string> qaFileList = new List<string>();
+            //create a list to hold all the non-QAFile nodes in the tree
             List <string> nonQAFileList = new List<string>();
 
             CallRecursive();
@@ -985,6 +988,7 @@ namespace QAProject
                 void CallRecursive()
                 {
                     // Print each node recursively.  
+                    // Create a treenodecollection to hold all the nodes in the subjectTreeView
                     TreeNodeCollection nodes = subjectTreeView.Nodes;
                     foreach (TreeNode n in nodes)
                     {
