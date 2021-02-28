@@ -275,13 +275,13 @@ namespace QAProject
             // Add this qa file node's  name and text value to the qaNamesDictionary
             QAFileNameScoresModel.updateQANameScoreDictionaryWithNewEntry(nextQAFileNumberString, qaFileNumber, qaNode.Name, qaNode.Text, parentChain);
            
-            if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt"))
+            if (!File.Exists(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt"))
             {
                 // Creates the qaFile with a file stream so it can be closed so
                 //that it doesn't create 'File In Use by Another Process' Error
-                var fileStream = File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt");
+                var fileStream = File.Create(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text + ".txt");
                 fileStream.Close();
-                //File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text  + ".txt");
+                //File.Create(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\" + qaNode.Text  + ".txt");
             }
         }// End addNewQAFileNodeButton_Click
 
@@ -568,16 +568,16 @@ namespace QAProject
             }
             //subjectTextLabel.Text = "Enter HyperLink";
             hyperlinkSelectedNode = subjectTreeView.SelectedNode;
-            if (!File.Exists(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt"))
+            if (!File.Exists(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt"))
             {
-                File.Create(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt");
+                File.Create(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt");
             }
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string filePath = ofd.FileName;
                 string output = hyperlinkSelectedNode.Name + '^' + filePath + '\n';
-                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
+                File.AppendAllText(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
             }
 
             //addingHyperlink = true;
@@ -591,7 +591,7 @@ namespace QAProject
             {
                 thisHyperlink = subjectTextValue.Text;
                 string output = hyperlinkSelectedNode.Name + '^' + thisHyperlink + '\n';
-                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
+                File.AppendAllText(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NameHyperlinks.txt", output);
                 subjectTextLabel.Text = "Enter Name ->";
                 thisHyperlink = "";
                 addingHyperlink = false;
@@ -1007,7 +1007,17 @@ namespace QAProject
             answerQuestionsForm.ShowDialog();
         }
 
-        
+        private void subjectTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            TreeNode selectedNode = subjectTreeView.SelectedNode;
+            string selectedNodeName = selectedNode.Name;
+            string hyperlink = TreeViewDictionaryModel.getHyperlink(selectedNodeName);
+            if(hyperlink != null)
+            {
+                openHyperlinkButton.ForeColor = Color.Red;
+                openHyperlinkButton.Enabled = true;
+            }
+        }
     }// End QATreeForm
 
 

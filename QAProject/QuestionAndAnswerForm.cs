@@ -116,7 +116,7 @@ namespace QAProject
         private void openQAFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.InitialDirectory = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles";
+            ofd.InitialDirectory = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles";
             // Open qa File if it has data and create the qaDictionary
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -285,18 +285,18 @@ namespace QAProject
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string oldPathAndName = ofd.FileName;
-                int fileCount = Directory.GetFiles(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\Images").Length;
+                int fileCount = Directory.GetFiles(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\Images").Length;
                 string newFileName = fileCount.ToString()+".jpg";
-                string newPathAndName = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\Images\" + newFileName;
+                string newPathAndName = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\Images\" + newFileName;
                 System.IO.File.Copy(oldPathAndName, newPathAndName);
                 imageURL = newPathAndName;
                 string oldFileName = Path.GetFileName(oldPathAndName);
                 string fileNameConversionStr = newFileName + " = " + oldFileName;
                 // write this string to the   folder
-                File.AppendAllText(@"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\ImageFilesOriginalNames.txt", fileNameConversionStr);
+                File.AppendAllText(@"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\ImageFilesOriginalNames.txt", fileNameConversionStr);
 
                 //add the image from the _CSharpQAFiles\Images\ folder to the questionImagePictureBox
-                questionImagePictureBox.ImageLocation = newPathAndName;
+                //questionImagePictureBox.ImageLocation = newPathAndName;
             }// End open file dialog
         }// End imagesToolStripMenuItem_Click
 
@@ -352,7 +352,7 @@ namespace QAProject
             imageURL = thisQALineArray[2];
             if(imageURL != "")
             {
-                questionImagePictureBox.ImageLocation = imageURL;
+                //questionImagePictureBox.ImageLocation = imageURL;
             }
             mp3URL = thisQALineArray[3];
             return;
@@ -384,7 +384,7 @@ namespace QAProject
                 currentQAPairInt++;
                 questionValue.Text = "";
                 answerValue.Text = "";
-                questionImagePictureBox.Image = null;
+                //questionImagePictureBox.Image = null;
                 return;
             }
             if (editAllSeriatem)
@@ -398,7 +398,7 @@ namespace QAProject
                 }
                 if(imageURL != "")
                 {
-                    questionImagePictureBox.Image = null;
+                    //questionImagePictureBox.Image = null;
                 }
 
                 setQandA();

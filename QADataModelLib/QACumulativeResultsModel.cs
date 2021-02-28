@@ -1,6 +1,6 @@
 ﻿//--------------------GLOBAL vARIABLES--------------------//
 //      DataTable table = new DataTable();
-//      string filePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
+//      string filePath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
 //      Dictionary<string, string> cumulativeResultsDictionary 
 //-------IMPORT EXPORT QACUMULATIVERESULTS FILE-----------//
 //      importQACumulativeResultsFile(
@@ -47,7 +47,7 @@ namespace QADataModelLib
         /// <summary>
         /// filePath is the path to the storage file for cumulative test results
         /// </summary>
-        static string filePath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
+        static string filePath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\QACumulativeResults.txt";
 
         /// <summary>
         /// The cumulativeResultsDictionary has the nodeName as its Key and the delimited items of the 

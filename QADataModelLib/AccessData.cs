@@ -56,7 +56,7 @@ namespace QADataModelLib
     {
 
         //------------------------------FILE PATHS--------------------------------------------------//
-        private static string accessoryFilesPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\";
+        private static string accessoryFilesPath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\";
         public static string qaCumulativeResultsPath = accessoryFilesPath + "QACumulativeResults.txt";
 
         //------------------------------DATA STRUCTURES---------------------------------------------//

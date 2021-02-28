@@ -7,7 +7,7 @@ namespace QADataModelLib
 {
     public static class NodeChildrenDictionaryModel
     {
-        private static string nodeChildDictionaryPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NodeChildDictionary.txt";
+        private static string nodeChildDictionaryPath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\NodeChildDictionary.txt";
 
         /// <summary>
         /// Holds all Subject and Division nodes and each line holds a string node name

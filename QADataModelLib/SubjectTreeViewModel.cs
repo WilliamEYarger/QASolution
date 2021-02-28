@@ -1,7 +1,7 @@
 ﻿
 //------------------------------VARIABLE DEFINITIONS---------------------------
 //------------------------------FILE PATHS--------------------------------------------------//
-//      string accessoryFilesPath = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\";
+//      string accessoryFilesPath = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\AccessoryFiles\";
 //      string treeViewDictionaryPath = accessoryFilesPath + "TreeViewDictionary.txt";
 //      string nodeChildDictionaryPath = accessoryFilesPath + "NodeChildDictionary.txt";
 //      string qASubjectTreeViewPath = accessoryFilesPath + "QASubjectTreeView.bin";

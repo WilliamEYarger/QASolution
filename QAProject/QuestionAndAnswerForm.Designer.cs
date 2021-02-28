@@ -47,7 +47,6 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.questionNumberValue = new System.Windows.Forms.TextBox();
             this.questionNumberLabel = new System.Windows.Forms.Label();
-            this.questionImagePictureBox = new System.Windows.Forms.PictureBox();
             this.questionValue = new System.Windows.Forms.TextBox();
             this.questionLabel = new System.Windows.Forms.Label();
             this.answerLable = new System.Windows.Forms.Label();
@@ -57,7 +56,6 @@
             this.getNextQAPairButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.questionImagePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // formTitleLabel
@@ -66,7 +64,7 @@
             this.formTitleLabel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.formTitleLabel.Location = new System.Drawing.Point(565, 20);
             this.formTitleLabel.Name = "formTitleLabel";
-            this.formTitleLabel.Size = new System.Drawing.Size(377, 54);
+            this.formTitleLabel.Size = new System.Drawing.Size(303, 45);
             this.formTitleLabel.TabIndex = 2;
             this.formTitleLabel.Text = "Create/Edit QA Files";
             this.formTitleLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -82,7 +80,7 @@
             this.instructionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1488, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(1488, 29);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -92,7 +90,7 @@
             this.openFileToolStripMenuItem,
             this.saveFileAndReturnToDashboardToolStripMenuItem});
             this.filesToolStripMenuItem.Name = "filesToolStripMenuItem";
-            this.filesToolStripMenuItem.Size = new System.Drawing.Size(64, 32);
+            this.filesToolStripMenuItem.Size = new System.Drawing.Size(53, 25);
             this.filesToolStripMenuItem.Text = "&Files";
             // 
             // openFileToolStripMenuItem
@@ -100,17 +98,20 @@
             this.openFileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openQAFileToolStripMenuItem});
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(399, 32);
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(320, 26);
             this.openFileToolStripMenuItem.Text = "&Open File";
+            // 
+            // openQAFileToolStripMenuItem
+            // 
             this.openQAFileToolStripMenuItem.Name = "openQAFileToolStripMenuItem";
-            this.openQAFileToolStripMenuItem.Size = new System.Drawing.Size(224, 32);
+            this.openQAFileToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.openQAFileToolStripMenuItem.Text = "Open &QA file";
             this.openQAFileToolStripMenuItem.Click += new System.EventHandler(this.openQAFileToolStripMenuItem_Click);
             // 
             // saveFileAndReturnToDashboardToolStripMenuItem
             // 
             this.saveFileAndReturnToDashboardToolStripMenuItem.Name = "saveFileAndReturnToDashboardToolStripMenuItem";
-            this.saveFileAndReturnToDashboardToolStripMenuItem.Size = new System.Drawing.Size(399, 32);
+            this.saveFileAndReturnToDashboardToolStripMenuItem.Size = new System.Drawing.Size(320, 26);
             this.saveFileAndReturnToDashboardToolStripMenuItem.Text = "Save File and Return to Dashboard";
             this.saveFileAndReturnToDashboardToolStripMenuItem.Click += new System.EventHandler(this.saveFileAndReturnToDashboardToolStripMenuItem_Click);
             // 
@@ -122,34 +123,34 @@
             this.editSelectedQAPairsToolStripMenuItem,
             this.editAllSeriatemToolStripMenuItem});
             this.editTypeToolStripMenuItem.Name = "editTypeToolStripMenuItem";
-            this.editTypeToolStripMenuItem.Size = new System.Drawing.Size(106, 32);
+            this.editTypeToolStripMenuItem.Size = new System.Drawing.Size(84, 25);
             this.editTypeToolStripMenuItem.Text = "Edit Type";
             // 
             // beginANewFileToolStripMenuItem
             // 
             this.beginANewFileToolStripMenuItem.Name = "beginANewFileToolStripMenuItem";
-            this.beginANewFileToolStripMenuItem.Size = new System.Drawing.Size(289, 32);
+            this.beginANewFileToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
             this.beginANewFileToolStripMenuItem.Text = "Begin a New File";
             this.beginANewFileToolStripMenuItem.Click += new System.EventHandler(this.beginANewFileToolStripMenuItem_Click);
             // 
             // appendToolStripMenuItem
             // 
             this.appendToolStripMenuItem.Name = "appendToolStripMenuItem";
-            this.appendToolStripMenuItem.Size = new System.Drawing.Size(289, 32);
+            this.appendToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
             this.appendToolStripMenuItem.Text = "Append";
             this.appendToolStripMenuItem.Click += new System.EventHandler(this.appendToolStripMenuItem_Click);
             // 
             // editSelectedQAPairsToolStripMenuItem
             // 
             this.editSelectedQAPairsToolStripMenuItem.Name = "editSelectedQAPairsToolStripMenuItem";
-            this.editSelectedQAPairsToolStripMenuItem.Size = new System.Drawing.Size(289, 32);
+            this.editSelectedQAPairsToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
             this.editSelectedQAPairsToolStripMenuItem.Text = "Edit Selected QA Pairs";
             this.editSelectedQAPairsToolStripMenuItem.Click += new System.EventHandler(this.editSelectedQAPairsToolStripMenuItem_Click);
             // 
             // editAllSeriatemToolStripMenuItem
             // 
             this.editAllSeriatemToolStripMenuItem.Name = "editAllSeriatemToolStripMenuItem";
-            this.editAllSeriatemToolStripMenuItem.Size = new System.Drawing.Size(289, 32);
+            this.editAllSeriatemToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
             this.editAllSeriatemToolStripMenuItem.Text = "Edit All Seriatem";
             this.editAllSeriatemToolStripMenuItem.Click += new System.EventHandler(this.editAllSeriatemToolStripMenuItem_Click);
             // 
@@ -159,26 +160,26 @@
             this.imagesToolStripMenuItem,
             this.soundsToolStripMenuItem});
             this.mediaToolStripMenuItem.Name = "mediaToolStripMenuItem";
-            this.mediaToolStripMenuItem.Size = new System.Drawing.Size(81, 32);
+            this.mediaToolStripMenuItem.Size = new System.Drawing.Size(65, 25);
             this.mediaToolStripMenuItem.Text = "Media";
             // 
             // imagesToolStripMenuItem
             // 
             this.imagesToolStripMenuItem.Name = "imagesToolStripMenuItem";
-            this.imagesToolStripMenuItem.Size = new System.Drawing.Size(163, 32);
+            this.imagesToolStripMenuItem.Size = new System.Drawing.Size(132, 26);
             this.imagesToolStripMenuItem.Text = "Images";
             this.imagesToolStripMenuItem.Click += new System.EventHandler(this.imagesToolStripMenuItem_Click);
             // 
             // soundsToolStripMenuItem
             // 
             this.soundsToolStripMenuItem.Name = "soundsToolStripMenuItem";
-            this.soundsToolStripMenuItem.Size = new System.Drawing.Size(163, 32);
+            this.soundsToolStripMenuItem.Size = new System.Drawing.Size(132, 26);
             this.soundsToolStripMenuItem.Text = "Sounds";
             // 
             // instructionsToolStripMenuItem
             // 
             this.instructionsToolStripMenuItem.Name = "instructionsToolStripMenuItem";
-            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(127, 32);
+            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(103, 25);
             this.instructionsToolStripMenuItem.Text = "Instructions";
             this.instructionsToolStripMenuItem.Click += new System.EventHandler(this.instructionsToolStripMenuItem_Click);
             // 
@@ -192,7 +193,7 @@
             this.questionNumberValue.Location = new System.Drawing.Point(313, 66);
             this.questionNumberValue.Name = "questionNumberValue";
             this.questionNumberValue.ReadOnly = true;
-            this.questionNumberValue.Size = new System.Drawing.Size(100, 39);
+            this.questionNumberValue.Size = new System.Drawing.Size(100, 32);
             this.questionNumberValue.TabIndex = 0;
             this.questionNumberValue.TabStop = false;
             this.questionNumberValue.Leave += new System.EventHandler(this.questionNumberValue_Leave);
@@ -203,18 +204,9 @@
             this.questionNumberLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.questionNumberLabel.Location = new System.Drawing.Point(13, 69);
             this.questionNumberLabel.Name = "questionNumberLabel";
-            this.questionNumberLabel.Size = new System.Drawing.Size(294, 32);
+            this.questionNumberLabel.Size = new System.Drawing.Size(231, 25);
             this.questionNumberLabel.TabIndex = 6;
             this.questionNumberLabel.Text = "Current Question Number";
-            // 
-            // questionImagePictureBox
-            // 
-            this.questionImagePictureBox.Location = new System.Drawing.Point(1067, 166);
-            this.questionImagePictureBox.Name = "questionImagePictureBox";
-            this.questionImagePictureBox.Size = new System.Drawing.Size(397, 500);
-            this.questionImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.questionImagePictureBox.TabIndex = 7;
-            this.questionImagePictureBox.TabStop = false;
             // 
             // questionValue
             // 
@@ -222,16 +214,16 @@
             this.questionValue.Multiline = true;
             this.questionValue.Name = "questionValue";
             this.questionValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.questionValue.Size = new System.Drawing.Size(1000, 203);
+            this.questionValue.Size = new System.Drawing.Size(690, 498);
             this.questionValue.TabIndex = 0;
             // 
             // questionLabel
             // 
             this.questionLabel.AutoSize = true;
             this.questionLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.questionLabel.Location = new System.Drawing.Point(13, 118);
+            this.questionLabel.Location = new System.Drawing.Point(198, 118);
             this.questionLabel.Name = "questionLabel";
-            this.questionLabel.Size = new System.Drawing.Size(174, 32);
+            this.questionLabel.Size = new System.Drawing.Size(137, 25);
             this.questionLabel.TabIndex = 9;
             this.questionLabel.Text = "Enter Question";
             // 
@@ -239,28 +231,28 @@
             // 
             this.answerLable.AutoSize = true;
             this.answerLable.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.answerLable.Location = new System.Drawing.Point(13, 401);
+            this.answerLable.Location = new System.Drawing.Point(1029, 118);
             this.answerLable.Name = "answerLable";
-            this.answerLable.Size = new System.Drawing.Size(147, 32);
+            this.answerLable.Size = new System.Drawing.Size(118, 25);
             this.answerLable.TabIndex = 10;
             this.answerLable.Text = "EnterAnswer";
             // 
             // answerValue
             // 
-            this.answerValue.Location = new System.Drawing.Point(19, 463);
+            this.answerValue.Location = new System.Drawing.Point(733, 166);
             this.answerValue.Multiline = true;
             this.answerValue.Name = "answerValue";
             this.answerValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.answerValue.Size = new System.Drawing.Size(1000, 203);
+            this.answerValue.Size = new System.Drawing.Size(687, 498);
             this.answerValue.TabIndex = 1;
             // 
             // editTypeLabel
             // 
             this.editTypeLabel.AutoSize = true;
             this.editTypeLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.editTypeLabel.Location = new System.Drawing.Point(981, 122);
+            this.editTypeLabel.Location = new System.Drawing.Point(970, 91);
             this.editTypeLabel.Name = "editTypeLabel";
-            this.editTypeLabel.Size = new System.Drawing.Size(110, 28);
+            this.editTypeLabel.Size = new System.Drawing.Size(86, 21);
             this.editTypeLabel.TabIndex = 15;
             this.editTypeLabel.Text = "Appending";
             // 
@@ -270,7 +262,7 @@
             this.selectEditTypeLable.ForeColor = System.Drawing.Color.Red;
             this.selectEditTypeLable.Location = new System.Drawing.Point(436, 64);
             this.selectEditTypeLable.Name = "selectEditTypeLable";
-            this.selectEditTypeLable.Size = new System.Drawing.Size(211, 38);
+            this.selectEditTypeLable.Size = new System.Drawing.Size(166, 30);
             this.selectEditTypeLable.TabIndex = 16;
             this.selectEditTypeLable.Text = "Select Edit Type";
             this.selectEditTypeLable.Visible = false;
@@ -278,7 +270,7 @@
             // getNextQAPairButton
             // 
             this.getNextQAPairButton.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.getNextQAPairButton.Location = new System.Drawing.Point(85, 692);
+            this.getNextQAPairButton.Location = new System.Drawing.Point(545, 682);
             this.getNextQAPairButton.Name = "getNextQAPairButton";
             this.getNextQAPairButton.Size = new System.Drawing.Size(250, 49);
             this.getNextQAPairButton.TabIndex = 17;
@@ -288,7 +280,7 @@
             // 
             // QuestionAndAnswerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 37F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1488, 753);
             this.Controls.Add(this.getNextQAPairButton);
@@ -298,7 +290,6 @@
             this.Controls.Add(this.answerLable);
             this.Controls.Add(this.questionLabel);
             this.Controls.Add(this.questionValue);
-            this.Controls.Add(this.questionImagePictureBox);
             this.Controls.Add(this.questionNumberLabel);
             this.Controls.Add(this.questionNumberValue);
             this.Controls.Add(this.formTitleLabel);
@@ -313,7 +304,6 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.questionImagePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -330,7 +320,6 @@
         private System.Windows.Forms.Label answerLable;
         private System.Windows.Forms.Label questionLabel;
         private System.Windows.Forms.TextBox questionValue;
-        private System.Windows.Forms.PictureBox questionImagePictureBox;
         private System.Windows.Forms.Label questionNumberLabel;
         private System.Windows.Forms.TextBox questionNumberValue;
         private System.Windows.Forms.ToolStripMenuItem editTypeToolStripMenuItem;

@@ -34,7 +34,7 @@ namespace QADataModelLib
         /// <summary>
         /// qaFilePathFolder is the QAFiles folder in the Learning\_CSharpQAFiles directory
         /// </summary>
-        private static string qaFilePathFolder = @"C:\Users\Bill Yarger\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\";
+        private static string qaFilePathFolder = @"C:\Users\Owner\OneDrive\Documents\Learning\_CSharpQAFiles\QAFiles\";
         //-----------------------VARIABLES----------------------//
         private static string qaFileName = "";
 
