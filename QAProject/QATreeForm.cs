@@ -610,12 +610,24 @@ namespace QAProject
             TreeNode selectedNode = subjectTreeView.SelectedNode;
             string selectedNodeName = selectedNode.Name;
             string hyperlink = TreeViewDictionaryModel.getHyperlink(selectedNodeName);
+
             if (hyperlink == "")
             {
                 MessageBox.Show("No Hyperlink exists for this node");
                 return;
             }
-                System.Diagnostics.Process.Start(hyperlink);
+
+            // if hyperlink contains a bookmark (#....) strip it off and write it to the clipboard
+            if(hyperlink.IndexOf('#') != -1)
+            {
+                string[] hyperlineArray = hyperlink.Split('#');
+                string Bookmark = hyperlineArray[1];
+                tbxBookmark.Text = Bookmark;
+                System.Windows.Forms.Clipboard.SetText(Bookmark);
+                hyperlink = hyperlineArray[0];
+            }
+
+            System.Diagnostics.Process.Start(hyperlink);
 
         }// End openHyperlinkButton_Click(
 
